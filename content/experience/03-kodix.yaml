@@ -1,0 +1,35 @@
+id: kodix
+company: Kodix
+companyUrl: https://kodix.ru
+role:
+  ru: Разработчик
+  en: Developer
+location:
+  ru: Москва
+  en: Moscow
+start: "2017-08"
+end: "2018-12"
+tags:
+  domains: [fullstack, web]
+highlights:
+  - text:
+      ru: "Разрабатывал и поддерживал единую платформу дилерских автосайтов: доставка фич, обновлений и контента из центра управления на все дилерские сайты; соответствие сайтам марки по виду, каталогу и ценам. Стек: PHP 5.6–7.0, 1C-Bitrix, jQuery."
+      en: "Built and maintained a unified platform for car-dealer websites: delivering features, updates and content from a control centre to all dealer sites; keeping them aligned with the brand site in look, catalogue and pricing. Stack: PHP 5.6–7.0, 1C-Bitrix, jQuery."
+    tags: {}
+  - text:
+      ru: "Разработал систему подбора конфигурации автомобиля по ключевым факторам с прогнозированием цены и 3D-визуализацией на движке Unity. Стек: PHP 5.6–7.0, 1C-Bitrix, jQuery."
+      en: "Built a car-configuration selector by key factors with price prediction and Unity-based 3D visualisation. Stack: PHP 5.6–7.0, 1C-Bitrix, jQuery."
+    tags: {}
+  - text:
+      ru: "Создал сервис оценки стоимости личного автомобиля по параметрам на основе сопоставимых предложений auto.ru; микросервисная архитектура. Стек: PHP 7.0, Lumen, Redis, jQuery, Codeception."
+      en: "Built a personal-car valuation service from parameters based on comparable auto.ru listings; microservice architecture. Stack: PHP 7.0, Lumen, Redis, jQuery, Codeception."
+    tags: {}
+  - text:
+      ru: "Разработал внутренний интерфейс автоматического деплоя и управления серверами (prod/test/dev) с настройкой характеристик; интеграция с API Ansible. Стек: Python (Flask), JS (jQuery)."
+      en: "Built an internal UI for automated deploy and server management (prod/test/dev) with configurable specs; Ansible API integration. Stack: Python (Flask), JS (jQuery)."
+    tags: {}
+  - text:
+      ru: "Сделал MVP мобильного web-приложения для инженера автосервиса: акт приёма автомобиля с выбором стоимости, срочности и пр. Стек: PHP (Laravel), JS (Vue.js)."
+      en: "Built an MVP mobile web app for a service-station engineer: car intake report with cost, urgency and other fields. Stack: PHP (Laravel), JS (Vue.js)."
+    tags: {}
+stack: [PHP, 1C-Bitrix, Lumen, Laravel, "Vue.js", jQuery, Python, Flask, Redis]

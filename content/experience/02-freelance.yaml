@@ -1,0 +1,24 @@
+id: freelance
+company: Фриланс / прямой заказчик («Европолы»)
+role:
+  ru: Web-разработчик
+  en: Web Developer
+location:
+  ru: Москва
+  en: Moscow
+start: "2017-03"
+end: "2017-08"
+# Старая роль — скрыта в ATS-варианте ради краткости (видна для HR/technical).
+tags:
+  audience: [hr, technical]
+  domains: [web]
+highlights:
+  - text:
+      ru: "Разработал внутреннюю систему учёта и складирования для компании «Европолы», включая собственную систему управления доступом; глубокая кастомизация визуализации таблиц на DataTables.js. Стек: PHP 5.6 (собственная ORM-обёртка), jQuery, MySQL."
+      en: "Built an internal inventory and warehousing system for Evropoly, including a custom access-control system; deep table-visualisation customisation with DataTables.js. Stack: PHP 5.6 (custom ORM wrapper), jQuery, MySQL."
+    tags: {}
+  - text:
+      ru: "Разработал интернет-магазин паркета: SEO-менеджер ранжирования товаров через динамические правила на свойствах продукта; управление складом и атрибутами товаров. Стек: PHP 5.6, Yii2, jQuery, Bootstrap, MySQL."
+      en: "Built a parquet e-commerce store: an SEO manager for product ranking via dynamic rules on product attributes; warehouse and product-attribute management. Stack: PHP 5.6, Yii2, jQuery, Bootstrap, MySQL."
+    tags: {}
+stack: [PHP, Yii2, jQuery, Bootstrap, MySQL]

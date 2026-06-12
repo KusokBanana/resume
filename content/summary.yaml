@@ -1,0 +1,38 @@
+# Варианты блока "Кратко". compose берёт лучший по priority среди релевантных
+# (по audience/system).
+variants:
+  - id: summary-general
+    priority: 10
+    tags:
+      audience: [hr, technical]
+    text:
+      ru: >-
+        Инженерный руководитель, 9+ лет в IT, более 3 лет в управлении командами.
+        Построил frontend-направление в Positive Technologies с нуля до отдела из
+        11 человек (4 кросс-функциональные команды). Ранее — Яндекс и VK. Совмещаю
+        стратегию, процессы и hands-on разработку на React / Angular / TypeScript.
+        Внедряю AI-assisted development в работу команд — ускорил разработку в 1,5 раза.
+      en: >-
+        Engineering manager with 9+ years in tech and 3+ years leading teams.
+        Built the frontend function at Positive Technologies from scratch to an
+        11-person department (4 cross-functional teams). Previously at Yandex and VK.
+        I combine strategy, process and hands-on development in React / Angular /
+        TypeScript, and bring AI-assisted development into team workflows — sped up
+        delivery by 1.5×.
+
+  - id: summary-ats
+    priority: 20
+    tags:
+      audience: [ats]
+    # Версия под автоотбор: плотная по ключевым словам.
+    text:
+      ru: >-
+        Engineering Manager / Руководитель отдела frontend-разработки. 9+ лет в IT,
+        3+ года в управлении. Управление командами, найм и развитие, процессы,
+        стейкхолдер-менеджмент. Стек: TypeScript, React, Angular, Node.js, Python,
+        CI/CD, Docker, дизайн-системы, FrontOps, AI-assisted development.
+      en: >-
+        Engineering Manager / Head of Frontend. 9+ years in tech, 3+ years in
+        management. Team leadership, hiring and growth, process design, stakeholder
+        management. Stack: TypeScript, React, Angular, Node.js, Python, CI/CD,
+        Docker, design systems, FrontOps, AI-assisted development.

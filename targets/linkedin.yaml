@@ -1,0 +1,12 @@
+# LinkedIn — HR + recruiters, оба языка. Markdown удобен для копипасты в профиль.
+id: linkedin
+label:
+  ru: LinkedIn
+  en: LinkedIn
+languages: [ru, en]
+system: linkedin
+audience: hr
+layout: rich
+formats: [html, pdf, md]
+sections: [summary, achievements, experience, skills, languages, education]
+select: {}

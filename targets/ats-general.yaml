@@ -1,0 +1,13 @@
+# Универсальное резюме под автоотбор (ATS/ИИ): одноколоночный минималистичный
+# layout, плотный по ключевым словам summary, машиночитаемая структура.
+id: ats-general
+label:
+  ru: ATS / автоотбор
+  en: ATS / auto-screening
+languages: [ru, en]
+system: general
+audience: ats
+layout: ats
+formats: [html, pdf, md, json]
+sections: [summary, achievements, experience, skills, languages, education]
+select: {}

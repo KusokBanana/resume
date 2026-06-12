@@ -1,0 +1,29 @@
+{
+  "name": "resume",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Резюме как код: единый источник истины, мульти-таргет сборка (HTML/PDF/MD) на GitHub Pages",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "validate": "tsx scripts/validate.ts",
+    "build:md": "tsx scripts/build-md.ts",
+    "build:json": "tsx scripts/build-json.ts",
+    "build:pdf": "tsx scripts/build-pdf.ts",
+    "build:all": "npm run build && npm run build:md && npm run build:json && npm run build:pdf",
+    "tailor": "tsx scripts/tailor.ts"
+  },
+  "dependencies": {
+    "astro": "^5.13.0",
+    "yaml": "^2.6.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "playwright": "^1.49.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,172 @@
+:root {
+  --ink: #1a1a1a;
+  --muted: #5a5a5a;
+  --accent: #2563eb;
+  --rule: #e2e2e2;
+  --bg: #ffffff;
+  --maxw: 800px;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f4f4f5;
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.page {
+  max-width: var(--maxw);
+  margin: 24px auto;
+  background: var(--bg);
+  padding: 40px 48px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Панель действий — не печатается. */
+.toolbar {
+  max-width: var(--maxw);
+  margin: 16px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+}
+.toolbar a,
+.toolbar .chip {
+  text-decoration: none;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+.toolbar a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.toolbar .spacer {
+  flex: 1;
+}
+
+/* Шапка резюме */
+.resume header h1 {
+  margin: 0 0 4px;
+  font-size: 28px;
+}
+.resume .headline {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 17px;
+  font-weight: 500;
+}
+.resume .contacts {
+  font-size: 14px;
+  color: var(--muted);
+}
+.resume .contacts a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.resume section {
+  margin-top: 22px;
+}
+.resume h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 4px;
+  margin: 0 0 10px;
+}
+.resume .item {
+  margin-bottom: 14px;
+}
+.resume .item h3 {
+  margin: 0;
+  font-size: 16px;
+}
+.resume .group {
+  margin-top: 8px;
+}
+.resume .group h4 {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.resume .item .meta {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 2px 0 6px;
+}
+.resume ul {
+  margin: 6px 0;
+  padding-left: 18px;
+}
+.resume li {
+  margin: 2px 0;
+}
+.resume .stack {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.resume .skills-line {
+  margin: 4px 0;
+}
+
+/* ----- ATS layout: одна колонка, без декора, максимально машиночитаемо ----- */
+.resume[data-layout='ats'] {
+  --accent: #000;
+}
+.resume[data-layout='ats'] h2 {
+  color: #000;
+  border-bottom: 1px solid #000;
+}
+.resume[data-layout='ats'] .contacts a,
+.resume[data-layout='ats'] header h1 {
+  color: #000;
+}
+
+/* ----- Печать / PDF ----- */
+@media print {
+  body {
+    background: #fff;
+    font-size: 11pt;
+  }
+  .toolbar {
+    display: none !important;
+  }
+  .page {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .resume section {
+    break-inside: avoid;
+  }
+  .resume .item {
+    break-inside: avoid;
+  }
+  a {
+    color: inherit;
+  }
+}
+
+@page {
+  margin: 16mm 14mm;
+}

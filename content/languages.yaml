@@ -1,0 +1,11 @@
+items:
+  - id: ru
+    priority: 100
+    name: { ru: Русский, en: Russian }
+    level: { ru: родной, en: native }
+    tags: {}
+  - id: en
+    priority: 90
+    name: { ru: Английский, en: English }
+    level: { ru: B2 (средне-продвинутый), en: B2 (upper-intermediate) }
+    tags: {}

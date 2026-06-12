@@ -1,0 +1,21 @@
+# Базовый профиль.
+name:
+  ru: Дёмочкин Святослав Владимирович
+  en: Svyatoslav Demochkin
+title:
+  ru: Engineering Manager · Руководитель отдела разработки
+  en: Engineering Manager · Head of Development
+location:
+  ru: Москва · Удалённо, готов к командировкам
+  en: Moscow · Remote, open to business trips
+email: svyat.dema@yandex.ru
+# Дата рождения держим как данные; рендер опционален и включается отдельным профилем сборки.
+birthYear: 1994
+# GitHub намеренно не указан — добавить при необходимости.
+links:
+  - label: Habr Career
+    url: https://career.habr.com/svyatoslav-demochkin
+    kind: habr
+  - label: Telegram
+    url: https://t.me/kusokBanana
+    kind: telegram

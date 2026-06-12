@@ -1,0 +1,12 @@
+# hh.ru — HR-аудитория, богатый layout, оба языка.
+id: hh
+label:
+  ru: hh.ru
+  en: hh.ru
+languages: [ru, en]
+system: hh
+audience: hr
+layout: rich
+formats: [html, pdf, md]
+sections: [summary, achievements, experience, skills, languages, education]
+select: {}

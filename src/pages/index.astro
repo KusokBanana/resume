@@ -1,0 +1,122 @@
+---
+import { loadContent, loadTargets } from '../lib/load';
+import { variantSlug } from '../lib/slug';
+import { UI } from '../lib/labels';
+import '../styles/resume.css';
+
+const content = loadContent();
+const targets = loadTargets();
+const base = import.meta.env.BASE_URL;
+
+// Имя для шапки берём из ru-варианта профиля.
+const name = content.profile.name.ru;
+const headline = content.profile.title.ru;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{name} — резюме</title>
+    <meta name="description" content={`Резюме · ${headline}`} />
+    <style>
+      .catalog {
+        max-width: 800px;
+        margin: 24px auto;
+        padding: 0 16px;
+      }
+      .catalog h1 {
+        font-size: 26px;
+        margin-bottom: 2px;
+      }
+      .catalog .sub {
+        color: #5a5a5a;
+        margin-top: 0;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #e2e2e2;
+        border-radius: 10px;
+        padding: 16px 18px;
+        margin: 12px 0;
+      }
+      .card h2 {
+        margin: 0 0 4px;
+        font-size: 18px;
+      }
+      .card .tags {
+        font-size: 13px;
+        color: #5a5a5a;
+        margin: 0 0 10px;
+      }
+      .langrow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .langrow .lang {
+        font-weight: 600;
+        min-width: 28px;
+      }
+      .langrow a {
+        text-decoration: none;
+        color: #1a1a1a;
+        border: 1px solid #e2e2e2;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+      }
+      .langrow a:hover {
+        border-color: #2563eb;
+        color: #2563eb;
+      }
+      .langrow + .langrow {
+        margin-top: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="catalog">
+      <h1>{name}</h1>
+      <p class="sub">{headline} · {UI.sourceOfTruth.ru}</p>
+
+      {
+        targets.map((t) => (
+          <div class="card">
+            <h2>{t.label.ru} / {t.label.en}</h2>
+            <p class="tags">
+              system: {t.system} · audience: {t.audience} · layout: {t.layout} ·
+              formats: {t.formats.join(', ')}
+            </p>
+            {t.languages.map((lang) => {
+              const slug = variantSlug(t.id, lang);
+              return (
+                <div class="langrow">
+                  <span class="lang">{lang.toUpperCase()}</span>
+                  <a href={`${base}${t.id}/${lang}`}>{UI.viewOnline[lang]}</a>
+                  {t.formats.includes('pdf') && (
+                    <a href={`${base}generated/${slug}.pdf`} download>
+                      PDF
+                    </a>
+                  )}
+                  {t.formats.includes('md') && (
+                    <a href={`${base}generated/${slug}.md`} download>
+                      MD
+                    </a>
+                  )}
+                  {t.formats.includes('json') && (
+                    <a href={`${base}generated/${slug}.json`} download>
+                      JSON
+                    </a>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ))
+      }
+    </div>
+  </body>
+</html>

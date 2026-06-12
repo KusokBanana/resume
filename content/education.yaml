@@ -1,0 +1,14 @@
+items:
+  - id: mephi
+    priority: 10
+    institution:
+      ru: НИЯУ МИФИ, Москва
+      en: National Research Nuclear University MEPhI, Moscow
+    degree:
+      ru: Бакалавр
+      en: BSc
+    field:
+      ru: Бизнес-информатика (факультет управления и экономики высоких технологий)
+      en: Business Informatics (Faculty of Management and Economics of High Technologies)
+    end: "2017"
+    tags: {}

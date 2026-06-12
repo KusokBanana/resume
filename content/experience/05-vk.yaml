@@ -1,0 +1,38 @@
+id: vk
+company: VK
+companyUrl: https://vk.company/ru/
+role:
+  ru: Lead Frontend / Team Lead
+  en: Lead Frontend / Team Lead
+location:
+  ru: Россия
+  en: Russia
+start: "2022-08"
+end: "2023-12"
+tags:
+  domains: [frontend, leadership, fintech]
+summary:
+  ru: Финтех ВКонтакте — продукт «Кабинет выплат» (выплаты заработка по монетизациям ВКонтакте).
+  en: VK fintech — the "Payouts Dashboard" product (creator-monetisation payouts on VKontakte).
+highlights:
+  - text:
+      ru: "Руководил кросс-функциональной командой разработки продукта: планирование и реализация продуктовых интеграций и улучшений."
+      en: "Led a cross-functional product team: planning and delivery of product integrations and improvements."
+    tags: {}
+  - text:
+      ru: Проводил 1:1, ставил цели и определял точки роста членов команды.
+      en: Ran 1:1s, set goals and identified growth areas for team members.
+    tags: { audience: [hr] }
+  - text:
+      ru: Сотрудничал с отделом маркетинга для привлечения новых клиентов продукта.
+      en: Partnered with marketing to acquire new product customers.
+    tags: { audience: [hr] }
+  - text:
+      ru: Интегрировал смежные отделы для автоматизации рутинных процессов.
+      en: Integrated adjacent departments to automate routine processes.
+    tags: { audience: [hr, technical] }
+  - text:
+      ru: Hands-on разрабатывал интерфейсы финтеха ВКонтакте, включая сервис «Кабинет выплат».
+      en: Hands-on development of VK fintech UIs, including the Payouts Dashboard.
+    tags: {}
+stack: [TypeScript, React]

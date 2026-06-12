@@ -1,0 +1,12 @@
+# Habr Career — техническая аудитория. Markdown — основной формат.
+id: habr
+label:
+  ru: Habr Career
+  en: Habr Career
+languages: [ru, en]
+system: habr
+audience: technical
+layout: rich
+formats: [html, md]
+sections: [summary, achievements, experience, skills, languages, education]
+select: {}

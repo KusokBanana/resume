@@ -1,0 +1,125 @@
+id: positive-technologies
+company: Positive Technologies
+companyUrl: https://www.ptsecurity.com
+role:
+  ru: Руководитель отдела разработки интерфейсов (Engineering Manager)
+  en: Head of UI Development (Engineering Manager)
+location:
+  ru: Москва · кибербезопасность
+  en: Moscow · cybersecurity
+start: "2024-03"
+end: present
+tags:
+  domains: [engineering-management, frontend, leadership]
+summary:
+  ru: >-
+    Frontend-направление продуктов дирекции информационных технологий. В подчинении
+    4 кросс-функциональные команды: техлиды, frontend-разработчики и UX/UI-дизайнеры.
+    Полная ответственность за направление — от стратегии и найма до технологических
+    решений и пользовательского результата. Выступал владельцем интерфейсного
+    направления, балансируя интересы бизнеса, пользователей и команды.
+  en: >-
+    Frontend function across the IT directorate's products. Led 4 cross-functional
+    teams: tech leads, frontend engineers and UX/UI designers. Full ownership of the
+    function — from strategy and hiring to technical decisions and user outcomes.
+    Acted as the owner of the UI domain, balancing business, user and team interests.
+groups:
+  - title: { ru: Продукты, en: Products }
+    highlights:
+      - text:
+          ru: Руководил полным циклом разработки интерфейсов — от Low-Fidelity-прототипов до промышленного релиза и развития на проде.
+          en: Led the full UI lifecycle — from low-fidelity prototypes to production release and ongoing evolution.
+        tags: {}
+      - text:
+          ru: "Вёл интерфейсы продуктов: Корпоративный портал, Партнёрский портал, Aim (автоматизация управления инфраструктурой), Preboarding (найм и онбординг) и ряд менее крупных."
+          en: "Owned UIs for: Corporate Portal, Partner Portal, Aim (infrastructure-management automation), Preboarding (hiring and onboarding) and several smaller products."
+        tags: {}
+      - text:
+          ru: Обеспечил стабильную поставку интерфейсных решений для продуктов с активной пользовательской базой.
+          en: Ensured stable delivery of UI solutions for products with an active user base.
+        tags: { audience: [hr, technical] }
+  - title: { ru: Команды и процессы, en: Teams & process }
+    highlights:
+      - text:
+          ru: "Построил frontend-направление с нуля: найм, онбординг, зоны ответственности, стратегия; масштабировал отдел с 0 до 11 человек за год."
+          en: "Built the frontend function from scratch: hiring, onboarding, ownership areas, strategy; scaled the department from 0 to 11 people in a year."
+        tags: {}
+      - text:
+          ru: "Принял команды «по наследству»: внедрил процессы, повысил управляемость и прозрачность, выстроил рабочие и доверительные отношения."
+          en: "Inherited existing teams: introduced process, improved manageability and transparency, built trust and working relationships."
+        tags: {}
+      - text:
+          ru: Провёл полную замену команды в одном из продуктов с бесшовной интеграцией нового интерфейса на современном стеке — без остановки развития продукта.
+          en: Fully replaced a product's team with a seamless migration to a modern-stack UI — without pausing product development.
+        tags: { audience: [hr, technical] }
+      - text:
+          ru: Внедрил процесс дизайн-ревью — число визуальных багов снизилось со стабильных 5–10 до 0–1 на релиз.
+          en: Introduced a design-review process — visual bugs dropped from a steady 5–10 to 0–1 per release.
+        tags: {}
+      - text:
+          ru: "Перестроил процесс разработки email-писем: вместо связки «дизайнер + разработчик, ~неделя» — один разработчик за пару часов."
+          en: Reworked the email-building process — from "designer + developer, ~a week" to one developer in a couple of hours.
+        tags: { audience: [hr, technical] }
+  - title: { ru: Люди, en: People }
+    highlights:
+      - text:
+          ru: "Развивал команду через индивидуальные планы развития (ИПР): 3 человека выросли до Senior, 3 — до лидов."
+          en: "Grew the team via individual development plans: 3 people reached Senior, 3 became leads."
+        tags: {}
+      - text:
+          ru: Удержал отдел без единого добровольного ухода за 2 года на фоне турбулентности в компании (урезание бюджетов, массовые сокращения); потери — только в рамках общекорпоративного сокращения штата.
+          en: Kept the department with zero voluntary attrition over 2 years amid company turbulence (budget cuts, mass layoffs); the only losses were part of company-wide reductions.
+        tags: {}
+      - text:
+          ru: Повысил автономность команд и снизил bus-factor — уменьшил зависимость от отдельных специалистов.
+          en: Increased team autonomy and reduced the bus factor — lowered dependence on individual specialists.
+        tags: { audience: [hr, technical] }
+      - text:
+          ru: Принимал сложные управленческие решения, включая расставание с сотрудниками в рамках оптимизации команды.
+          en: Made hard management calls, including parting with team members during team optimisation.
+        tags: { audience: [hr] }
+  - title: { ru: Технологии и hands-on, en: Technology & hands-on }
+    highlights:
+      - text:
+          ru: Внедрил AI-assisted development (Claude и аналогичные инструменты) — ускорил разработку в ~1,5 раза за счёт прототипирования, рефакторинга, написания кода и код-ревью.
+          en: Introduced AI-assisted development (Claude and similar) — sped up delivery ~1.5× across prototyping, refactoring, coding and code review.
+        tags: {}
+      - text:
+          ru: "Оснастил библиотеку компонентов поддержкой llms.txt — машиночитаемой документацией для LLM-инструментов: AI-ассистенты используют компоненты корректно «из коробки», без ручного контекста."
+          en: Added llms.txt support to the component library — machine-readable docs for LLM tools, so AI assistants use components correctly out of the box without manual context.
+        tags: { audience: [technical] }
+      - text:
+          ru: Участвовал в разработке ключевых частей интерфейсов на React и Angular — точечный hands-on в сложных и критичных местах.
+          en: Contributed hands-on to key UI parts in React and Angular — targeted work in complex, critical areas.
+        tags: {}
+      - text:
+          ru: Прорабатывал архитектурные решения, проводил код-ревью; владею frontend-архитектурой и стандартами разработки интерфейсов.
+          en: Shaped architectural decisions and ran code reviews; strong in frontend architecture and UI development standards.
+        tags: { audience: [hr, technical] }
+      - text:
+          ru: Автоматизировал внутренние процессы и tooling на Python — скрипты, вспомогательные сервисы, оптимизация рутинных операций.
+          en: Automated internal processes and tooling in Python — scripts, helper services, routine-operation optimisation.
+        tags: { audience: [technical] }
+  - title: { ru: Frontend-инфраструктура и FrontOps, en: Frontend infra & FrontOps }
+    highlights:
+      - text:
+          ru: Спроектировал и развивал frontend-инфраструктуру команды.
+          en: Designed and evolved the team's frontend infrastructure.
+        tags: { audience: [hr, technical] }
+      - text:
+          ru: "Автоматизировал релизный цикл (скрипты + CI/CD): подготовка релиза сократилась с 2 часов до 10 минут."
+          en: Automated the release cycle (scripts + CI/CD) — release prep dropped from 2 hours to 10 minutes.
+        tags: {}
+      - text:
+          ru: Внедрил полностью автоматическую сборку и публикацию пакетов по схеме push → merge → release — без единого ручного действия.
+          en: Introduced fully automated package build and publish (push → merge → release) — with zero manual steps.
+        tags: { audience: [technical] }
+      - text:
+          ru: Организовал оптимизацию сборки фронтенда — загрузка страниц ускорилась в 2 раза.
+          en: Organised frontend build optimisation — page loads became 2× faster.
+        tags: {}
+      - text:
+          ru: Повысил стабильность релизов и предсказуемость поставки, снизил операционную нагрузку на команды.
+          en: Improved release stability and delivery predictability, reduced operational load on teams.
+        tags: { audience: [hr, technical] }
+stack: [React, Angular, TypeScript, Python, GitLab CI, Jira, Figma]

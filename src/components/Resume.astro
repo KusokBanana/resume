@@ -1,0 +1,182 @@
+---
+import type { ResumeDocument, Section } from '../schema/index';
+import { sectionTitle, endLabel, UI } from '../lib/labels';
+import { inlineHtml } from '../lib/inline';
+
+interface Props {
+  doc: ResumeDocument;
+  sections: Section[];
+}
+const { doc, sections } = Astro.props;
+const lang = doc.meta.language;
+const range = (s: string, e: string) => `${s} — ${endLabel(e, lang)}`;
+---
+
+<article class="resume" data-layout={doc.meta.layout} lang={lang}>
+  <header>
+    <h1>{doc.profile.name}</h1>
+    <p class="headline">{doc.profile.title}</p>
+    <p class="contacts">
+      {
+        [
+          doc.profile.location,
+          doc.profile.email && (
+            <a href={`mailto:${doc.profile.email}`}>{doc.profile.email}</a>
+          ),
+          doc.profile.phone,
+        ]
+          .filter(Boolean)
+          .map((part, i) => (
+            <>
+              {i > 0 && ' · '}
+              {part}
+            </>
+          ))
+      }
+    </p>
+    {
+      doc.profile.links.length > 0 && (
+        <p class="contacts">
+          {doc.profile.links.map((l, i) => (
+            <>
+              {i > 0 && ' · '}
+              <a href={l.url}>{l.label}</a>
+            </>
+          ))}
+        </p>
+      )
+    }
+  </header>
+
+  {
+    sections.map((section) => {
+      if (section === 'summary' && doc.summary) {
+        return (
+          <section>
+            <h2>{sectionTitle('summary', lang)}</h2>
+            <p>{doc.summary}</p>
+          </section>
+        );
+      }
+
+      if (section === 'achievements' && doc.achievements.length > 0) {
+        return (
+          <section>
+            <h2>{sectionTitle('achievements', lang)}</h2>
+            <ul>
+              {doc.achievements.map((a) => (
+                <li set:html={inlineHtml(a)} />
+              ))}
+            </ul>
+          </section>
+        );
+      }
+
+      if (section === 'experience' && doc.experience.length > 0) {
+        return (
+          <section>
+            <h2>{sectionTitle('experience', lang)}</h2>
+            {doc.experience.map((e) => (
+              <div class="item">
+                <h3>
+                  {e.role} —{' '}
+                  {e.companyUrl ? <a href={e.companyUrl}>{e.company}</a> : e.company}
+                </h3>
+                <p class="meta">
+                  {[range(e.start, e.end), e.location].filter(Boolean).join(' · ')}
+                </p>
+                {e.summary && <p>{e.summary}</p>}
+                {e.highlights.length > 0 && (
+                  <ul>
+                    {e.highlights.map((h) => (
+                      <li set:html={inlineHtml(h)} />
+                    ))}
+                  </ul>
+                )}
+                {e.groups.map((g) => (
+                  <div class="group">
+                    <h4>{g.title}</h4>
+                    <ul>
+                      {g.highlights.map((h) => (
+                        <li set:html={inlineHtml(h)} />
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                {e.stack.length > 0 && (
+                  <p class="stack">
+                    {UI.stack[lang]}: {e.stack.join(', ')}
+                  </p>
+                )}
+              </div>
+            ))}
+          </section>
+        );
+      }
+
+      if (section === 'projects' && doc.projects.length > 0) {
+        return (
+          <section>
+            <h2>{sectionTitle('projects', lang)}</h2>
+            {doc.projects.map((p) => (
+              <div class="item">
+                <h3>{p.url ? <a href={p.url}>{p.name}</a> : p.name}</h3>
+                <p>{p.description}</p>
+                {p.highlights.length > 0 && (
+                  <ul>
+                    {p.highlights.map((h) => (
+                      <li>{h}</li>
+                    ))}
+                  </ul>
+                )}
+                {p.stack.length > 0 && (
+                  <p class="stack">
+                    {UI.stack[lang]}: {p.stack.join(', ')}
+                  </p>
+                )}
+              </div>
+            ))}
+          </section>
+        );
+      }
+
+      if (section === 'skills' && doc.skills.length > 0) {
+        return (
+          <section>
+            <h2>{sectionTitle('skills', lang)}</h2>
+            {doc.skills.map((g) => (
+              <p class="skills-line">
+                <strong>{g.name}:</strong> {g.items.join(', ')}
+              </p>
+            ))}
+          </section>
+        );
+      }
+
+      if (section === 'education' && doc.education.length > 0) {
+        return (
+          <section>
+            <h2>{sectionTitle('education', lang)}</h2>
+            {doc.education.map((e) => (
+              <div class="item">
+                <h3>{e.institution}</h3>
+                <p class="meta">
+                  {[
+                    [e.degree, e.field].filter(Boolean).join(', '),
+                    [e.start, e.end ? endLabel(e.end, lang) : undefined]
+                      .filter(Boolean)
+                      .join(' — '),
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')}
+                </p>
+              </div>
+            ))}
+          </section>
+        );
+      }
+
+      return null;
+    })
+  }
+</article>

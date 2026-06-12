@@ -1,0 +1,82 @@
+groups:
+  - id: management
+    priority: 100
+    name:
+      ru: Управление
+      en: Management
+    items:
+      - ru: найм и развитие команд
+        en: hiring & team growth
+      - ru: ИПР
+        en: individual development plans
+      - ru: "1:1"
+        en: "1:1s"
+      - ru: OKR / roadmap
+        en: OKR / roadmap
+      - ru: Agile / Scrum
+        en: Agile / Scrum
+      - ru: выстраивание процессов
+        en: process design
+      - ru: стейкхолдер-менеджмент
+        en: stakeholder management
+      - ru: кросс-функциональное взаимодействие
+        en: cross-functional collaboration
+      - ru: управление изменениями
+        en: change management
+    tags: {}
+
+  - id: tech
+    priority: 90
+    name:
+      ru: Технологии
+      en: Technology
+    # Технические термины языко-нейтральны → простые строки.
+    items:
+      - TypeScript
+      - React
+      - Angular
+      - Node.js
+      - Python
+      - CI/CD (GitLab CI)
+      - Docker
+      - Figma
+    tags: {}
+
+  - id: tech-domains
+    priority: 85
+    name:
+      ru: Frontend-экспертиза
+      en: Frontend expertise
+    items:
+      - ru: frontend-архитектура
+        en: frontend architecture
+      - ru: дизайн-системы
+        en: design systems
+      - ru: FrontOps
+        en: FrontOps
+    tags: {}
+
+  - id: ai
+    priority: 80
+    name:
+      ru: AI / эффективность
+      en: AI / efficiency
+    items:
+      - ru: LLM-assisted development (Claude, Cursor) во встроенных процессах команды
+        en: LLM-assisted development (Claude, Cursor) embedded in team workflows
+      - ru: автоматизация рутинных операций
+        en: automation of routine operations
+    tags: {}
+
+  - id: earlier
+    priority: 70
+    name:
+      ru: Ранее
+      en: Earlier
+    items:
+      - PHP / Symfony / Laravel / Yii2
+      - SQL (PostgreSQL, MySQL, Oracle)
+      - MongoDB, Redis
+      - Linux
+      - Flask / SQLAlchemy
+    tags: {}

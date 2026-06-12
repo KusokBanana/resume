@@ -1,0 +1,82 @@
+id: yandex
+company: Яндекс
+companyUrl: https://yandex.ru
+role:
+  ru: Fullstack-разработчик
+  en: Fullstack Developer
+location:
+  ru: Москва
+  en: Moscow
+start: "2018-12"
+end: "2022-05"
+tags:
+  domains: [fullstack, frontend, infrastructure]
+summary:
+  ru: Служба развития средств автоматизации и управления IT-инфраструктурой дата-центров.
+  en: Team building automation and management tooling for data-centre IT infrastructure.
+highlights:
+  # Универсальные пункты (видны и в ATS-варианте)
+  - text:
+      ru: "Создал и развивал библиотеку UI-компонентов: перевёл на неё 5 проектов отдела, ускорил разработку новых интерфейсов в разы."
+      en: "Built and grew a UI component library: migrated 5 of the team's projects to it, multiplying the speed of new UI development."
+    tags: {}
+  - text:
+      ru: Менторил коллег по backend- и frontend-разработке.
+      en: Mentored colleagues in backend and frontend development.
+    tags: {}
+  - text:
+      ru: Выступал product owner части продуктов — развитие и поддержка.
+      en: Acted as product owner for several products — growth and support.
+    tags: {}
+  # Детальный список конкретных сервисов (скрывается в ATS-варианте ради краткости)
+  - text:
+      ru: Писал документацию по внешней и внутренней эксплуатации сервисов.
+      en: Wrote external and internal operations documentation for services.
+    tags: { audience: [hr, technical] }
+  - text:
+      ru: Дорабатывал и поддерживал платформу заказа и выдачи серверов под нужды сервисов компании.
+      en: Extended and maintained the server ordering and provisioning platform for company services.
+    tags: { audience: [hr, technical] }
+  - text:
+      ru: "Разработал сервис комплектации, разукомплектации и перекомплектации оборудования (серверные компоненты, части беспилотных автомобилей и др.)."
+      en: "Built a service for assembling, disassembling and re-assembling equipment (server components, self-driving-car parts, etc.)."
+    tags: { audience: [hr, technical] }
+  - text:
+      ru: Разработал платформу ремонта оборудования — полный цикл от заявки до получения отремонтированного оборудования из сервисного центра.
+      en: Built an equipment-repair platform — full cycle from request to receiving repaired hardware from the service centre.
+    tags: { audience: [hr, technical] }
+  - text:
+      ru: Разработал интерфейс исполнения заявок в дата-центрах (замена компонентов и серверов).
+      en: Built a UI for fulfilling data-centre work orders (component and server replacement).
+    tags: { audience: [hr, technical] }
+  - text:
+      ru: Разработал систему технического учёта материальных активов компании.
+      en: Built a technical asset-tracking system for the company's physical assets.
+    tags: { audience: [hr, technical] }
+  - text:
+      ru: Разработал интерфейс автоматизированной инвентаризации производства серверного оборудования на заводе.
+      en: Built a UI for automated inventory of server-hardware manufacturing at the factory.
+    tags: { audience: [hr, technical] }
+  - text:
+      ru: Разработал сервис транзакционного изменения состояния оборудования в системах инвентарного и количественного учёта.
+      en: Built a service for transactional equipment-state changes across inventory and quantity-accounting systems.
+    tags: { audience: [hr, technical] }
+  - text:
+      ru: "Разработал сервис заказа на закупку и производство серверного оборудования: по минимально необходимой конфигурации подбирает оптимальное по стоимости железо."
+      en: "Built a procurement/manufacturing ordering service: from a minimal required configuration it selects the most cost-optimal hardware."
+    tags: { audience: [hr, technical] }
+stack:
+  - TypeScript
+  - React
+  - Angular
+  - Python
+  - Flask
+  - PHP
+  - Symfony
+  - PostgreSQL
+  - MySQL
+  - Oracle
+  - MongoDB
+  - Redis
+  - Memcached
+  - Docker
