@@ -12,11 +12,15 @@ export function getStaticPaths() {
   const targets = loadTargets();
   return targetLangPairs(targets).map(({ target, lang }) => ({
     params: { target: target.id, lang },
-    props: { doc: compose(content, target, lang), sections: target.sections },
+    props: {
+      doc: compose(content, target, lang),
+      sections: target.sections,
+      formats: target.formats,
+    },
   }));
 }
 
-const { doc, sections } = Astro.props;
+const { doc, sections, formats } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const slug = variantSlug(doc.meta.targetId, doc.meta.language);
 const lang = doc.meta.language;
@@ -39,6 +43,13 @@ const other = lang === 'ru' ? 'en' : 'ru';
       <span class="spacer"></span>
       <a href={withBase(base, `generated/${slug}.pdf`)} download>{UI.downloadPdf[lang]}</a>
       <a href={withBase(base, `generated/${slug}.md`)} download>{UI.downloadMd[lang]}</a>
+      {
+        formats.includes('txt') && (
+          <a href={withBase(base, `generated/${slug}.txt`)} download>
+            {UI.downloadTxt[lang]}
+          </a>
+        )
+      }
     </nav>
     <main class="page">
       <Resume doc={doc} sections={sections} />

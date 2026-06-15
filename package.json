@@ -11,8 +11,9 @@
     "validate": "tsx scripts/validate.ts",
     "build:md": "tsx scripts/build-md.ts",
     "build:json": "tsx scripts/build-json.ts",
+    "build:txt": "tsx scripts/build-txt.ts",
     "build:pdf": "tsx scripts/build-pdf.ts",
-    "build:all": "npm run build && npm run build:md && npm run build:json && npm run build:pdf",
+    "build:all": "npm run build && npm run build:md && npm run build:json && npm run build:txt && npm run build:pdf",
     "tailor": "tsx scripts/tailor.ts"
   },
   "dependencies": {

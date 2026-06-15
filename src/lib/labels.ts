@@ -16,6 +16,7 @@ export const UI: Record<string, Record<Lang, string>> = {
   stack: { ru: 'Стек', en: 'Stack' },
   downloadPdf: { ru: 'Скачать PDF', en: 'Download PDF' },
   downloadMd: { ru: 'Скачать Markdown', en: 'Download Markdown' },
+  downloadTxt: { ru: 'Скачать TXT', en: 'Download TXT' },
   viewOnline: { ru: 'Смотреть онлайн', en: 'View online' },
   variants: { ru: 'Варианты резюме', en: 'Resume variants' },
   sourceOfTruth: {

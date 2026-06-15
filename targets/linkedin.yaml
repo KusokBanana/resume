@@ -7,6 +7,6 @@ languages: [ru, en]
 system: linkedin
 audience: hr
 layout: rich
-formats: [html, pdf, md]
+formats: [html, pdf, md, txt]
 sections: [summary, achievements, experience, skills, languages, education]
 select: {}

@@ -232,6 +232,11 @@ const contactIcon: Record<string, string> = {
                           MD
                         </a>
                       )}
+                      {t.formats.includes('txt') && (
+                        <a class="file" href={withBase(base, `generated/${slug}.txt`)} download>
+                          TXT
+                        </a>
+                      )}
                       {t.formats.includes('json') && (
                         <a class="file" href={withBase(base, `generated/${slug}.json`)} download>
                           JSON

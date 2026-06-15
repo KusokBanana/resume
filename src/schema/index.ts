@@ -235,7 +235,7 @@ export const TargetSchema = z.object({
   languages: z.array(Lang).min(1),
   system: z.enum(['hh', 'linkedin', 'habr', 'general']),
   audience: Audience,
-  formats: z.array(z.enum(['html', 'pdf', 'md', 'json'])).default(['html']),
+  formats: z.array(z.enum(['html', 'pdf', 'md', 'json', 'txt'])).default(['html']),
   layout: z.enum(['rich', 'ats']).default('rich'),
   select: Select,
   /** Порядок и состав секций. По умолчанию — стандартный порядок ниже. */
