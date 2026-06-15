@@ -2,6 +2,7 @@
 import { loadContent, loadTargets } from '../../lib/load';
 import { compose, targetLangPairs } from '../../lib/compose';
 import { variantSlug } from '../../lib/slug';
+import { withBase } from '../../lib/url';
 import { UI } from '../../lib/labels';
 import Resume from '../../components/Resume.astro';
 import '../../styles/resume.css';
@@ -27,16 +28,17 @@ const other = lang === 'ru' ? 'en' : 'ru';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={withBase(base, 'favicon.svg')} />
     <title>{doc.profile.name} — {doc.meta.label} ({lang.toUpperCase()})</title>
     <meta name="description" content={doc.summary ?? doc.profile.title} />
   </head>
   <body>
     <nav class="toolbar">
-      <a href={`${base}`}>← {UI.variants[lang]}</a>
-      <a href={`${base}${doc.meta.targetId}/${other}`}>{other.toUpperCase()}</a>
+      <a href={withBase(base)}>← {UI.variants[lang]}</a>
+      <a href={withBase(base, `${doc.meta.targetId}/${other}`)}>{other.toUpperCase()}</a>
       <span class="spacer"></span>
-      <a href={`${base}generated/${slug}.pdf`} download>{UI.downloadPdf[lang]}</a>
-      <a href={`${base}generated/${slug}.md`} download>{UI.downloadMd[lang]}</a>
+      <a href={withBase(base, `generated/${slug}.pdf`)} download>{UI.downloadPdf[lang]}</a>
+      <a href={withBase(base, `generated/${slug}.md`)} download>{UI.downloadMd[lang]}</a>
     </nav>
     <main class="page">
       <Resume doc={doc} sections={sections} />
