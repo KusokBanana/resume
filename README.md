@@ -111,5 +111,6 @@ npm run tailor -- --job ./vacancy.txt --lang ru --system general --slug acme
 3. Пуш в `main` запускает [.github/workflows/deploy.yml](.github/workflows/deploy.yml):
    валидация → сборка HTML → генерация MD/JSON/PDF → деплой `dist/` на Pages.
 
-Замени `sdemochkin` в `astro.config.mjs` и в ссылках `content/` на свои данные.
+По умолчанию сайт публикуется на `https://kusokbanana.github.io/resume/`. При форке
+поменяй `SITE` в `astro.config.mjs` (или задай env `SITE`/`BASE`).
 ```
