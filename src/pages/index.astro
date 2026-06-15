@@ -2,123 +2,277 @@
 import { loadContent, loadTargets } from '../lib/load';
 import { variantSlug } from '../lib/slug';
 import { withBase } from '../lib/url';
-import { UI } from '../lib/labels';
-import '../styles/resume.css';
+import { UI, SECTION_TITLES } from '../lib/labels';
+import type { Localized, SkillItem } from '../schema/index';
+import '../styles/landing.css';
 
 const content = loadContent();
 const targets = loadTargets();
 const base = import.meta.env.BASE_URL;
 
-// Имя для шапки берём из ru-варианта профиля.
-const name = content.profile.name.ru;
-const headline = content.profile.title.ru;
+const { profile } = content;
+const name = profile.name.ru; // язык документа по умолчанию — ru
+
+// Tagline для hero: человеко-ориентированный general-вариант (с фолбэком).
+const byPriority = [...content.summary.variants].sort((a, b) => b.priority - a.priority);
+const tagline =
+  content.summary.variants.find((v) => v.id === 'summary-general') ?? byPriority[0];
+
+// Топ ключевых результатов по priority.
+const results = [...content.achievements.items]
+  .sort((a, b) => b.priority - a.priority)
+  .slice(0, 6);
+
+const skillGroups = [...content.skills.groups].sort((a, b) => b.priority - a.priority);
+
+/** Простой inline-markdown: экранируем и превращаем **жирный** в <strong>. */
+function renderBold(s: string): string {
+  const esc = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return esc.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
+/** Навык: языко-нейтральная строка либо двуязычный термин. */
+const isLocalized = (x: SkillItem): x is Localized => typeof x !== 'string';
+
+/** Глиф для контакт-чипа по `kind`. */
+const contactIcon: Record<string, string> = {
+  habr: '⌘',
+  telegram: '✈',
+  github: '⎇',
+  linkedin: 'in',
+};
 ---
 
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-lang="ru">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={withBase(base, 'favicon.svg')} />
     <title>{name} — резюме</title>
-    <meta name="description" content={`Резюме · ${headline}`} />
-    <style>
-      .catalog {
-        max-width: 800px;
-        margin: 24px auto;
-        padding: 0 16px;
-      }
-      .catalog h1 {
-        font-size: 26px;
-        margin-bottom: 2px;
-      }
-      .catalog .sub {
-        color: #5a5a5a;
-        margin-top: 0;
-      }
-      .card {
-        background: #fff;
-        border: 1px solid #e2e2e2;
-        border-radius: 10px;
-        padding: 16px 18px;
-        margin: 12px 0;
-      }
-      .card h2 {
-        margin: 0 0 4px;
-        font-size: 18px;
-      }
-      .card .tags {
-        font-size: 13px;
-        color: #5a5a5a;
-        margin: 0 0 10px;
-      }
-      .langrow {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        align-items: center;
-      }
-      .langrow .lang {
-        font-weight: 600;
-        min-width: 28px;
-      }
-      .langrow a {
-        text-decoration: none;
-        color: #1a1a1a;
-        border: 1px solid #e2e2e2;
-        padding: 4px 10px;
-        border-radius: 999px;
-        font-size: 13px;
-      }
-      .langrow a:hover {
-        border-color: #2563eb;
-        color: #2563eb;
-      }
-      .langrow + .langrow {
-        margin-top: 6px;
-      }
-    </style>
+    <meta name="description" content={`${profile.title.ru} · ${tagline.text.ru}`} />
+    <script is:inline>
+      // Восстанавливаем выбранный язык до отрисовки тела — без мигания.
+      (function () {
+        try {
+          var l = localStorage.getItem('landing-lang');
+          if (l === 'en' || l === 'ru') {
+            document.documentElement.dataset.lang = l;
+            document.documentElement.setAttribute('lang', l);
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
-    <div class="catalog">
-      <h1>{name}</h1>
-      <p class="sub">{headline} · {UI.sourceOfTruth.ru}</p>
+    <header class="nav">
+      <a class="brand" href={withBase(base)}>
+        <span class="mono">SD</span>
+        <span class="lang-ru">{profile.name.ru.split(' ')[1] ?? name}</span>
+        <span class="lang-en">{profile.name.en.split(' ')[1] ?? profile.name.en}</span>
+      </a>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-set-lang="ru">RU</button>
+        <button type="button" data-set-lang="en">EN</button>
+      </div>
+    </header>
 
-      {
-        targets.map((t) => (
-          <div class="card">
-            <h2>{t.label.ru} / {t.label.en}</h2>
-            <p class="tags">
-              system: {t.system} · audience: {t.audience} · layout: {t.layout} ·
-              formats: {t.formats.join(', ')}
+    <main class="wrap">
+      <!-- HERO -->
+      <section class="hero">
+        <p class="eyebrow">
+          <span class="lang-ru">Открыт к предложениям</span>
+          <span class="lang-en">Open to opportunities</span>
+        </p>
+        <h1>
+          <span class="lang-ru">{profile.name.ru}</span>
+          <span class="lang-en">{profile.name.en}</span>
+        </h1>
+        <p class="title">
+          <span class="lang-ru">{profile.title.ru}</span>
+          <span class="lang-en">{profile.title.en}</span>
+        </p>
+        {
+          profile.location && (
+            <p class="location">
+              <span class="lang-ru">{profile.location.ru}</span>
+              <span class="lang-en">{profile.location.en}</span>
             </p>
-            {t.languages.map((lang) => {
-              const slug = variantSlug(t.id, lang);
-              return (
-                <div class="langrow">
-                  <span class="lang">{lang.toUpperCase()}</span>
-                  <a href={withBase(base, `${t.id}/${lang}`)}>{UI.viewOnline[lang]}</a>
-                  {t.formats.includes('pdf') && (
-                    <a href={withBase(base, `generated/${slug}.pdf`)} download>
-                      PDF
-                    </a>
-                  )}
-                  {t.formats.includes('md') && (
-                    <a href={withBase(base, `generated/${slug}.md`)} download>
-                      MD
-                    </a>
-                  )}
-                  {t.formats.includes('json') && (
-                    <a href={withBase(base, `generated/${slug}.json`)} download>
-                      JSON
-                    </a>
+          )
+        }
+        <p class="tagline">
+          <span class="lang-ru">{tagline.text.ru}</span>
+          <span class="lang-en">{tagline.text.en}</span>
+        </p>
+
+        <div class="contacts">
+          {
+            profile.email && (
+              <a class="chip" href={`mailto:${profile.email}`}>
+                <span class="ico">✉</span>
+                <span class="lang-ru">Почта</span>
+                <span class="lang-en">Email</span>
+              </a>
+            )
+          }
+          {
+            profile.links.map((l) => (
+              <a class="chip" href={l.url} target="_blank" rel="noopener noreferrer">
+                <span class="ico">{contactIcon[l.kind ?? ''] ?? '↗'}</span>
+                {l.label}
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#variants">
+            <span class="lang-ru">Варианты резюме</span>
+            <span class="lang-en">Résumé versions</span>
+          </a>
+          <a class="btn btn-ghost" href="#results">
+            <span class="lang-ru">Ключевые результаты</span>
+            <span class="lang-en">Key results</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- РЕЗУЛЬТАТЫ -->
+      <section class="section" id="results">
+        <div class="section-head">
+          <span class="num">01</span>
+          <h2>
+            <span class="lang-ru">{SECTION_TITLES.achievements.ru}</span>
+            <span class="lang-en">{SECTION_TITLES.achievements.en}</span>
+          </h2>
+        </div>
+        <div class="results">
+          {
+            results.map((a) => (
+              <article class="result">
+                <div class="body">
+                  <span class="lang-ru" set:html={renderBold(a.text.ru)} />
+                  <span class="lang-en" set:html={renderBold(a.text.en)} />
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- НАВЫКИ -->
+      <section class="section" id="skills">
+        <div class="section-head">
+          <span class="num">02</span>
+          <h2>
+            <span class="lang-ru">{SECTION_TITLES.skills.ru}</span>
+            <span class="lang-en">{SECTION_TITLES.skills.en}</span>
+          </h2>
+        </div>
+        <div class="skill-groups">
+          {
+            skillGroups.map((g) => (
+              <div class="skill-group">
+                <h3>
+                  <span class="lang-ru">{g.name.ru}</span>
+                  <span class="lang-en">{g.name.en}</span>
+                </h3>
+                <div class="tags">
+                  {g.items.map((it) =>
+                    isLocalized(it) ? (
+                      <span class="tag">
+                        <span class="lang-ru">{it.ru}</span>
+                        <span class="lang-en">{it.en}</span>
+                      </span>
+                    ) : (
+                      <span class="tag">{it}</span>
+                    ),
                   )}
                 </div>
-              );
-            })}
-          </div>
-        ))
-      }
-    </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- ВАРИАНТЫ -->
+      <section class="section" id="variants">
+        <div class="section-head">
+          <span class="num">03</span>
+          <h2>
+            <span class="lang-ru">{UI.variants.ru}</span>
+            <span class="lang-en">{UI.variants.en}</span>
+          </h2>
+        </div>
+        <div class="variants">
+          {
+            targets.map((t) => (
+              <article class="variant">
+                <h3>{t.label.ru}</h3>
+                <div class="badges">
+                  <span class="badge">{t.system}</span>
+                  <span class="badge alt">{t.audience}</span>
+                  <span class="badge">{t.layout}</span>
+                </div>
+                {t.languages.map((lang) => {
+                  const slug = variantSlug(t.id, lang);
+                  return (
+                    <div class="langrow">
+                      <span class="lcode">{lang.toUpperCase()}</span>
+                      <a class="open" href={withBase(base, `${t.id}/${lang}`)}>
+                        {UI.viewOnline[lang]}
+                      </a>
+                      {t.formats.includes('pdf') && (
+                        <a class="file" href={withBase(base, `generated/${slug}.pdf`)} download>
+                          PDF
+                        </a>
+                      )}
+                      {t.formats.includes('md') && (
+                        <a class="file" href={withBase(base, `generated/${slug}.md`)} download>
+                          MD
+                        </a>
+                      )}
+                      {t.formats.includes('json') && (
+                        <a class="file" href={withBase(base, `generated/${slug}.json`)} download>
+                          JSON
+                        </a>
+                      )}
+                    </div>
+                  );
+                })}
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>
+          <span class="lang-ru">{UI.sourceOfTruth.ru}</span>
+          <span class="lang-en">{UI.sourceOfTruth.en}</span>
+        </span>
+        <a href="https://github.com/KusokBanana/resume" target="_blank" rel="noopener noreferrer">
+          GitHub ↗
+        </a>
+      </footer>
+    </main>
+
+    <script is:inline>
+      (function () {
+        var html = document.documentElement;
+        function set(l) {
+          html.dataset.lang = l;
+          html.setAttribute('lang', l);
+          try {
+            localStorage.setItem('landing-lang', l);
+          } catch (e) {}
+        }
+        document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+          b.addEventListener('click', function () {
+            set(b.getAttribute('data-set-lang'));
+          });
+        });
+      })();
+    </script>
   </body>
 </html>

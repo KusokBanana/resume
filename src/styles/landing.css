@@ -1,0 +1,486 @@
+/* ============================================================================
+   Лендинг корневой страницы — тёмная драматичная тема.
+   Самодостаточный файл: НЕ импортирует resume.css (та — светлая, под печать).
+   Двуязычность: видимость через html[data-lang]; см. .lang-ru / .lang-en ниже.
+   ========================================================================== */
+
+:root {
+  --bg: #08080c;
+  --bg-soft: #0e0e16;
+  --surface: rgba(255, 255, 255, 0.025);
+  --surface-hover: rgba(255, 255, 255, 0.05);
+  --ink: #ecedf2;
+  --muted: #9a9bab;
+  --faint: #6a6b7d;
+  --accent: #6ea8fe;
+  --accent-strong: #3b82f6;
+  --violet: #a78bfa;
+  --rule: rgba(255, 255, 255, 0.09);
+  --rule-strong: rgba(255, 255, 255, 0.16);
+  --maxw: 980px;
+  --radius: 16px;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Фоновое свечение — драматичный градиент за всей страницей. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60% 50% at 18% 0%, rgba(59, 130, 246, 0.18), transparent 70%),
+    radial-gradient(55% 45% at 95% 8%, rgba(167, 139, 250, 0.14), transparent 70%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg) 40%);
+  pointer-events: none;
+}
+
+a {
+  color: inherit;
+}
+
+/* ---- Двуязычность: переключение видимости ----------------------------- */
+html[data-lang='ru'] .lang-en,
+html[data-lang='en'] .lang-ru {
+  display: none !important;
+}
+
+/* ---- Контейнер -------------------------------------------------------- */
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---- Навбар ----------------------------------------------------------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  backdrop-filter: blur(8px);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+.mono {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-strong), var(--violet));
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+}
+
+/* Переключатель языка */
+.lang-toggle {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+}
+.lang-toggle button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+.lang-toggle button:hover {
+  color: var(--ink);
+}
+html[data-lang='ru'] .lang-toggle [data-set-lang='ru'],
+html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* ---- Hero ------------------------------------------------------------- */
+.hero {
+  padding: 64px 0 40px;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin: 0 0 18px;
+}
+.eyebrow::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  background: linear-gradient(120deg, #fff 30%, var(--accent) 75%, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero .title {
+  margin: 16px 0 0;
+  font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+  font-weight: 600;
+  color: var(--ink);
+}
+.hero .location {
+  margin: 6px 0 0;
+  color: var(--faint);
+  font-size: 14px;
+}
+.hero .tagline {
+  margin: 24px 0 0;
+  max-width: 70ch;
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  color: var(--muted);
+}
+
+/* Контакт-чипы */
+.contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 9px 15px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+.chip:hover {
+  border-color: var(--accent);
+  background: var(--surface-hover);
+  transform: translateY(-1px);
+}
+.chip .ico {
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* CTA */
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background 0.15s;
+}
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-strong), var(--violet));
+  box-shadow: 0 8px 28px rgba(59, 130, 246, 0.32);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px rgba(59, 130, 246, 0.42);
+}
+.btn-ghost {
+  color: var(--ink);
+  border-color: var(--rule-strong);
+  background: var(--surface);
+}
+.btn-ghost:hover {
+  border-color: var(--accent);
+  background: var(--surface-hover);
+}
+
+/* ---- Секции ----------------------------------------------------------- */
+.section {
+  padding: 48px 0;
+}
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.section-head h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.section-head .num {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Ключевые результаты --------------------------------------------- */
+.results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.result {
+  padding: 22px 22px 24px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.18s, transform 0.18s, background 0.18s;
+}
+.result::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-strong), var(--violet));
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+.result:hover {
+  border-color: var(--rule-strong);
+  background: var(--surface-hover);
+  transform: translateY(-3px);
+}
+.result:hover::after {
+  opacity: 1;
+}
+.result .body {
+  font-size: 15px;
+  color: var(--muted);
+}
+.result .body strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ---- Навыки ----------------------------------------------------------- */
+.skill-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.skill-group h3 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--faint);
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag {
+  font-size: 13.5px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+/* ---- Каталог вариантов ----------------------------------------------- */
+.variants {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+.variant {
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: border-color 0.18s, background 0.18s;
+}
+.variant:hover {
+  border-color: var(--rule-strong);
+  background: var(--surface-hover);
+}
+.variant h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 16px;
+}
+.badge {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: rgba(110, 168, 254, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(110, 168, 254, 0.22);
+}
+.badge.alt {
+  background: rgba(167, 139, 250, 0.12);
+  color: var(--violet);
+  border-color: rgba(167, 139, 250, 0.22);
+}
+.langrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+.langrow + .langrow {
+  margin-top: 2px;
+}
+.langrow .lcode {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--faint);
+  min-width: 24px;
+}
+.langrow .open {
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 5px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(110, 168, 254, 0.3);
+  transition: background 0.15s, border-color 0.15s;
+}
+.langrow .open:hover {
+  background: rgba(110, 168, 254, 0.12);
+  border-color: var(--accent);
+}
+.langrow .file {
+  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  transition: color 0.15s, border-color 0.15s;
+}
+.langrow .file:hover {
+  color: var(--ink);
+  border-color: var(--rule-strong);
+}
+
+/* ---- Футер ------------------------------------------------------------ */
+.footer {
+  padding: 40px 0 60px;
+  border-top: 1px solid var(--rule);
+  margin-top: 24px;
+  color: var(--faint);
+  font-size: 13.5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.footer a:hover {
+  color: var(--accent);
+}
+
+/* ---- Адаптив ---------------------------------------------------------- */
+@media (max-width: 560px) {
+  .hero {
+    padding: 40px 0 24px;
+  }
+  .cta-row .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+/* ---- Доступность: уважаем reduce-motion ------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition: none !important;
+  }
+}
