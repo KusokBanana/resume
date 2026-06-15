@@ -41,10 +41,11 @@ jobs:
           SITE: ${{ steps.pages.outputs.origin }}
           BASE: ${{ steps.pages.outputs.base_path }}
 
-      - name: Generate MD + JSON
+      - name: Generate MD + JSON + TXT
         run: |
           npm run build:md
           npm run build:json
+          npm run build:txt
 
       - name: Install Chromium for PDF
         run: npx playwright install --with-deps chromium
