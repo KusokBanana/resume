@@ -1,0 +1,19 @@
+id: vk-senior
+company: VK
+companyUrl: https://vk.company/ru/
+role:
+  ru: Старший фронтенд-разработчик
+  en: Senior Frontend Developer
+location:
+  ru: Москва · гибрид
+  en: Moscow · hybrid
+start: "2022-08"
+end: "2023-04"
+tags:
+  domains: [frontend, fintech]
+highlights:
+  - text:
+      ru: Разрабатывал интерфейсы финтеха ВКонтакте и сервиса «Кабинет выплат».
+      en: Built VK fintech UIs and the Payouts Dashboard service.
+    tags: {}
+stack: [TypeScript, React]
