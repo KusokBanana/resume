@@ -19,8 +19,8 @@ items:
     priority: 90
     tags: {}
     text:
-      ru: "**Вырастил людей через ИПР**: 3 — до Senior, 3 — до тимлидов."
-      en: "**Grew people via individual development plans**: 3 to Senior, 3 to team leads."
+      ru: "**Вырастил людей через ИПР**: 3 — до старших разработчиков/дизайнеров, 3 — до руководителей."
+      en: "**Grew people via individual development plans**: 3 to senior engineers/designers, 3 to team leads."
 
   - id: ai-speedup
     priority: 85
