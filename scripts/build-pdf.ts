@@ -71,7 +71,7 @@ async function main() {
   let n = 0;
   for (const { t, lang } of jobs) {
     const slug = variantSlug(t.id, lang);
-    await page.goto(`${baseUrl}/${t.id}/${lang}/`, { waitUntil: 'networkidle' });
+    await page.goto(`${baseUrl}/exports/${t.id}/${lang}/`, { waitUntil: 'networkidle' });
     await page.emulateMedia({ media: 'print' });
     await page.pdf({
       path: join(OUT, `${slug}.pdf`),

@@ -1,6 +1,7 @@
 id: yandex
 company: Яндекс
 companyUrl: https://yandex.ru
+logo: logos/yandex.svg
 role:
   ru: Fullstack-разработчик
   en: Fullstack Developer

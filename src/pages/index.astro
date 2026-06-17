@@ -1,13 +1,12 @@
 ---
-import { loadContent, loadTargets } from '../lib/load';
-import { variantSlug } from '../lib/slug';
+import { loadContent } from '../lib/load';
 import { withBase } from '../lib/url';
+import { absUrl } from '../lib/canonical';
 import { UI, SECTION_TITLES, endLabel } from '../lib/labels';
 import type { Localized, SkillItem, Experience, Lang } from '../schema/index';
 import '../styles/landing.css';
 
 const content = loadContent();
-const targets = loadTargets();
 const base = import.meta.env.BASE_URL;
 
 const { profile } = content;
@@ -28,6 +27,17 @@ const skillGroups = [...content.skills.groups].sort((a, b) => b.priority - a.pri
 // Опыт — по дате начала по убыванию (новейшее сверху), как в основном резюме.
 const experience = [...content.experience].sort((a, b) => b.start.localeCompare(a.start));
 
+// Логотипы компаний для hero-полосы: уникальные, в порядке от новейшего опыта.
+const companyLogos = experience
+  .filter((e) => e.logo)
+  .reduce<{ company: string; logo: string; expId: string }[]>((acc, e) => {
+    if (!acc.some((c) => c.company === e.company)) {
+      // expId — id первого (новейшего) места работы этой компании: якорь для скролла.
+      acc.push({ company: e.company, logo: e.logo!, expId: e.id });
+    }
+    return acc;
+  }, []);
+
 const dateRange = (e: Experience, lang: Lang) =>
   `${e.start} — ${e.end === 'present' ? endLabel('present', lang) : e.end}`;
 
@@ -47,6 +57,40 @@ const contactIcon: Record<string, string> = {
   github: '⎇',
   linkedin: 'in',
 };
+
+const year = new Date().getFullYear();
+
+// Абсолютные URL для SEO/AI (портируемо: из Astro.site + base).
+const site = Astro.site;
+const pageUrl = absUrl(site, base, '');
+const mdRu = absUrl(site, base, 'ru/resume.md');
+const mdEn = absUrl(site, base, 'en/resume.md');
+const ogImage = absUrl(site, base, 'favicon.svg');
+
+// JSON-LD schema.org Person — факты прямо в HTML для ИИ/поисковиков.
+const current = experience[0]; // новейшее место работы
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name.en,
+  alternateName: profile.name.ru,
+  jobTitle: profile.title.en,
+  description: tagline.text.en,
+  email: profile.email ? `mailto:${profile.email}` : undefined,
+  url: pageUrl,
+  address: profile.location
+    ? { '@type': 'PostalAddress', addressLocality: profile.location.en }
+    : undefined,
+  sameAs: profile.links.map((l) => l.url),
+  worksFor: current
+    ? { '@type': 'Organization', name: current.company, url: current.companyUrl }
+    : undefined,
+  knowsLanguage: content.languages.items.map((l) => l.name.en),
+  alumniOf: content.education.items.map((e) => ({
+    '@type': 'CollegeOrUniversity',
+    name: e.institution.en,
+  })),
+};
 ---
 
 <!doctype html>
@@ -57,6 +101,18 @@ const contactIcon: Record<string, string> = {
     <link rel="icon" type="image/svg+xml" href={withBase(base, 'favicon.svg')} />
     <title>{name} — резюме</title>
     <meta name="description" content={`${profile.title.ru} · ${tagline.text.ru}`} />
+    <link rel="canonical" href={pageUrl} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={`${name} — ${profile.title.ru}`} />
+    <meta property="og:description" content={tagline.text.ru} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={name} />
+    <meta name="twitter:description" content={tagline.text.ru} />
+    <link rel="alternate" type="text/markdown" hreflang="ru" href={mdRu} />
+    <link rel="alternate" type="text/markdown" hreflang="en" href={mdEn} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline>
       // Восстанавливаем выбранный язык до отрисовки тела — без мигания.
       (function () {
@@ -132,15 +188,33 @@ const contactIcon: Record<string, string> = {
         </div>
 
         <div class="cta-row">
-          <a class="btn btn-primary" href="#variants">
-            <span class="lang-ru">Варианты резюме</span>
-            <span class="lang-en">Résumé versions</span>
-          </a>
-          <a class="btn btn-ghost" href="#results">
+          <a class="btn btn-primary" href="#results">
             <span class="lang-ru">Ключевые результаты</span>
             <span class="lang-en">Key results</span>
           </a>
+          <a class="btn btn-ghost" href="#experience">
+            <span class="lang-ru">Опыт работы</span>
+            <span class="lang-en">Experience</span>
+          </a>
         </div>
+
+        {
+          companyLogos.length > 0 && (
+            <div class="logos">
+              <span class="logos-label">
+                <span class="lang-ru">Опыт в компаниях</span>
+                <span class="lang-en">Experience at</span>
+              </span>
+              <div class="logos-row">
+                {companyLogos.map((c) => (
+                  <a class="logo" href={`#exp-${c.expId}`} title={c.company}>
+                    <img src={withBase(base, c.logo)} alt={c.company} loading="lazy" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )
+        }
       </section>
 
       <!-- РЕЗУЛЬТАТЫ -->
@@ -178,12 +252,15 @@ const contactIcon: Record<string, string> = {
         <div class="timeline">
           {
             experience.map((e) => (
-              <article class="tl-item">
+              <article class="tl-item" id={`exp-${e.id}`}>
                 <h3 class="tl-role">
                   <span class="lang-ru">{e.role.ru}</span>
                   <span class="lang-en">{e.role.en}</span>
                 </h3>
                 <p class="tl-company">
+                  {e.logo && (
+                    <img class="tl-logo" src={withBase(base, e.logo)} alt="" loading="lazy" />
+                  )}
                   {e.companyUrl ? (
                     <a href={e.companyUrl} target="_blank" rel="noopener noreferrer">
                       {e.company}
@@ -285,70 +362,20 @@ const contactIcon: Record<string, string> = {
         </div>
       </section>
 
-      <!-- ВАРИАНТЫ -->
-      <section class="section" id="variants">
-        <div class="section-head">
-          <span class="num">04</span>
-          <h2>
-            <span class="lang-ru">{UI.variants.ru}</span>
-            <span class="lang-en">{UI.variants.en}</span>
-          </h2>
-        </div>
-        <div class="variants">
-          {
-            targets.map((t) => (
-              <article class="variant">
-                <h3>{t.label.ru}</h3>
-                <div class="badges">
-                  <span class="badge">{t.system}</span>
-                  <span class="badge alt">{t.audience}</span>
-                  <span class="badge">{t.layout}</span>
-                </div>
-                {t.languages.map((lang) => {
-                  const slug = variantSlug(t.id, lang);
-                  return (
-                    <div class="langrow">
-                      <span class="lcode">{lang.toUpperCase()}</span>
-                      <a class="open" href={withBase(base, `${t.id}/${lang}`)}>
-                        {UI.viewOnline[lang]}
-                      </a>
-                      {t.formats.includes('pdf') && (
-                        <a class="file" href={withBase(base, `generated/${slug}.pdf`)} download>
-                          PDF
-                        </a>
-                      )}
-                      {t.formats.includes('md') && (
-                        <a class="file" href={withBase(base, `generated/${slug}.md`)} download>
-                          MD
-                        </a>
-                      )}
-                      {t.formats.includes('txt') && (
-                        <a class="file" href={withBase(base, `generated/${slug}.txt`)} download>
-                          TXT
-                        </a>
-                      )}
-                      {t.formats.includes('json') && (
-                        <a class="file" href={withBase(base, `generated/${slug}.json`)} download>
-                          JSON
-                        </a>
-                      )}
-                    </div>
-                  );
-                })}
-              </article>
-            ))
-          }
-        </div>
-      </section>
-
       <footer class="footer">
-        <span>
-          <span class="lang-ru">{UI.sourceOfTruth.ru}</span>
-          <span class="lang-en">{UI.sourceOfTruth.en}</span>
+        <span class="copy">
+          © {year}
+          <span class="lang-ru">{profile.name.ru}</span>
+          <span class="lang-en">{profile.name.en}</span>
         </span>
-        <a href="https://github.com/KusokBanana/resume" target="_blank" rel="noopener noreferrer">
-          GitHub ↗
-        </a>
+        <a
+          class="src"
+          href="https://github.com/KusokBanana/resume"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Source code"
+          title="Source">↗</a
+        >
       </footer>
     </main>
 

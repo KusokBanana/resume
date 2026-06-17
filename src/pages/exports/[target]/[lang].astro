@@ -1,11 +1,12 @@
 ---
-import { loadContent, loadTargets } from '../../lib/load';
-import { compose, targetLangPairs } from '../../lib/compose';
-import { variantSlug } from '../../lib/slug';
-import { withBase } from '../../lib/url';
-import { UI } from '../../lib/labels';
-import Resume from '../../components/Resume.astro';
-import '../../styles/resume.css';
+import { loadContent, loadTargets } from '../../../lib/load';
+import { compose, targetLangPairs } from '../../../lib/compose';
+import { variantSlug } from '../../../lib/slug';
+import { withBase } from '../../../lib/url';
+import { absUrl } from '../../../lib/canonical';
+import { UI } from '../../../lib/labels';
+import Resume from '../../../components/Resume.astro';
+import '../../../styles/resume.css';
 
 export function getStaticPaths() {
   const content = loadContent();
@@ -25,6 +26,11 @@ const base = import.meta.env.BASE_URL;
 const slug = variantSlug(doc.meta.targetId, doc.meta.language);
 const lang = doc.meta.language;
 const other = lang === 'ru' ? 'en' : 'ru';
+
+const site = Astro.site;
+const canonical = absUrl(site, base, `exports/${doc.meta.targetId}/${lang}`);
+const otherUrl = absUrl(site, base, `exports/${doc.meta.targetId}/${other}`);
+const mdCanonical = absUrl(site, base, `${lang}/resume.md`);
 ---
 
 <!doctype html>
@@ -32,14 +38,21 @@ const other = lang === 'ru' ? 'en' : 'ru';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href={withBase(base, 'favicon.svg')} />
     <title>{doc.profile.name} — {doc.meta.label} ({lang.toUpperCase()})</title>
     <meta name="description" content={doc.summary ?? doc.profile.title} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link rel="alternate" hreflang={other} href={otherUrl} />
+    <link rel="alternate" type="text/markdown" href={mdCanonical} />
   </head>
   <body>
     <nav class="toolbar">
-      <a href={withBase(base)}>← {UI.variants[lang]}</a>
-      <a href={withBase(base, `${doc.meta.targetId}/${other}`)}>{other.toUpperCase()}</a>
+      <a href={withBase(base, 'exports')}>← {UI.variants[lang]}</a>
+      <a href={withBase(base, `exports/${doc.meta.targetId}/${other}`)}>
+        {other.toUpperCase()}
+      </a>
       <span class="spacer"></span>
       <a href={withBase(base, `generated/${slug}.pdf`)} download>{UI.downloadPdf[lang]}</a>
       <a href={withBase(base, `generated/${slug}.md`)} download>{UI.downloadMd[lang]}</a>

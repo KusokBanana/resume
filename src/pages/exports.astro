@@ -1,0 +1,134 @@
+---
+import { loadContent, loadTargets } from '../lib/load';
+import { variantSlug } from '../lib/slug';
+import { withBase } from '../lib/url';
+import { UI } from '../lib/labels';
+import '../styles/landing.css';
+
+// Скрытая служебная страница: нигде не линкуется, закрыта в robots.txt и
+// исключена из sitemap. Личный экспорт-инструментарий — копипаст/скачивание.
+const content = loadContent();
+const targets = loadTargets();
+const base = import.meta.env.BASE_URL;
+const name = content.profile.name.ru;
+---
+
+<!doctype html>
+<html lang="ru" data-lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href={withBase(base, 'favicon.svg')} />
+    <title>{name} — форматы и экспорт</title>
+  </head>
+  <body>
+    <header class="nav">
+      <a class="brand" href={withBase(base)}>
+        <span class="mono">SD</span>
+        <span>← на резюме</span>
+      </a>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-set-lang="ru">RU</button>
+        <button type="button" data-set-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="section">
+        <div class="section-head">
+          <h2>
+            <span class="lang-ru">Форматы и экспорт</span>
+            <span class="lang-en">Formats &amp; export</span>
+          </h2>
+        </div>
+        <p class="tagline" style="margin-top:0">
+          <span class="lang-ru"
+            >Личная утилита: открыть нужный вариант и скопировать/скачать для вставки в
+            систему. Не индексируется и не отображается на сайте.</span
+          >
+          <span class="lang-en"
+            >Personal utility: open a variant and copy/download it to paste into a
+            system. Not indexed, not linked from the site.</span
+          >
+        </p>
+
+        <div class="variants">
+          {
+            targets.map((t) => (
+              <article class="variant">
+                <h3>{t.label.ru}</h3>
+                <div class="badges">
+                  <span class="badge">{t.system}</span>
+                  <span class="badge alt">{t.audience}</span>
+                  <span class="badge">{t.layout}</span>
+                </div>
+                {t.languages.map((lang) => {
+                  const slug = variantSlug(t.id, lang);
+                  return (
+                    <div class="langrow">
+                      <span class="lcode">{lang.toUpperCase()}</span>
+                      <a class="open" href={withBase(base, `exports/${t.id}/${lang}`)}>
+                        {UI.viewOnline[lang]}
+                      </a>
+                      {t.formats.includes('pdf') && (
+                        <a class="file" href={withBase(base, `generated/${slug}.pdf`)} download>
+                          PDF
+                        </a>
+                      )}
+                      {t.formats.includes('md') && (
+                        <a class="file" href={withBase(base, `generated/${slug}.md`)} download>
+                          MD
+                        </a>
+                      )}
+                      {t.formats.includes('txt') && (
+                        <a class="file" href={withBase(base, `generated/${slug}.txt`)} download>
+                          TXT
+                        </a>
+                      )}
+                      {t.formats.includes('json') && (
+                        <a class="file" href={withBase(base, `generated/${slug}.json`)} download>
+                          JSON
+                        </a>
+                      )}
+                    </div>
+                  );
+                })}
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>
+            <span class="lang-ru">Каноническое (для ИИ)</span>
+            <span class="lang-en">Canonical (for AI)</span>
+          </h2>
+        </div>
+        <div class="langrow">
+          <span class="lcode">AI</span>
+          <a class="open" href={withBase(base, 'llms.txt')}>llms.txt</a>
+          <a class="file" href={withBase(base, 'ru/resume.md')}>resume.md (ru)</a>
+          <a class="file" href={withBase(base, 'en/resume.md')}>resume.md (en)</a>
+          <a class="file" href={withBase(base, 'ru/resume.json')}>resume.json (ru)</a>
+          <a class="file" href={withBase(base, 'en/resume.json')}>resume.json (en)</a>
+        </div>
+      </section>
+    </main>
+
+    <script is:inline>
+      (function () {
+        var html = document.documentElement;
+        document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+          b.addEventListener('click', function () {
+            var l = b.getAttribute('data-set-lang');
+            html.dataset.lang = l;
+            html.setAttribute('lang', l);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

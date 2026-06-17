@@ -34,7 +34,10 @@ interface Tagged {
  *  4. excludeTags: пересечение -> исключаем.
  *  5. includeTags (если задан): требуем пересечение, иначе исключаем.
  */
-function isRelevant(block: Tagged, target: Target): boolean {
+function isRelevant(block: Tagged, target: Target, includeAll = false): boolean {
+  // Полный («канонический») вариант — без фильтрации по audience/system/тегам.
+  if (includeAll) return true;
+
   const { select, system, audience } = target;
   const flat = flatten(block.tags);
 
@@ -77,9 +80,10 @@ function localizeHighlights(
   highlights: Highlight[],
   target: Target,
   lang: Lang,
+  includeAll = false,
 ): string[] {
   return highlights
-    .filter((h) => isRelevant(h, target))
+    .filter((h) => isRelevant(h, target, includeAll))
     .map((h) => pick(h.text, lang));
 }
 
@@ -87,35 +91,41 @@ function localizeGroups(
   groups: { title: Localized; highlights: Highlight[] }[],
   target: Target,
   lang: Lang,
+  includeAll = false,
 ): { title: string; highlights: string[] }[] {
   return groups
     .map((g) => ({
       title: pick(g.title, lang),
-      highlights: localizeHighlights(g.highlights, target, lang),
+      highlights: localizeHighlights(g.highlights, target, lang, includeAll),
     }))
     .filter((g) => g.highlights.length > 0);
 }
 
-/** Собирает ResumeDocument из content под конкретный target и язык. */
+/**
+ * Собирает ResumeDocument из content под конкретный target и язык.
+ * `includeAll` — собрать «полный» (канонический) документ без фильтрации по
+ * audience/system/тегам (для публичного md/json и AI-точек входа).
+ */
 export function compose(
   content: Content,
   target: Target,
   lang: Lang,
+  includeAll = false,
 ): ResumeDocument {
   const { profile } = content;
 
   // Summary: лучший по priority релевантный вариант.
   const summaryVariant = content.summary.variants
-    .filter((v) => isRelevant(v, target))
+    .filter((v) => isRelevant(v, target, includeAll))
     .sort(byPriority)[0];
 
   const achievements = content.achievements.items
-    .filter((a) => isRelevant(a, target))
+    .filter((a) => isRelevant(a, target, includeAll))
     .sort(byPriority)
     .map((a) => pick(a.text, lang));
 
   const experience = content.experience
-    .filter((e) => isRelevant(e, target))
+    .filter((e) => isRelevant(e, target, includeAll))
     .sort(byStartDesc)
     .map((e) => ({
       company: e.company,
@@ -125,24 +135,24 @@ export function compose(
       start: e.start,
       end: e.end,
       summary: e.summary ? pick(e.summary, lang) : undefined,
-      highlights: localizeHighlights(e.highlights, target, lang),
-      groups: localizeGroups(e.groups, target, lang),
+      highlights: localizeHighlights(e.highlights, target, lang, includeAll),
+      groups: localizeGroups(e.groups, target, lang, includeAll),
       stack: e.stack,
     }));
 
   const projects = content.projects
-    .filter((p) => isRelevant(p, target))
+    .filter((p) => isRelevant(p, target, includeAll))
     .sort(byPriority)
     .map((p) => ({
       name: pick(p.name, lang),
       url: p.url,
       description: pick(p.description, lang),
-      highlights: localizeHighlights(p.highlights, target, lang),
+      highlights: localizeHighlights(p.highlights, target, lang, includeAll),
       stack: p.stack,
     }));
 
   const skills = content.skills.groups
-    .filter((g) => isRelevant(g, target))
+    .filter((g) => isRelevant(g, target, includeAll))
     .sort(byPriority)
     .map((g) => ({
       name: pick(g.name, lang),
@@ -150,12 +160,12 @@ export function compose(
     }));
 
   const languages = content.languages.items
-    .filter((l) => isRelevant(l, target))
+    .filter((l) => isRelevant(l, target, includeAll))
     .sort(byPriority)
     .map((l) => ({ name: pick(l.name, lang), level: pick(l.level, lang) }));
 
   const education = content.education.items
-    .filter((e) => isRelevant(e, target))
+    .filter((e) => isRelevant(e, target, includeAll))
     .sort(byPriority)
     .map((e) => ({
       institution: pick(e.institution, lang),

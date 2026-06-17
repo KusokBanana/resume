@@ -258,6 +258,45 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   background: var(--surface-hover);
 }
 
+/* ---- Полоса логотипов компаний в hero -------------------------------- */
+.logos {
+  margin-top: 36px;
+  padding-top: 26px;
+  border-top: 1px solid var(--rule);
+}
+.logos-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 16px;
+}
+.logos-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+}
+.logo img {
+  height: 30px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  opacity: 0.7;
+  filter: grayscale(1);
+  transition: opacity 0.18s, filter 0.18s;
+}
+.logo:hover img {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
 /* ---- Секции ----------------------------------------------------------- */
 .section {
   padding: 48px 0;
@@ -360,6 +399,7 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   position: relative;
   padding: 0 0 30px 30px;
   border-left: 1px solid var(--rule);
+  scroll-margin-top: 84px; /* отступ под липкий навбар при скролле по якорю */
 }
 .tl-item:last-child {
   padding-bottom: 0;
@@ -369,7 +409,7 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   content: '';
   position: absolute;
   left: -5px;
-  top: 5px;
+  top: 9px; /* по центру первой строки должности (line-height ≈ 28px) */
   width: 9px;
   height: 9px;
   border-radius: 50%;
@@ -388,6 +428,16 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   margin: 3px 0 0;
   font-weight: 600;
   color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.tl-logo {
+  height: 18px;
+  width: auto;
+  max-width: 90px;
+  object-fit: contain;
+  flex: none;
 }
 .tl-company a {
   text-decoration: none;
@@ -539,22 +589,25 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
 
 /* ---- Футер ------------------------------------------------------------ */
 .footer {
-  padding: 40px 0 60px;
+  padding: 40px 0 56px;
   border-top: 1px solid var(--rule);
   margin-top: 24px;
   color: var(--faint);
-  font-size: 13.5px;
+  font-size: 13px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 18px;
+  gap: 10px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
-.footer a {
-  color: var(--muted);
+/* Ссылка на исходники — намеренно неприметная. */
+.footer .src {
+  color: var(--faint);
   text-decoration: none;
+  opacity: 0.45;
+  transition: opacity 0.15s, color 0.15s;
 }
-.footer a:hover {
+.footer .src:hover {
+  opacity: 1;
   color: var(--accent);
 }
 

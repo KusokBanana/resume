@@ -1,6 +1,7 @@
 id: vk-lead
 company: VK
 companyUrl: https://vk.company/ru/
+logo: logos/vk.svg
 role:
   ru: Руководитель команды разработки «Кабинета выплат» (Team Lead)
   en: Team Lead — Payouts Dashboard

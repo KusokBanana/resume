@@ -96,6 +96,8 @@ export const ExperienceSchema = z.object({
   id: z.string(),
   company: z.string(),
   companyUrl: z.string().url().optional(),
+  /** Путь к логотипу относительно public/, напр. "logos/vk.svg". */
+  logo: z.string().optional(),
   role: Localized,
   location: Localized.optional(),
   start: YearMonth,

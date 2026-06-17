@@ -1,6 +1,7 @@
 id: vk-senior
 company: VK
 companyUrl: https://vk.company/ru/
+logo: logos/vk.svg
 role:
   ru: Старший фронтенд-разработчик
   en: Senior Frontend Developer
