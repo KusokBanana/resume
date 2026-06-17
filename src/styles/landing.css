@@ -351,6 +351,100 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   color: var(--ink);
 }
 
+/* ---- Опыт работы (таймлайн) ------------------------------------------ */
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+.tl-item {
+  position: relative;
+  padding: 0 0 30px 30px;
+  border-left: 1px solid var(--rule);
+}
+.tl-item:last-child {
+  padding-bottom: 0;
+  border-left-color: transparent;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow:
+    0 0 0 4px var(--bg),
+    0 0 12px rgba(110, 168, 254, 0.7);
+}
+.tl-role {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.tl-company {
+  margin: 3px 0 0;
+  font-weight: 600;
+  color: var(--accent);
+}
+.tl-company a {
+  text-decoration: none;
+}
+.tl-company a:hover {
+  text-decoration: underline;
+}
+.tl-meta {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--faint);
+}
+.tl-summary {
+  margin: 12px 0 0;
+  color: var(--muted);
+  max-width: 74ch;
+}
+.tl-points {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  max-width: 74ch;
+}
+.tl-points li {
+  margin: 5px 0;
+  color: var(--muted);
+}
+.tl-points li::marker {
+  color: var(--accent);
+}
+.tl-points li strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+.tl-group {
+  margin-top: 16px;
+}
+.tl-group h4 {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+}
+.tl-group .tl-points {
+  margin-top: 6px;
+}
+.tl-stackline {
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  color: var(--faint);
+  max-width: 74ch;
+}
+.tl-stacklabel {
+  color: var(--muted);
+  font-weight: 600;
+}
+
 /* ---- Каталог вариантов ----------------------------------------------- */
 .variants {
   display: grid;

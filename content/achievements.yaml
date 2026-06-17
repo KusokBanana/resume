@@ -2,56 +2,56 @@
 # Порядок — по priority (выше = выше).
 items:
   - id: ai-speedup
-    priority: 100
+    priority: 85
     tags: {}
     text:
       ru: "**Ускорил разработку в 1,5×** — внедрил AI-инструменты (Claude) в процессы команды."
       en: "**Sped up delivery 1.5×** — introduced AI tooling (Claude) into team workflows."
 
   - id: release-time
-    priority: 95
+    priority: 80
     tags: {}
     text:
       ru: "**Сократил подготовку релиза с 2 часов до 10 минут** — автоматизация скриптами и CI/CD."
       en: "**Cut release prep from 2 hours to 10 minutes** — automation via scripts and CI/CD."
 
   - id: page-load
-    priority: 90
+    priority: 60
     tags: {}
     text:
       ru: "**Загрузка страниц ускорена в 2×** — инициировал и довёл до результата оптимизацию сборки фронтенда силами команды."
       en: "**2× faster page loads** — initiated and drove a frontend build optimisation with the team."
 
   - id: visual-bugs
-    priority: 85
+    priority: 75
     tags: {}
     text:
       ru: "**Снизил визуальные баги с 5–10 до 0–1 на релиз** — внедрил процесс дизайн-ревью."
       en: "**Reduced visual bugs from 5–10 to 0–1 per release** — introduced a design-review process."
 
   - id: email-cost
-    priority: 80
+    priority: 70
     tags: {}
     text:
       ru: "**Снизил стоимость разработки email-писем** — с «дизайнер + разработчик, ~неделя» до «один разработчик, пара часов»."
       en: "**Cut the cost of building emails** — from “designer + developer, ~a week” to “one developer, a couple of hours”."
 
   - id: retention
-    priority: 75
+    priority: 95
     tags: {}
     text:
       ru: "**Удержал отдел без единого добровольного ухода за 2 года** — на фоне турбулентности в компании (урезание бюджетов, массовые сокращения)."
       en: "**Zero voluntary attrition over 2 years** — amid company turbulence (budget cuts, mass layoffs)."
 
   - id: growth
-    priority: 70
+    priority: 90
     tags: {}
     text:
       ru: "**Вырастил людей через ИПР**: 3 — до Senior, 3 — до тимлидов."
       en: "**Grew people via individual development plans**: 3 to Senior, 3 to team leads."
 
   - id: scale
-    priority: 65
+    priority: 100
     tags: {}
     text:
       ru: "**Масштабировал отдел с 0 до 11 человек за год.**"

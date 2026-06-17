@@ -2,8 +2,8 @@
 import { loadContent, loadTargets } from '../lib/load';
 import { variantSlug } from '../lib/slug';
 import { withBase } from '../lib/url';
-import { UI, SECTION_TITLES } from '../lib/labels';
-import type { Localized, SkillItem } from '../schema/index';
+import { UI, SECTION_TITLES, endLabel } from '../lib/labels';
+import type { Localized, SkillItem, Experience, Lang } from '../schema/index';
 import '../styles/landing.css';
 
 const content = loadContent();
@@ -24,6 +24,12 @@ const results = [...content.achievements.items]
   .slice(0, 6);
 
 const skillGroups = [...content.skills.groups].sort((a, b) => b.priority - a.priority);
+
+// Опыт — по дате начала по убыванию (новейшее сверху), как в основном резюме.
+const experience = [...content.experience].sort((a, b) => b.start.localeCompare(a.start));
+
+const dateRange = (e: Experience, lang: Lang) =>
+  `${e.start} — ${e.end === 'present' ? endLabel('present', lang) : e.end}`;
 
 /** Простой inline-markdown: экранируем и превращаем **жирный** в <strong>. */
 function renderBold(s: string): string {
@@ -160,10 +166,94 @@ const contactIcon: Record<string, string> = {
         </div>
       </section>
 
+      <!-- ОПЫТ -->
+      <section class="section" id="experience">
+        <div class="section-head">
+          <span class="num">02</span>
+          <h2>
+            <span class="lang-ru">{SECTION_TITLES.experience.ru}</span>
+            <span class="lang-en">{SECTION_TITLES.experience.en}</span>
+          </h2>
+        </div>
+        <div class="timeline">
+          {
+            experience.map((e) => (
+              <article class="tl-item">
+                <h3 class="tl-role">
+                  <span class="lang-ru">{e.role.ru}</span>
+                  <span class="lang-en">{e.role.en}</span>
+                </h3>
+                <p class="tl-company">
+                  {e.companyUrl ? (
+                    <a href={e.companyUrl} target="_blank" rel="noopener noreferrer">
+                      {e.company}
+                    </a>
+                  ) : (
+                    e.company
+                  )}
+                </p>
+                <p class="tl-meta">
+                  <span class="lang-ru">{dateRange(e, 'ru')}</span>
+                  <span class="lang-en">{dateRange(e, 'en')}</span>
+                  {e.location && (
+                    <>
+                      {' · '}
+                      <span class="lang-ru">{e.location.ru}</span>
+                      <span class="lang-en">{e.location.en}</span>
+                    </>
+                  )}
+                </p>
+                {e.summary && (
+                  <p class="tl-summary">
+                    <span class="lang-ru">{e.summary.ru}</span>
+                    <span class="lang-en">{e.summary.en}</span>
+                  </p>
+                )}
+                {e.highlights.length > 0 && (
+                  <ul class="tl-points">
+                    {e.highlights.map((h) => (
+                      <>
+                        <li class="lang-ru" set:html={renderBold(h.text.ru)} />
+                        <li class="lang-en" set:html={renderBold(h.text.en)} />
+                      </>
+                    ))}
+                  </ul>
+                )}
+                {e.groups.map((g) => (
+                  <div class="tl-group">
+                    <h4>
+                      <span class="lang-ru">{g.title.ru}</span>
+                      <span class="lang-en">{g.title.en}</span>
+                    </h4>
+                    <ul class="tl-points">
+                      {g.highlights.map((h) => (
+                        <>
+                          <li class="lang-ru" set:html={renderBold(h.text.ru)} />
+                          <li class="lang-en" set:html={renderBold(h.text.en)} />
+                        </>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                {e.stack.length > 0 && (
+                  <p class="tl-stackline">
+                    <span class="tl-stacklabel">
+                      <span class="lang-ru">{UI.stack.ru}</span>
+                      <span class="lang-en">{UI.stack.en}</span>:
+                    </span>{' '}
+                    {e.stack.join(', ')}
+                  </p>
+                )}
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
       <!-- НАВЫКИ -->
       <section class="section" id="skills">
         <div class="section-head">
-          <span class="num">02</span>
+          <span class="num">03</span>
           <h2>
             <span class="lang-ru">{SECTION_TITLES.skills.ru}</span>
             <span class="lang-en">{SECTION_TITLES.skills.en}</span>
@@ -198,7 +288,7 @@ const contactIcon: Record<string, string> = {
       <!-- ВАРИАНТЫ -->
       <section class="section" id="variants">
         <div class="section-head">
-          <span class="num">03</span>
+          <span class="num">04</span>
           <h2>
             <span class="lang-ru">{UI.variants.ru}</span>
             <span class="lang-en">{UI.variants.en}</span>

@@ -1,9 +1,21 @@
+/* ============================================================================
+   Стили детального резюме.
+   НА ЭКРАНЕ — тёмная тема (в тон лендингу). НА печати/PDF — светлая:
+   Playwright печатает эти же страницы, поэтому @media print полностью
+   сбрасывает палитру и фоны к светлым значениям. Менять печатный вид —
+   только внутри @media print.
+   ========================================================================== */
+
 :root {
-  --ink: #1a1a1a;
-  --muted: #5a5a5a;
-  --accent: #2563eb;
-  --rule: #e2e2e2;
-  --bg: #ffffff;
+  --ink: #ecedf2;
+  --muted: #9a9bab;
+  --faint: #6a6b7d;
+  --accent: #6ea8fe;
+  --rule: rgba(255, 255, 255, 0.1);
+  --rule-strong: rgba(255, 255, 255, 0.16);
+  --bg: #0e0e16; /* поверхность «листа» */
+  --body-bg: #08080c; /* фон вокруг листа */
+  --surface: rgba(255, 255, 255, 0.03);
   --maxw: 800px;
   --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif;
@@ -15,26 +27,41 @@
 
 body {
   margin: 0;
-  background: #f4f4f5;
+  background: var(--body-bg);
   color: var(--ink);
   font-family: var(--font);
   line-height: 1.5;
   font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Фоновое свечение — как на лендинге, для визуальной связи. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60% 45% at 20% 0%, rgba(59, 130, 246, 0.16), transparent 70%),
+    radial-gradient(50% 40% at 95% 6%, rgba(167, 139, 250, 0.12), transparent 70%),
+    linear-gradient(180deg, #0e0e16, var(--body-bg) 42%);
+  pointer-events: none;
 }
 
 .page {
   max-width: var(--maxw);
-  margin: 24px auto;
+  margin: 24px auto 48px;
   background: var(--bg);
-  padding: 40px 48px;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 44px 48px;
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
 }
 
 /* Панель действий — не печатается. */
 .toolbar {
   max-width: var(--maxw);
-  margin: 16px auto 0;
+  margin: 20px auto 0;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -46,9 +73,10 @@ body {
   text-decoration: none;
   color: var(--ink);
   border: 1px solid var(--rule);
-  background: #fff;
-  padding: 6px 12px;
+  background: var(--surface);
+  padding: 7px 14px;
   border-radius: 999px;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 .toolbar a:hover {
   border-color: var(--accent);
@@ -61,7 +89,9 @@ body {
 /* Шапка резюме */
 .resume header h1 {
   margin: 0 0 4px;
-  font-size: 28px;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
 }
 .resume .headline {
   margin: 0 0 8px;
@@ -79,26 +109,33 @@ body {
 }
 
 .resume section {
-  margin-top: 22px;
+  margin-top: 26px;
 }
 .resume h2 {
-  font-size: 13px;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: var(--accent);
   border-bottom: 1px solid var(--rule);
-  padding-bottom: 4px;
-  margin: 0 0 10px;
+  padding-bottom: 6px;
+  margin: 0 0 12px;
 }
 .resume .item {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 .resume .item h3 {
   margin: 0;
   font-size: 16px;
 }
+.resume .item h3 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.resume .item h3 a:hover {
+  color: var(--accent);
+}
 .resume .group {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 .resume .group h4 {
   margin: 0 0 2px;
@@ -107,7 +144,7 @@ body {
   color: var(--muted);
 }
 .resume .item .meta {
-  color: var(--muted);
+  color: var(--faint);
   font-size: 13px;
   margin: 2px 0 6px;
 }
@@ -116,35 +153,58 @@ body {
   padding-left: 18px;
 }
 .resume li {
-  margin: 2px 0;
+  margin: 3px 0;
+}
+.resume li::marker {
+  color: var(--accent);
+}
+.resume li strong {
+  color: var(--ink);
 }
 .resume .stack {
   font-size: 13px;
-  color: var(--muted);
+  color: var(--faint);
   margin-top: 4px;
 }
 .resume .skills-line {
   margin: 4px 0;
 }
+.resume .skills-line strong {
+  color: var(--ink);
+}
 
-/* ----- ATS layout: одна колонка, без декора, максимально машиночитаемо ----- */
+/* ----- ATS layout на экране: монохром, минимум декора ----- */
 .resume[data-layout='ats'] {
-  --accent: #000;
+  --accent: #c9cbd6;
 }
 .resume[data-layout='ats'] h2 {
-  color: #000;
-  border-bottom: 1px solid #000;
+  color: var(--ink);
+  border-bottom-color: var(--rule-strong);
 }
-.resume[data-layout='ats'] .contacts a,
-.resume[data-layout='ats'] header h1 {
-  color: #000;
+.resume[data-layout='ats'] li::marker {
+  color: var(--muted);
 }
 
-/* ----- Печать / PDF ----- */
+/* ============================================================================
+   Печать / PDF — полный сброс к светлой теме (как было раньше).
+   ========================================================================== */
 @media print {
+  :root {
+    --ink: #1a1a1a;
+    --muted: #5a5a5a;
+    --faint: #5a5a5a;
+    --accent: #2563eb;
+    --rule: #e2e2e2;
+    --rule-strong: #e2e2e2;
+    --bg: #ffffff;
+  }
   body {
     background: #fff;
+    color: var(--ink);
     font-size: 11pt;
+  }
+  body::before {
+    display: none !important;
   }
   .toolbar {
     display: none !important;
@@ -153,17 +213,45 @@ body {
     max-width: none;
     margin: 0;
     padding: 0;
+    border: 0;
     border-radius: 0;
     box-shadow: none;
+    background: #fff;
   }
-  .resume section {
-    break-inside: avoid;
+  .resume header h1 {
+    color: var(--ink);
   }
+  .resume h2 {
+    color: var(--accent);
+    border-bottom: 1px solid var(--rule);
+  }
+  .resume .item h3 a,
+  .resume li strong,
+  .resume .skills-line strong {
+    color: var(--ink);
+  }
+  .resume li::marker {
+    color: inherit;
+  }
+  .resume section,
   .resume .item {
     break-inside: avoid;
   }
   a {
     color: inherit;
+  }
+
+  /* ATS в печати — строго чёрный, машиночитаемо. */
+  .resume[data-layout='ats'] {
+    --accent: #000;
+  }
+  .resume[data-layout='ats'] h2 {
+    color: #000;
+    border-bottom: 1px solid #000;
+  }
+  .resume[data-layout='ats'] .contacts a,
+  .resume[data-layout='ats'] header h1 {
+    color: #000;
   }
 }
 
