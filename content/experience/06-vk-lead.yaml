@@ -15,14 +15,20 @@ tags:
 summary:
   ru: >-
     Финтех ВКонтакте — «Кабинет выплат» (выплаты авторам заработка по монетизациям
-    в социальной сети ВКонтакте). Повышение из роли старшего фронтенд-разработчика.
+    в социальной сети ВКонтакте). Highload-сервис в экосистеме ВКонтакте. Повышение
+    из роли старшего фронтенд-разработчика.
   en: >-
     VK fintech — Payouts Dashboard (paying out monetisation earnings to creators on
-    the VKontakte social network). Promoted from senior frontend developer.
+    the VKontakte social network). A high-load service within the VK ecosystem.
+    Promoted from senior frontend developer.
 highlights:
   - text:
       ru: Руководил кросс-функциональной командой разработки (4 разработчика) и продуктом «Кабинет выплат».
       en: Led a cross-functional development team (4 engineers) and the Payouts Dashboard product.
+    tags: {}
+  - text:
+      ru: "Масштаб сервиса: десятки тысяч авторов и выплаты на десятки миллионов рублей в месяц."
+      en: "Service scale: tens of thousands of creators and payouts of tens of millions of rubles per month."
     tags: {}
   - text:
       ru: Планировал и реализовывал продуктовые интеграции и улучшения.

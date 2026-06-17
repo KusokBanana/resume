@@ -14,7 +14,19 @@ tags:
   domains: [frontend, fintech]
 highlights:
   - text:
-      ru: Разрабатывал интерфейсы финтеха ВКонтакте и сервиса «Кабинет выплат».
-      en: Built VK fintech UIs and the Payouts Dashboard service.
+      ru: Разрабатывал highload-интерфейсы финтеха ВКонтакте — продукта внутри одной из крупнейших соцсетей рунета (~100 млн MAU).
+      en: Built high-load VK fintech UIs — a product inside one of the largest social networks in the region (~100M MAU).
+    tags: {}
+  - text:
+      ru: "Работал в условиях высокой нагрузки: большой трафик и объёмы данных, повышенные требования к стабильности, производительности и отказоустойчивости клиентских интерфейсов."
+      en: "Worked under high load: significant traffic and data volumes, with elevated client-side stability, performance and resilience requirements."
+    tags: { audience: [technical] }
+  - text:
+      ru: "Внедрил feature-flags: релизы несколько раз в день и выборочный раскат функциональности на отдельные категории пользователей."
+      en: "Introduced feature flags: multiple releases per day and selective rollout of functionality to specific user segments."
+    tags: {}
+  - text:
+      ru: Разрабатывал интерфейсы сервиса «Кабинет выплат».
+      en: Built the Payouts Dashboard service UI.
     tags: {}
 stack: [TypeScript, React]

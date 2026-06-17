@@ -29,6 +29,13 @@ items:
       ru: "**Ускорил разработку в 1,5×** — внедрил AI-инструменты (Claude) в процессы команды."
       en: "**Sped up delivery 1.5×** — introduced AI tooling (Claude) into team workflows."
 
+  - id: vk-release-flags
+    priority: 82
+    tags: {}
+    text:
+      ru: "**Релизы несколько раз в день** в highload-финтехе ВКонтакте — внедрил feature-flags с выборочным раскатом на сегменты пользователей."
+      en: "**Multiple releases per day** in VK's high-load fintech — introduced feature flags with selective rollout to user segments."
+
   - id: release-time
     priority: 80
     tags: {}

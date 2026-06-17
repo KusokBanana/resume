@@ -18,8 +18,8 @@ summary:
 highlights:
   # Универсальные пункты (видны и в ATS-варианте)
   - text:
-      ru: "Создал и развивал библиотеку UI-компонентов: перевёл на неё 5 проектов отдела, ускорил разработку новых интерфейсов в разы."
-      en: "Built and grew a UI component library: migrated 5 of the team's projects to it, multiplying the speed of new UI development."
+      ru: "Создал и развивал библиотеку UI-компонентов: перевёл на неё большинство проектов отдела, ускорил разработку новых интерфейсов в разы."
+      en: "Built and grew a UI component library: migrated most of the team's projects to it, multiplying the speed of new UI development."
     tags: {}
   - text:
       ru: Менторил коллег по backend- и frontend-разработке.

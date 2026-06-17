@@ -50,6 +50,8 @@ groups:
     items:
       - ru: frontend-архитектура
         en: frontend architecture
+      - ru: highload-интерфейсы
+        en: high-load UIs
       - ru: дизайн-системы
         en: design systems
       - ru: FrontOps
