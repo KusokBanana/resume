@@ -1,40 +1,12 @@
 # Ключевые результаты (вверху резюме). Жирный лид-акцент через **...**.
 # Порядок — по priority (выше = выше).
 items:
-  - id: ai-speedup
-    priority: 85
+  - id: scale
+    priority: 100
     tags: {}
     text:
-      ru: "**Ускорил разработку в 1,5×** — внедрил AI-инструменты (Claude) в процессы команды."
-      en: "**Sped up delivery 1.5×** — introduced AI tooling (Claude) into team workflows."
-
-  - id: release-time
-    priority: 80
-    tags: {}
-    text:
-      ru: "**Сократил подготовку релиза с 2 часов до 10 минут** — автоматизация скриптами и CI/CD."
-      en: "**Cut release prep from 2 hours to 10 minutes** — automation via scripts and CI/CD."
-
-  - id: page-load
-    priority: 60
-    tags: {}
-    text:
-      ru: "**Загрузка страниц ускорена в 2×** — инициировал и довёл до результата оптимизацию сборки фронтенда силами команды."
-      en: "**2× faster page loads** — initiated and drove a frontend build optimisation with the team."
-
-  - id: visual-bugs
-    priority: 75
-    tags: {}
-    text:
-      ru: "**Снизил визуальные баги с 5–10 до 0–1 на релиз** — внедрил процесс дизайн-ревью."
-      en: "**Reduced visual bugs from 5–10 to 0–1 per release** — introduced a design-review process."
-
-  - id: email-cost
-    priority: 70
-    tags: {}
-    text:
-      ru: "**Снизил стоимость разработки email-писем** — с «дизайнер + разработчик, ~неделя» до «один разработчик, пара часов»."
-      en: "**Cut the cost of building emails** — from “designer + developer, ~a week” to “one developer, a couple of hours”."
+      ru: "**Масштабировал отдел с 0 до 11 человек за год** — выстроил архитектуру из 4 кросс-функциональных команд (лид + фронтендеры + дизайнер); весь найм вёл сам, с рынка и ротацией внутри."
+      en: "**Scaled the department from 0 to 11 people in a year** — built an architecture of 4 cross-functional teams (lead + frontend engineers + designer); ran all hiring myself, externally and via internal rotation."
 
   - id: retention
     priority: 95
@@ -50,9 +22,37 @@ items:
       ru: "**Вырастил людей через ИПР**: 3 — до Senior, 3 — до тимлидов."
       en: "**Grew people via individual development plans**: 3 to Senior, 3 to team leads."
 
-  - id: scale
-    priority: 100
+  - id: ai-speedup
+    priority: 85
     tags: {}
     text:
-      ru: "**Масштабировал отдел с 0 до 11 человек за год.**"
-      en: "**Scaled the department from 0 to 11 people in a year.**"
+      ru: "**Ускорил разработку в 1,5×** — внедрил AI-инструменты (Claude) в процессы команды."
+      en: "**Sped up delivery 1.5×** — introduced AI tooling (Claude) into team workflows."
+
+  - id: release-time
+    priority: 80
+    tags: {}
+    text:
+      ru: "**Сократил подготовку релиза с 2 часов до 10 минут** — автоматизация скриптами и CI/CD."
+      en: "**Cut release prep from 2 hours to 10 minutes** — automation via scripts and CI/CD."
+
+  - id: visual-bugs
+    priority: 75
+    tags: {}
+    text:
+      ru: "**Снизил визуальные баги с 5–10 до 0–1 на релиз** — внедрил процесс дизайн-ревью."
+      en: "**Reduced visual bugs from 5–10 to 0–1 per release** — introduced a design-review process."
+
+  - id: email-cost
+    priority: 70
+    tags: {}
+    text:
+      ru: "**Снизил стоимость разработки email-писем** — с «дизайнер + разработчик, ~неделя» до «один разработчик, пара часов»."
+      en: "**Cut the cost of building emails** — from “designer + developer, ~a week” to “one developer, a couple of hours”."
+
+  - id: page-load
+    priority: 60
+    tags: {}
+    text:
+      ru: "**Загрузка страниц ускорена в 2×** — инициировал и довёл до результата оптимизацию сборки фронтенда силами команды."
+      en: "**2× faster page loads** — initiated and drove a frontend build optimisation with the team."
