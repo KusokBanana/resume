@@ -1,0 +1,33 @@
+# Личные увлечения — показываются только на лендинге (секция «Beyond work»).
+# Порядок на странице — по priority (по убыванию).
+# Чтобы по клику на увлечение открывалось фото: положи файл в public/interests/
+# и раскомментируй строку `photo:` у нужного пункта (путь относительно public/).
+items:
+  - id: diving
+    icon: 🤿
+    priority: 100
+    # photo: interests/diving.jpg
+    label:
+      ru: Дайвинг
+      en: Scuba diving
+  - id: gymnastics
+    icon: 🤸
+    priority: 90
+    # photo: interests/gymnastics.jpg
+    label:
+      ru: Спортивная гимнастика
+      en: Gymnastics
+  - id: skydiving
+    icon: 🪂
+    priority: 80
+    # photo: interests/skydiving.jpg
+    label:
+      ru: Парашютный спорт
+      en: Skydiving
+  - id: travel
+    icon: 🌍
+    priority: 70
+    # photo: interests/travel.jpg
+    label:
+      ru: Путешествия
+      en: Travel

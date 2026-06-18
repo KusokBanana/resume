@@ -14,6 +14,7 @@ import {
   SkillsSchema,
   LanguagesSchema,
   EducationSchema,
+  InterestsSchema,
   TargetSchema,
 } from '../schema/index';
 
@@ -86,6 +87,13 @@ export function loadContent(): Content {
       : { items: [] },
     'content/education.yaml',
   );
+  const interests = validate(
+    InterestsSchema,
+    existsSync(join(CONTENT_DIR, 'interests.yaml'))
+      ? readYaml(join(CONTENT_DIR, 'interests.yaml'))
+      : { items: [] },
+    'content/interests.yaml',
+  );
 
   const experience = listYaml(join(CONTENT_DIR, 'experience')).map((p) =>
     validate(ExperienceSchema, readYaml(p), `content/experience/${basename(p)}`),
@@ -103,6 +111,7 @@ export function loadContent(): Content {
     skills,
     languages,
     education,
+    interests,
   };
 }
 

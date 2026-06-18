@@ -64,6 +64,8 @@ export const ProfileSchema = z.object({
   location: Localized.optional(),
   email: z.string().email().optional(),
   phone: z.string().optional(),
+  /** Путь к портретному фото относительно public/, напр. "photo.jpg". Используется на лендинге. */
+  photo: z.string().optional(),
   birthYear: z.number().int().optional(),
   links: z
     .array(
@@ -75,6 +77,8 @@ export const ProfileSchema = z.object({
       }),
     )
     .default([]),
+  /** Личная ссылка для блока «Помимо работы» (нейтральная подпись, без названия площадки). */
+  personalLink: z.string().url().optional(),
 });
 export type Profile = z.infer<typeof ProfileSchema>;
 
@@ -191,6 +195,27 @@ export const EducationSchema = z.object({
 });
 export type Education = z.infer<typeof EducationSchema>;
 
+/**
+ * Личные увлечения — только для лендинга (человеческое измерение).
+ * Намеренно НЕ протаскивается через compose/ResumeDocument/экспорты.
+ */
+export const InterestsSchema = z.object({
+  items: z
+    .array(
+      z.object({
+        id: z.string(),
+        /** Эмодзи/глиф для чипа, напр. "🤿". */
+        icon: z.string().optional(),
+        label: Localized,
+        /** Путь к фото относительно public/, напр. "interests/diving.jpg". При наличии чип кликабелен и открывает фото. */
+        photo: z.string().optional(),
+        priority: z.number().default(0),
+      }),
+    )
+    .default([]),
+});
+export type Interests = z.infer<typeof InterestsSchema>;
+
 /** Весь загруженный и провалидированный content. */
 export interface Content {
   profile: Profile;
@@ -201,6 +226,7 @@ export interface Content {
   skills: Skills;
   languages: Languages;
   education: Education;
+  interests: Interests;
 }
 
 // ---- Target (профиль сборки) -------------------------------------------

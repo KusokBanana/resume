@@ -1,0 +1,147 @@
+---
+import { withBase } from '../lib/url';
+import { renderBold } from '../lib/inline-md';
+import { UI, endLabel } from '../lib/labels';
+import type { Experience, Lang } from '../schema/index';
+
+interface Props {
+  e: Experience;
+  base: string;
+}
+const { e, base } = Astro.props;
+
+const dateRange = (lang: Lang) =>
+  `${e.start} — ${e.end === 'present' ? endLabel('present', lang) : e.end}`;
+
+// Превью: первые N плоских пунктов видны всегда; остальное (хвост плоских пунктов,
+// все группы, стек) уходит под сворачивание. Группы НЕ дробим — так заголовки
+// подсекций остаются осмысленными.
+const LEAD = 3;
+const lead = e.highlights.slice(0, LEAD);
+const restHighlights = e.highlights.slice(LEAD);
+const groupBullets = e.groups.reduce((n, g) => n + g.highlights.length, 0);
+const hiddenCount = restHighlights.length + groupBullets;
+const hasCollapse = hiddenCount > 0;
+---
+
+<article class="tl-item reveal" id={`exp-${e.id}`}>
+  <h3 class="tl-role">
+    <span class="lang-ru">{e.role.ru}</span>
+    <span class="lang-en">{e.role.en}</span>
+  </h3>
+  <p class="tl-company">
+    {e.logo && <img class="tl-logo" src={withBase(base, e.logo)} alt="" loading="lazy" />}
+    {
+      e.companyUrl ? (
+        <a href={e.companyUrl} target="_blank" rel="noopener noreferrer">
+          {e.company}
+        </a>
+      ) : (
+        e.company
+      )
+    }
+  </p>
+  <p class="tl-meta">
+    <span class="lang-ru">{dateRange('ru')}</span>
+    <span class="lang-en">{dateRange('en')}</span>
+    {
+      e.location && (
+        <>
+          {' · '}
+          <span class="lang-ru">{e.location.ru}</span>
+          <span class="lang-en">{e.location.en}</span>
+        </>
+      )
+    }
+  </p>
+  {
+    e.summary && (
+      <p class="tl-summary">
+        <span class="lang-ru">{e.summary.ru}</span>
+        <span class="lang-en">{e.summary.en}</span>
+      </p>
+    )
+  }
+  {
+    lead.length > 0 && (
+      <ul class="tl-points">
+        {lead.map((h) => (
+          <>
+            <li class="lang-ru" set:html={renderBold(h.text.ru)} />
+            <li class="lang-en" set:html={renderBold(h.text.en)} />
+          </>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    hasCollapse && (
+      <div class="tl-rest">
+        {restHighlights.length > 0 && (
+          <ul class="tl-points">
+            {restHighlights.map((h) => (
+              <>
+                <li class="lang-ru" set:html={renderBold(h.text.ru)} />
+                <li class="lang-en" set:html={renderBold(h.text.en)} />
+              </>
+            ))}
+          </ul>
+        )}
+        {e.groups.map((g) => (
+          <div class="tl-group">
+            <h4>
+              <span class="lang-ru">{g.title.ru}</span>
+              <span class="lang-en">{g.title.en}</span>
+            </h4>
+            <ul class="tl-points">
+              {g.highlights.map((h) => (
+                <>
+                  <li class="lang-ru" set:html={renderBold(h.text.ru)} />
+                  <li class="lang-en" set:html={renderBold(h.text.en)} />
+                </>
+              ))}
+            </ul>
+          </div>
+        ))}
+        {e.stack.length > 0 && (
+          <p class="tl-stackline">
+            <span class="tl-stacklabel">
+              <span class="lang-ru">{UI.stack.ru}</span>
+              <span class="lang-en">{UI.stack.en}</span>:
+            </span>{' '}
+            {e.stack.join(', ')}
+          </p>
+        )}
+      </div>
+    )
+  }
+
+  {
+    hasCollapse && (
+      <button class="tl-toggle" type="button" aria-expanded="false">
+        <span class="tl-toggle-more">
+          <span class="lang-ru">{`Показать ещё ${hiddenCount}`}</span>
+          <span class="lang-en">{`Show ${hiddenCount} more`}</span>
+        </span>
+        <span class="tl-toggle-less">
+          <span class="lang-ru">Свернуть</span>
+          <span class="lang-en">Collapse</span>
+        </span>
+        <span class="tl-chevron" aria-hidden="true">▾</span>
+      </button>
+    )
+  }
+
+  {
+    !hasCollapse && e.stack.length > 0 && (
+      <p class="tl-stackline">
+        <span class="tl-stacklabel">
+          <span class="lang-ru">{UI.stack.ru}</span>
+          <span class="lang-en">{UI.stack.en}</span>:
+        </span>{' '}
+        {e.stack.join(', ')}
+      </p>
+    )
+  }
+</article>

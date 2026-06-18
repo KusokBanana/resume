@@ -9,13 +9,25 @@ location:
   ru: Москва · Удалённо, готов к командировкам
   en: Moscow · Remote, open to business trips
 email: svyat.dema@yandex.ru
+# Портрет для лендинга. Положи файл в public/ и раскомментируй строку ниже
+# (путь относительно public/, напр. photo.jpg). Пока не задан — в hero показывается
+# градиентная монограмма «SD».
+# photo: photo.jpg
 # Дата рождения держим как данные; рендер опционален и включается отдельным профилем сборки.
 birthYear: 1994
 # GitHub намеренно не указан — добавить при необходимости.
 links:
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/svyat-dema/
+    kind: linkedin
+  - label: hh.ru
+    url: https://hh.ru/resume/f9dc3a3eff0cd461720039ed1f786d4c384275
+    kind: hh
   - label: Habr Career
     url: https://career.habr.com/svyatoslav-demochkin
     kind: habr
   - label: Telegram
     url: https://t.me/kusokBanana
     kind: telegram
+# Личная ссылка для блока «Помимо работы» — намеренно без названия площадки в тексте.
+personalLink: https://www.instagram.com/kusokbanana/

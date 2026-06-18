@@ -140,7 +140,63 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
 
 /* ---- Hero ------------------------------------------------------------- */
 .hero {
-  padding: 64px 0 40px;
+  /* Полноэкранный первый экран: видно только hero, следующая секция — сразу под сгибом.
+     71px — высота липкого навбара (см. .nav). svh учитывает динамическую панель на мобиле. */
+  min-height: calc(100vh - 71px);
+  min-height: calc(100svh - 71px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 0 28px;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(20px, 4vw, 40px);
+}
+.hero-main {
+  min-width: 0;
+}
+
+/* Портрет */
+.hero-portrait {
+  justify-self: end;
+}
+.portrait-frame {
+  position: relative;
+  width: clamp(168px, 18vw, 216px);
+  aspect-ratio: 1;
+  border-radius: 24px;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--accent-strong), var(--violet));
+  box-shadow: 0 18px 50px rgba(59, 130, 246, 0.28);
+}
+.portrait-frame::after {
+  /* мягкое свечение под портретом */
+  content: '';
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(110, 168, 254, 0.25), transparent 70%);
+  pointer-events: none;
+}
+.portrait-img,
+.portrait-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 21px;
+  object-fit: cover;
+}
+.portrait-fallback {
+  display: grid;
+  place-items: center;
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: linear-gradient(135deg, #11131c, #1a1d2e);
 }
 .eyebrow {
   display: inline-flex;
@@ -162,8 +218,8 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
 }
 .hero h1 {
   margin: 0;
-  font-size: clamp(2.6rem, 7vw, 4.6rem);
-  line-height: 1.02;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1.05;
   letter-spacing: -0.03em;
   font-weight: 800;
   background: linear-gradient(120deg, #fff 30%, var(--accent) 75%, var(--violet));
@@ -172,8 +228,8 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   color: transparent;
 }
 .hero .title {
-  margin: 16px 0 0;
-  font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+  margin: 14px 0 0;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
   font-weight: 600;
   color: var(--ink);
 }
@@ -183,9 +239,9 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   font-size: 14px;
 }
 .hero .tagline {
-  margin: 24px 0 0;
-  max-width: 70ch;
-  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  margin: 16px 0 0;
+  max-width: 64ch;
+  font-size: clamp(0.98rem, 1.4vw, 1.05rem);
   color: var(--muted);
 }
 
@@ -194,7 +250,7 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 28px;
+  margin-top: 20px;
 }
 .chip {
   display: inline-flex;
@@ -225,7 +281,7 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 .btn {
   display: inline-flex;
@@ -260,8 +316,8 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
 
 /* ---- Полоса логотипов компаний в hero -------------------------------- */
 .logos {
-  margin-top: 36px;
-  padding-top: 26px;
+  margin-top: 16px;
+  padding-top: 16px;
   border-top: 1px solid var(--rule);
 }
 .logos-label {
@@ -271,7 +327,7 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--faint);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 .logos-row {
   display: flex;
@@ -300,6 +356,7 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
 /* ---- Секции ----------------------------------------------------------- */
 .section {
   padding: 48px 0;
+  scroll-margin-top: 84px; /* чтобы липкий навбар (~71px) не перекрывал якорь при скролле */
 }
 .section-head {
   display: flex;
@@ -397,7 +454,8 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
 }
 .tl-item {
   position: relative;
-  padding: 0 0 30px 30px;
+  padding: 0 0 26px 30px;
+  max-width: 78ch;
   border-left: 1px solid var(--rule);
   scroll-margin-top: 84px; /* отступ под липкий навбар при скролле по якорю */
 }
@@ -495,6 +553,56 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   font-weight: 600;
 }
 
+/* Сворачиваемый «хвост» опыта. Без JS виден целиком (SEO/AI); JS навешивает
+   .is-collapsed и анимирует max-height. */
+.tl-rest {
+  transition: max-height 0.32s ease, opacity 0.24s ease;
+}
+.tl-rest.is-collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+.tl-toggle {
+  display: none; /* появляется только при включённом JS */
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(110, 168, 254, 0.08);
+  border: 1px solid rgba(110, 168, 254, 0.22);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+html.js .tl-toggle {
+  display: inline-flex;
+}
+.tl-toggle:hover {
+  background: rgba(110, 168, 254, 0.16);
+  border-color: var(--accent);
+}
+.tl-chevron {
+  font-size: 11px;
+  transition: transform 0.2s ease;
+}
+.tl-toggle .tl-toggle-less {
+  display: none;
+}
+.tl-toggle[aria-expanded='true'] .tl-toggle-more {
+  display: none;
+}
+.tl-toggle[aria-expanded='true'] .tl-toggle-less {
+  display: inline;
+}
+.tl-toggle[aria-expanded='true'] .tl-chevron {
+  transform: rotate(180deg);
+}
+
 /* ---- Каталог вариантов ----------------------------------------------- */
 .variants {
   display: grid;
@@ -587,6 +695,169 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   border-color: var(--rule-strong);
 }
 
+/* ---- Помимо работы (увлечения) --------------------------------------- */
+.beyond-lead {
+  margin: -8px 0 22px;
+  max-width: 60ch;
+  color: var(--muted);
+}
+.interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.interest {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  transition: border-color 0.18s, background 0.18s, transform 0.18s;
+}
+.interest:hover {
+  border-color: var(--accent);
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+}
+.interest-ico {
+  font-size: 20px;
+  line-height: 1;
+}
+/* Кликабельный чип увлечения (есть фото) */
+.interest-clickable {
+  font: inherit;
+  cursor: pointer;
+  appearance: none;
+}
+.interest-zoom {
+  margin-left: 2px;
+  font-size: 13px;
+  color: var(--faint);
+  transition: color 0.18s, transform 0.18s;
+}
+.interest-clickable:hover .interest-zoom {
+  color: var(--accent);
+  transform: scale(1.12);
+}
+
+/* Лайтбокс */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(4, 4, 8, 0.82);
+  backdrop-filter: blur(6px);
+}
+.lightbox.open {
+  display: flex;
+  animation: lb-fade 0.2s ease;
+}
+@keyframes lb-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.lightbox-fig {
+  margin: 0;
+  max-width: min(880px, 92vw);
+}
+.lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: 82vh;
+  border-radius: 16px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+}
+.lightbox-cap {
+  margin-top: 14px;
+  text-align: center;
+  color: var(--muted);
+  font-weight: 600;
+}
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.lightbox-close:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+}
+
+.beyond-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 22px;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--accent);
+  transition: gap 0.18s, color 0.18s;
+}
+.beyond-link:hover {
+  color: var(--ink);
+  gap: 13px;
+}
+.beyond-link-ico {
+  color: var(--violet);
+}
+.beyond-link-arrow {
+  transition: transform 0.18s;
+}
+.beyond-link:hover .beyond-link-arrow {
+  transform: translateX(2px);
+}
+
+/* ---- Появление при скролле ------------------------------------------- */
+/* Скрытое стартовое состояние — только при включённом JS, иначе контент
+   остаётся видимым без скриптов (важно для SEO/AI и no-JS). */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+html.js .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+/* Лёгкий стаггер для карточек в сетках/рядах. */
+html.js .results .reveal:nth-child(2),
+html.js .interests .reveal:nth-child(2) {
+  transition-delay: 0.06s;
+}
+html.js .results .reveal:nth-child(3),
+html.js .interests .reveal:nth-child(3) {
+  transition-delay: 0.12s;
+}
+html.js .results .reveal:nth-child(n + 4) {
+  transition-delay: 0.18s;
+}
+
 /* ---- Футер ------------------------------------------------------------ */
 .footer {
   padding: 40px 0 56px;
@@ -612,6 +883,31 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
 }
 
 /* ---- Адаптив ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Портрет уходит наверх, центрируем колонку текста. */
+  .hero-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 28px;
+  }
+  .hero-portrait {
+    order: -1;
+    justify-self: center;
+  }
+  .portrait-frame {
+    width: clamp(132px, 38vw, 168px);
+  }
+  .hero .tagline {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .contacts,
+  .cta-row {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 560px) {
   .hero {
     padding: 40px 0 24px;
@@ -629,5 +925,10 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   }
   * {
     transition: none !important;
+  }
+  /* Reveal-элементы сразу видимы, без анимации появления. */
+  html.js .reveal {
+    opacity: 1;
+    transform: none;
   }
 }
