@@ -16,6 +16,26 @@ const dateRange = (start: string, end: string, lang: Lang) =>
 /** Убираем markdown-жирный `**...**`, оставляя сам текст. */
 const stripBold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '$1');
 
+/**
+ * Текст «поля описания» одной позиции опыта (summary + пункты + группы + стек),
+ * без строки должности/дат/компании — на LinkedIn это отдельные поля.
+ * Используется и рендером, и проверкой лимита (LinkedIn — 2000 символов).
+ */
+export function experienceDescription(
+  e: ResumeDocument['experience'][number],
+  lang: Lang,
+): string {
+  const out: string[] = [];
+  if (e.summary) out.push(stripBold(e.summary));
+  for (const h of e.highlights) out.push(`• ${stripBold(h)}`);
+  for (const g of e.groups) {
+    out.push('', g.title);
+    for (const h of g.highlights) out.push(`• ${stripBold(h)}`);
+  }
+  if (e.stack.length) out.push(`${UI.stack[lang]}: ${e.stack.join(', ')}`);
+  return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
 export function renderPlain(doc: ResumeDocument, sections: Section[]): string {
   const lang = doc.meta.language;
   const out: string[] = [];
@@ -49,13 +69,7 @@ export function renderPlain(doc: ResumeDocument, sections: Section[]): string {
           .filter(Boolean)
           .join(' · ');
         out.push(meta);
-        if (e.summary) out.push(stripBold(e.summary));
-        for (const h of e.highlights) out.push(`• ${stripBold(h)}`);
-        for (const g of e.groups) {
-          out.push('', g.title);
-          for (const h of g.highlights) out.push(`• ${stripBold(h)}`);
-        }
-        if (e.stack.length) out.push(`${UI.stack[lang]}: ${e.stack.join(', ')}`);
+        out.push(experienceDescription(e, lang));
         out.push('');
       }
     }

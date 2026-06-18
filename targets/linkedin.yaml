@@ -9,4 +9,8 @@ audience: hr
 layout: rich
 formats: [html, pdf, md, txt]
 sections: [summary, achievements, experience, skills, languages, education]
-select: {}
+# LinkedIn ограничивает описание позиции 2000 символами. Пункты, помеченные
+# доменным тегом `linkedin-skip`, исключаются только из этого таргета — полные
+# версии остаются на сайте/hh/Habr.
+select:
+  excludeTags: [linkedin-skip]

@@ -38,7 +38,7 @@ groups:
       - text:
           ru: Обеспечил стабильную поставку интерфейсных решений для продуктов с активной пользовательской базой.
           en: Ensured stable delivery of UI solutions for products with an active user base.
-        tags: { audience: [hr, technical] }
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
   - title: { ru: Команды и процессы, en: Teams & process }
     highlights:
       - text:
@@ -48,7 +48,7 @@ groups:
       - text:
           ru: "Принял команды «по наследству»: внедрил процессы, повысил управляемость и прозрачность, выстроил рабочие и доверительные отношения."
           en: "Inherited existing teams: introduced process, improved manageability and transparency, built trust and working relationships."
-        tags: {}
+        tags: { domains: [linkedin-skip] }
       - text:
           ru: Провёл полную замену команды в одном из продуктов с бесшовной интеграцией нового интерфейса на современном стеке — без остановки развития продукта.
           en: Fully replaced a product's team with a seamless migration to a modern-stack UI — without pausing product development.
@@ -60,7 +60,7 @@ groups:
       - text:
           ru: "Перестроил процесс разработки email-писем: вместо связки «дизайнер + разработчик, ~неделя» — один разработчик за пару часов."
           en: Reworked the email-building process — from "designer + developer, ~a week" to one developer in a couple of hours.
-        tags: { audience: [hr, technical] }
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
   - title: { ru: Люди, en: People }
     highlights:
       - text:
@@ -74,11 +74,11 @@ groups:
       - text:
           ru: Повысил автономность команд и снизил bus-factor — уменьшил зависимость от отдельных специалистов.
           en: Increased team autonomy and reduced the bus factor — lowered dependence on individual specialists.
-        tags: { audience: [hr, technical] }
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
       - text:
           ru: Принимал сложные управленческие решения, включая расставание с сотрудниками в рамках оптимизации команды.
           en: Made hard management calls, including parting with team members during team optimisation.
-        tags: { audience: [hr] }
+        tags: { audience: [hr], domains: [linkedin-skip] }
   - title: { ru: Технологии и hands-on, en: Technology & hands-on }
     highlights:
       - text:
@@ -96,7 +96,7 @@ groups:
       - text:
           ru: Прорабатывал архитектурные решения, проводил код-ревью; владею frontend-архитектурой и стандартами разработки интерфейсов.
           en: Shaped architectural decisions and ran code reviews; strong in frontend architecture and UI development standards.
-        tags: { audience: [hr, technical] }
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
       - text:
           ru: Автоматизировал внутренние процессы и tooling на Python — скрипты, вспомогательные сервисы, оптимизация рутинных операций.
           en: Automated internal processes and tooling in Python — scripts, helper services, routine-operation optimisation.
@@ -106,7 +106,7 @@ groups:
       - text:
           ru: Спроектировал и развивал frontend-инфраструктуру команды.
           en: Designed and evolved the team's frontend infrastructure.
-        tags: { audience: [hr, technical] }
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
       - text:
           ru: "Автоматизировал релизный цикл (скрипты + CI/CD): подготовка релиза сократилась с 2 часов до 10 минут."
           en: Automated the release cycle (scripts + CI/CD) — release prep dropped from 2 hours to 10 minutes.
@@ -118,9 +118,9 @@ groups:
       - text:
           ru: Организовал оптимизацию сборки фронтенда — загрузка страниц ускорилась в 2 раза.
           en: Organised frontend build optimisation — page loads became 2× faster.
-        tags: {}
+        tags: { domains: [linkedin-skip] }
       - text:
           ru: Повысил стабильность релизов и предсказуемость поставки, снизил операционную нагрузку на команды.
           en: Improved release stability and delivery predictability, reduced operational load on teams.
-        tags: { audience: [hr, technical] }
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
 stack: [React, Angular, TypeScript, Python, GitLab CI, Jira, Figma]
