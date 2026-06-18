@@ -77,8 +77,8 @@ export const ProfileSchema = z.object({
       }),
     )
     .default([]),
-  /** Личная ссылка для блока «Помимо работы» (нейтральная подпись, без названия площадки). */
-  personalLink: z.string().url().optional(),
+  /** Личная ссылка для блока «Помимо работы» */
+  instagram: z.string().url().optional(),
 });
 export type Profile = z.infer<typeof ProfileSchema>;
 

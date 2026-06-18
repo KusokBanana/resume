@@ -6,28 +6,28 @@ items:
   - id: diving
     icon: 🤿
     priority: 100
-    # photo: interests/diving.jpg
+    photo: interests/diving.jpeg
     label:
       ru: Дайвинг
       en: Scuba diving
   - id: gymnastics
     icon: 🤸
     priority: 90
-    # photo: interests/gymnastics.jpg
+    photo: interests/gymnastics.jpg
     label:
       ru: Спортивная гимнастика
       en: Gymnastics
   - id: skydiving
     icon: 🪂
     priority: 80
-    # photo: interests/skydiving.jpg
+    photo: interests/skydiving.jpg
     label:
       ru: Парашютный спорт
       en: Skydiving
   - id: travel
     icon: 🌍
     priority: 70
-    # photo: interests/travel.jpg
+    photo: interests/travel.jpeg
     label:
       ru: Путешествия
       en: Travel

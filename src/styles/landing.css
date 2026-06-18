@@ -272,8 +272,16 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   transform: translateY(-1px);
 }
 .chip .ico {
-  font-size: 15px;
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted);
+  transition: color 0.15s;
+}
+.chip .ico svg {
+  display: block;
+}
+.chip:hover .ico {
+  color: var(--accent);
 }
 
 /* CTA */

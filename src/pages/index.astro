@@ -3,6 +3,7 @@ import { loadContent } from '../lib/load';
 import { withBase } from '../lib/url';
 import { absUrl } from '../lib/canonical';
 import { renderBold } from '../lib/inline-md';
+import { contactIcon, ICON_EMAIL } from '../lib/icons';
 import { SECTION_TITLES } from '../lib/labels';
 import ExperienceItem from '../components/ExperienceItem.astro';
 import type { Localized, SkillItem } from '../schema/index';
@@ -46,16 +47,9 @@ const interests = [...content.interests.items].sort((a, b) => b.priority - a.pri
 /** Навык: языко-нейтральная строка либо двуязычный термин. */
 const isLocalized = (x: SkillItem): x is Localized => typeof x !== 'string';
 
-/** Глиф для контакт-чипа по `kind`. */
-const contactIcon: Record<string, string> = {
-  habr: '⌘',
-  telegram: '✈',
-  github: '⎇',
-  linkedin: 'in',
-  hh: 'hh',
-};
-
 const year = new Date().getFullYear();
+
+// Контакт-иконки вынесены в src/lib/icons.ts (SVG, наследуют цвет чипа).
 
 // Абсолютные URL для SEO/AI (портируемо: из Astro.site + base).
 const site = Astro.site;
@@ -172,7 +166,7 @@ const jsonLd = {
               {
                 profile.email && (
                   <a class="chip" href={`mailto:${profile.email}`}>
-                    <span class="ico">✉</span>
+                    <span class="ico" set:html={ICON_EMAIL} />
                     <span class="lang-ru">Почта</span>
                     <span class="lang-en">Email</span>
                   </a>
@@ -181,7 +175,7 @@ const jsonLd = {
               {
                 profile.links.map((l) => (
                   <a class="chip" href={l.url} target="_blank" rel="noopener noreferrer">
-                    <span class="ico">{contactIcon[l.kind ?? ''] ?? '↗'}</span>
+                    <span class="ico" set:html={contactIcon(l.kind)} />
                     {l.label}
                   </a>
                 ))
@@ -362,10 +356,10 @@ const jsonLd = {
               )}
             </div>
             {
-              profile.personalLink && (
+              profile.instagram && (
                 <a
                   class="beyond-link reveal"
-                  href={profile.personalLink}
+                  href={profile.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

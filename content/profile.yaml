@@ -12,7 +12,7 @@ email: svyat.dema@yandex.ru
 # Портрет для лендинга. Положи файл в public/ и раскомментируй строку ниже
 # (путь относительно public/, напр. photo.jpg). Пока не задан — в hero показывается
 # градиентная монограмма «SD».
-# photo: photo.jpg
+photo: photo.jpeg
 # Дата рождения держим как данные; рендер опционален и включается отдельным профилем сборки.
 birthYear: 1994
 # GitHub намеренно не указан — добавить при необходимости.
@@ -30,4 +30,4 @@ links:
     url: https://t.me/kusokBanana
     kind: telegram
 # Личная ссылка для блока «Помимо работы» — намеренно без названия площадки в тексте.
-personalLink: https://www.instagram.com/kusokbanana/
+instagram: https://www.instagram.com/kusokbanana/
