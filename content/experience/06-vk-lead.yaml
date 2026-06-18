@@ -4,7 +4,7 @@ companyUrl: https://vk.company/ru/
 logo: logos/vk.svg
 role:
   ru: Руководитель команды разработки «Кабинета выплат» (Team Lead)
-  en: Team Lead — Payouts Dashboard
+  en: Team Lead — Cashout
 location:
   ru: Москва · удалённо
   en: Moscow · remote
@@ -14,17 +14,27 @@ tags:
   domains: [frontend, leadership, fintech]
 summary:
   ru: >-
-    Финтех ВКонтакте — «Кабинет выплат» (выплаты авторам заработка по монетизациям
-    в социальной сети ВКонтакте). Highload-сервис в экосистеме ВКонтакте. Повышение
-    из роли старшего фронтенд-разработчика.
+    Финтех ВКонтакте — «Кабинет выплат» (Cashout): полноценный интерфейс
+    самостоятельного вывода средств, где авторы выбирают источник заработка
+    по монетизациям в соцсети ВКонтакте и выводят нужную сумму. Highload-сервис
+    в экосистеме ВКонтакте. Повышение из роли старшего фронтенд-разработчика.
   en: >-
-    VK fintech — Payouts Dashboard (paying out monetisation earnings to creators on
-    the VKontakte social network). A high-load service within the VK ecosystem.
+    VK fintech — Cashout: a full self-service money-withdrawal product where
+    creators pick a monetisation earnings source on the VKontakte social network
+    and cash out the amount they want. A high-load service within the VK ecosystem.
     Promoted from senior frontend developer.
 highlights:
   - text:
-      ru: Руководил кросс-функциональной командой разработки (4 разработчика) и продуктом «Кабинет выплат».
-      en: Led a cross-functional development team (4 engineers) and the Payouts Dashboard product.
+      ru: Руководил кросс-функциональной командой разработки (4 разработчика) и продуктом «Кабинет выплат» (Cashout).
+      en: Led a cross-functional development team (4 engineers) and the Cashout product.
+    tags: {}
+  - text:
+      ru: >-
+        Развивал ядро продукта — самостоятельный вывод средств: автор выбирает источник
+        заработка и выводит нужную сумму; рядом — аналитика заработка и сопутствующие функции.
+      en: >-
+        Drove the product core — self-service withdrawal: a creator picks an earnings source
+        and cashes out the amount they need; alongside it, earnings analytics and related features.
     tags: {}
   - text:
       ru: "Масштаб сервиса: десятки тысяч авторов и выплаты на десятки миллионов рублей в месяц."
@@ -55,7 +65,7 @@ highlights:
       en: Ran 1:1s and performance reviews, set goals and growth areas for the team.
     tags: { audience: [hr] }
   - text:
-      ru: Hands-on разрабатывал интерфейсы финтеха ВКонтакте и сервиса «Кабинет выплат».
-      en: Hands-on development of VK fintech UIs and the Payouts Dashboard.
+      ru: Hands-on разрабатывал интерфейсы финтеха ВКонтакте и сервиса «Кабинет выплат» (Cashout).
+      en: Hands-on development of VK fintech UIs and the Cashout service.
     tags: {}
 stack: [TypeScript, React]

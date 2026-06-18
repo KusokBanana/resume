@@ -27,6 +27,6 @@ highlights:
     tags: {}
   - text:
       ru: Разрабатывал интерфейсы сервиса «Кабинет выплат».
-      en: Built the Payouts Dashboard service UI.
+      en: Built the Cashout service UI.
     tags: {}
 stack: [TypeScript, React]
