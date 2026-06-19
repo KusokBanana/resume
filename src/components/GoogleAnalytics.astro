@@ -1,0 +1,26 @@
+---
+// Google Analytics 4 (gtag.js). Один источник на все страницы сайта.
+const measurementId = 'G-1ZQRF42WCM';
+---
+
+<!-- Google tag (gtag.js) -->
+<script is:inline define:vars={{ measurementId }}>
+  // При печати PDF (Playwright) страница грузится с ?nostats=1 — не засоряем
+  // статистику синтетическими заходами сборщика.
+  if (!/[?&]nostats=1\b/.test(location.search)) {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
+    document.head.appendChild(s);
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag =
+      window.gtag ||
+      function () {
+        dataLayer.push(arguments);
+      };
+    gtag('js', new Date());
+    gtag('config', measurementId);
+  }
+</script>
+<!-- /Google tag -->
