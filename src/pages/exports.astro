@@ -3,6 +3,7 @@ import { loadContent, loadTargets } from '../lib/load';
 import { variantSlug } from '../lib/slug';
 import { withBase } from '../lib/url';
 import { UI } from '../lib/labels';
+import YandexMetrika from '../components/YandexMetrika.astro';
 import '../styles/landing.css';
 
 // Скрытая служебная страница: нигде не линкуется, закрыта в robots.txt и
@@ -21,6 +22,7 @@ const name = content.profile.name.ru;
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href={withBase(base, 'favicon.svg')} />
     <title>{name} — форматы и экспорт</title>
+    <YandexMetrika />
   </head>
   <body>
     <header class="nav">
