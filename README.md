@@ -1,5 +1,7 @@
 # Резюме как код
 
+[![Открыть резюме](https://img.shields.io/badge/🌐_открыть_резюме-kusokbanana.github.io%2Fresume-2da44e?style=for-the-badge)](https://kusokbanana.github.io/resume/)
+
 Единый структурированный источник истины для резюме. Из модульного YAML
 автоматически собираются цельные резюме под разные **системы** (hh, LinkedIn,
 Habr Career), **форматы** (HTML, PDF, Markdown, JSON Resume), **аудитории**
@@ -110,7 +112,5 @@ npm run tailor -- --job ./vacancy.txt --lang ru --system general --slug acme
 2. В настройках репозитория: **Settings → Pages → Source: GitHub Actions**.
 3. Пуш в `main` запускает [.github/workflows/deploy.yml](.github/workflows/deploy.yml):
    валидация → сборка HTML → генерация MD/JSON/PDF → деплой `dist/` на Pages.
-
-По умолчанию сайт публикуется на `https://kusokbanana.github.io/resume/`. При форке
-поменяй `SITE` в `astro.config.mjs` (или задай env `SITE`/`BASE`).
+   По умолчанию публикуется на `https://kusokbanana.github.io/resume/`.
 ```
