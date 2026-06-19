@@ -878,17 +878,6 @@ html.js .results .reveal:nth-child(n + 4) {
   align-items: center;
   justify-content: center;
 }
-/* Ссылка на исходники — намеренно неприметная. */
-.footer .src {
-  color: var(--faint);
-  text-decoration: none;
-  opacity: 0.45;
-  transition: opacity 0.15s, color 0.15s;
-}
-.footer .src:hover {
-  opacity: 1;
-  color: var(--accent);
-}
 
 /* ---- Адаптив ---------------------------------------------------------- */
 @media (max-width: 768px) {
