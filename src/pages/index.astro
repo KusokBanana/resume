@@ -58,6 +58,8 @@ const site = Astro.site;
 const pageUrl = absUrl(site, base, '');
 const mdRu = absUrl(site, base, 'ru/resume.md');
 const mdEn = absUrl(site, base, 'en/resume.md');
+const llmsUrl = absUrl(site, base, 'llms.txt');
+const jsonEn = absUrl(site, base, 'en/resume.json');
 const ogImage = absUrl(site, base, profile.photo ?? 'favicon.svg');
 
 // JSON-LD schema.org Person — факты прямо в HTML для ИИ/поисковиков.
@@ -79,6 +81,7 @@ const jsonLd = {
     ? { '@type': 'Organization', name: current.company, url: current.companyUrl }
     : undefined,
   knowsLanguage: content.languages.items.map((l) => l.name.en),
+  knowsAbout: profile.keywords?.en,
   alumniOf: content.education.items.map((e) => ({
     '@type': 'CollegeOrUniversity',
     name: e.institution.en,
@@ -105,6 +108,7 @@ const jsonLd = {
     <meta name="twitter:description" content={tagline.text.ru} />
     <link rel="alternate" type="text/markdown" hreflang="ru" href={mdRu} />
     <link rel="alternate" type="text/markdown" hreflang="en" href={mdEn} />
+    <link rel="alternate" type="text/plain" title="llms.txt" href={llmsUrl} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline>
       // Помечаем, что JS активен (включает сворачивание опыта и reveal-анимации).
@@ -387,6 +391,17 @@ const jsonLd = {
           © {year}
           <span class="lang-ru">{profile.name.ru}</span>
           <span class="lang-en">{profile.name.en}</span>
+        </span>
+        <!-- Машиночитаемая версия: видимый указатель для ИИ-ассистентов
+             (которые читают рендер, а не <head>) и сигнал «как данные» для людей. -->
+        <span class="machine">
+          <span class="lang-ru">Это резюме доступно как данные:</span>
+          <span class="lang-en">This resume is available as data:</span>
+          <a href={llmsUrl}>llms.txt</a>
+          <span class="sep" aria-hidden="true">·</span>
+          <a href={mdEn}>Markdown</a>
+          <span class="sep" aria-hidden="true">·</span>
+          <a href={jsonEn}>JSON Resume</a>
         </span>
       </footer>
     </main>

@@ -5,8 +5,8 @@ groups:
       ru: Управление
       en: Management
     items:
-      - ru: найм и развитие команд
-        en: hiring & team growth
+      - ru: найм
+        en: hiring
       - ru: ИПР
         en: individual development plans
       - ru: "1:1"
@@ -36,7 +36,6 @@ groups:
       - React
       - Angular
       - Node.js
-      - Python
       - CI/CD (GitLab CI)
       - Docker
       - Figma
@@ -54,8 +53,7 @@ groups:
         en: high-load UIs
       - ru: дизайн-системы
         en: design systems
-      - ru: FrontOps
-        en: FrontOps
+      - FrontOps
     tags: {}
 
   - id: ai
@@ -64,8 +62,7 @@ groups:
       ru: AI / эффективность
       en: AI / efficiency
     items:
-      - ru: LLM-assisted development (Claude, Cursor) во встроенных процессах команды
-        en: LLM-assisted development (Claude, Cursor) embedded in team workflows
+      - LLM-assisted development (Claude, Cursor)
       - ru: автоматизация рутинных операций
         en: automation of routine operations
     tags: {}
@@ -76,9 +73,9 @@ groups:
       ru: Ранее
       en: Earlier
     items:
+      - Python / Flask / SQLAlchemy
       - PHP / Symfony / Laravel / Yii2
-      - SQL (PostgreSQL, MySQL, Oracle)
-      - MongoDB, Redis
+      - SQL (PostgreSQL, MySQL, Oracle, ...)
+      - NoSQL (MongoDB, Redis, ...)
       - Linux
-      - Flask / SQLAlchemy
     tags: {}

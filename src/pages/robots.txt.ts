@@ -11,6 +11,8 @@ export const GET: APIRoute = ({ site }) => {
     `Disallow: ${withBase(base, 'exports')}`,
     '',
     `Sitemap: ${absUrl(site, base, 'sitemap.xml')}`,
+    // Нестандартная, но безвредная подсказка для ИИ-агентов: точка входа llms.txt.
+    `# LLM-friendly entry point: ${absUrl(site, base, 'llms.txt')}`,
     '',
   ].join('\n');
 

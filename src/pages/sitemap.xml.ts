@@ -10,6 +10,7 @@ export const GET: APIRoute = ({ site }) => {
   const urls = new Set<string>();
 
   urls.add(absUrl(site, base, ''));
+  urls.add(absUrl(site, base, 'llms.txt'));
   for (const lang of ['ru', 'en'] as const) {
     urls.add(absUrl(site, base, `${lang}/resume.md`));
     urls.add(absUrl(site, base, `${lang}/resume.json`));

@@ -3,8 +3,8 @@ name:
   ru: Дёмочкин Святослав Владимирович
   en: Svyatoslav Demochkin
 title:
-  ru: Engineering Manager · Руководитель отдела разработки
-  en: Engineering Manager · Head of Development
+  ru: Head of Engineering · Руководитель разработки
+  en: Head of Engineering
 location:
   ru: Москва · Удалённо, готов к командировкам
   en: Moscow · Remote, open to business trips
@@ -31,3 +31,34 @@ links:
     kind: telegram
 # Личная ссылка для блока «Помимо работы» — намеренно без названия площадки в тексте.
 instagram: https://www.instagram.com/kusokbanana/
+# Целевые ключевые фразы экспертизы → JSON-LD knowsAbout (то, по чему ищет AI-рекрутер).
+# Ручной список лидерских формулировок, не технологии из skills.
+keywords:
+  en:
+    - Head of Engineering
+    - Engineering Leadership
+    - Engineering Management
+    - Frontend Engineering Leadership
+    - Frontend Architecture
+    - Team Building & Scaling
+    - Engineering Hiring
+    - People Management & Development
+    - AI-Assisted Development
+    - Developer Productivity
+    - Design Systems
+    - High-Load Web Applications
+    - Stakeholder Management
+  ru:
+    - Руководитель разработки
+    - Инженерное лидерство
+    - Управление инженерными командами
+    - Руководитель frontend-разработки
+    - Frontend-архитектура
+    - Построение и масштабирование команд
+    - Технический найм
+    - Управление и развитие людей
+    - AI-assisted разработка
+    - Продуктивность разработки
+    - Дизайн-системы
+    - Высоконагруженные веб-приложения
+    - Стейкхолдер-менеджмент

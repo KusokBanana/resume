@@ -79,6 +79,14 @@ export const ProfileSchema = z.object({
     .default([]),
   /** Личная ссылка для блока «Помимо работы» */
   instagram: z.string().url().optional(),
+  /**
+   * Целевые ключевые фразы экспертизы (двуязычно). Отдаются в JSON-LD
+   * `knowsAbout` — это то, по чему AI-рекрутер/поиск матчит профиль.
+   * Ручной список (не из skills): лидерские формулировки, а не технологии.
+   */
+  keywords: z
+    .object({ ru: z.array(z.string()), en: z.array(z.string()) })
+    .optional(),
 });
 export type Profile = z.infer<typeof ProfileSchema>;
 

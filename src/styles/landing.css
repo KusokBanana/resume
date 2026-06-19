@@ -874,9 +874,27 @@ html.js .results .reveal:nth-child(n + 4) {
   color: var(--faint);
   font-size: 13px;
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 8px;
   align-items: center;
   justify-content: center;
+  text-align: center;
+}
+.footer .machine {
+  font-size: 12px;
+  opacity: 0.85;
+}
+.footer .machine a {
+  color: var(--faint);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer .machine a:hover {
+  color: var(--ink, currentColor);
+}
+.footer .machine .sep {
+  margin: 0 4px;
+  opacity: 0.5;
 }
 
 /* ---- Адаптив ---------------------------------------------------------- */

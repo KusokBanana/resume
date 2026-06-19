@@ -9,7 +9,7 @@ import { withBase } from './url';
  */
 export const PRIMARY_TARGET: Target = {
   id: 'full',
-  label: { ru: 'Полное резюме', en: 'Full résumé' },
+  label: { ru: 'Полное резюме', en: 'Full resume' },
   languages: ['ru', 'en'],
   system: 'general',
   audience: 'hr',
