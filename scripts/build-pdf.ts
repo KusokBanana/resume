@@ -8,7 +8,7 @@ import { variantSlug } from '../src/lib/slug';
 
 const DIST = join(ROOT, 'dist');
 const OUT = join(DIST, 'generated');
-const BASE = process.env.BASE ?? '/resume';
+const BASE = process.env.BASE ?? '/';
 const PORT = 4399;
 
 const MIME: Record<string, string> = {

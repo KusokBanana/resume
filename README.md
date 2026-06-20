@@ -1,6 +1,6 @@
 # Резюме как код
 
-[![Открыть резюме](https://img.shields.io/badge/🌐_открыть_резюме-kusokbanana.github.io%2Fresume-2da44e?style=for-the-badge)](https://kusokbanana.github.io/resume/)
+[![Открыть резюме](https://img.shields.io/badge/🌐_открыть_резюме-kusokbanana.ru-2da44e?style=for-the-badge)](https://kusokbanana.ru/)
 
 Единый структурированный источник истины для резюме. Из модульного YAML
 автоматически собираются цельные резюме под разные **системы** (hh, LinkedIn,
@@ -107,10 +107,16 @@ npm run tailor -- --job ./vacancy.txt --lang ru --system general --slug acme
 
 ## GitHub Pages
 
-1. В [astro.config.mjs](astro.config.mjs) `base` по умолчанию `/resume`. В CI он
-   подставляется автоматически из `actions/configure-pages`.
-2. В настройках репозитория: **Settings → Pages → Source: GitHub Actions**.
-3. Пуш в `main` запускает [.github/workflows/deploy.yml](.github/workflows/deploy.yml):
+Сайт публикуется на кастомном домене **`kusokbanana.ru`** (apex). Старый адрес
+`kusokbanana.github.io/resume/` GitHub автоматически 301-редиректит на домен.
+
+1. Домен привязан файлом [public/CNAME](public/CNAME) + **Settings → Pages →
+   Custom domain** = `kusokbanana.ru`, **Enforce HTTPS** включён.
+   DNS: A-записи apex на `185.199.108.153/.109.153/.110.153/.111.153`.
+2. `base` = `/` и `site` = `https://kusokbanana.ru` заданы дефолтами в
+   [astro.config.mjs](astro.config.mjs) (на `configure-pages` намеренно не
+   полагаемся — для кастомного домена он отдавал `/resume`).
+3. В настройках репозитория: **Settings → Pages → Source: GitHub Actions**.
+4. Пуш в `main` запускает [.github/workflows/deploy.yml](.github/workflows/deploy.yml):
    валидация → сборка HTML → генерация MD/JSON/PDF → деплой `dist/` на Pages.
-   По умолчанию публикуется на `https://kusokbanana.github.io/resume/`.
 ```

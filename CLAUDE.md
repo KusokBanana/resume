@@ -18,7 +18,7 @@ npm run build:md     # рендер Markdown → dist/generated/
 npm run build:json   # рендер JSON Resume → dist/generated/
 npm run build:pdf    # Playwright печатает собранный HTML → dist/generated/*.pdf
 npm run build:all    # build + md + json + pdf (правильный порядок)
-npm run preview      # отдаёт dist/ с base /resume (http://localhost:4321/resume/)
+npm run preview      # отдаёт dist/ в корне (http://localhost:4321/)
 npm run tailor -- --job <файл|текст> --lang ru --system general --slug acme   # подбор под вакансию (LLM/эвристика)
 ```
 
@@ -43,9 +43,9 @@ npm run tailor -- --job <файл|текст> --lang ru --system general --slug 
 ### Конвенции и подводные камни
 
 - **Импорты только относительные, без алиаса `@/`** — tsx-скрипты не резолвят `paths` из tsconfig, поэтому `@/` сломает CLI-скрипты. Новые импорты держи относительными.
-- **Base-путь GitHub Pages**: ссылки строй через `withBase(base, path)` ([src/lib/url.ts](src/lib/url.ts)). Здесь `import.meta.env.BASE_URL` равен `/resume` *без* завершающего слеша, поэтому наивная конкатенация `${base}${path}` даёт `/resumehh/ru`. Никогда не склеивай base вручную.
+- **Base-путь GitHub Pages**: ссылки строй через `withBase(base, path)` ([src/lib/url.ts](src/lib/url.ts)). Сейчас сайт на кастомном домене и `base` = `/`, но хелпер по-прежнему обязателен: `import.meta.env.BASE_URL` может быть `/` или (при форке) `/<repo>` без завершающего слеша — наивная конкатенация `${base}${path}` даёт `/resumehh/ru`. Никогда не склеивай base вручную.
 - **YAML**: любой скаляр с `": "` (двоеточие-пробел) нужно закавычивать, иначе парсер примет его за вложенный mapping. Особенно бьёт по длинным русским текстам пунктов.
-- **CI переопределяет base/site**: дефолты в [astro.config.mjs](astro.config.mjs) (`/resume`, `kusokbanana.github.io`) в CI заменяются выводом `actions/configure-pages` через env `SITE`/`BASE` в [.github/workflows/deploy.yml](.github/workflows/deploy.yml). Не хардкодь задеплоенный URL.
+- **base/site — дефолты в [astro.config.mjs](astro.config.mjs)** (`site=https://kusokbanana.ru`, `base=/`). Кастомный домен привязан через [public/CNAME](public/CNAME). На `actions/configure-pages` намеренно НЕ полагаемся: для кастомного домена он отдавал `base=/resume` и ломал пути к ассетам ([.github/workflows/deploy.yml](.github/workflows/deploy.yml) собирает на дефолтах). Переопределить можно env `SITE`/`BASE` (для форка на `<user>.github.io/<repo>`).
 
 ## Добавление контента
 

@@ -35,11 +35,11 @@ jobs:
       - name: Validate content
         run: npm run validate
 
+      # site/base берутся из дефолтов astro.config.mjs (kusokbanana.ru, base '/').
+      # configure-pages для кастомного домена ненадёжно отдавал base '/resume',
+      # поэтому на его outputs больше не полагаемся.
       - name: Build HTML
         run: npm run build
-        env:
-          SITE: ${{ steps.pages.outputs.origin }}
-          BASE: ${{ steps.pages.outputs.base_path }}
 
       - name: Generate MD + JSON + TXT
         run: |
@@ -52,8 +52,6 @@ jobs:
 
       - name: Generate PDF
         run: npm run build:pdf
-        env:
-          BASE: ${{ steps.pages.outputs.base_path }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

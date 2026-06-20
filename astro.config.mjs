@@ -1,13 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Для GitHub Pages.
-// Если репозиторий называется `resume` и публикуется на <user>.github.io/resume —
-// оставь base: '/resume'. Если используешь кастомный домен или репозиторий
-// <user>.github.io — поставь base: '/'.
-// При форке замени на свой GitHub username, либо задай через env SITE/BASE.
-const SITE = process.env.SITE ?? 'https://kusokbanana.github.io';
-const BASE = process.env.BASE ?? '/resume';
+// Для GitHub Pages на кастомном домене kusokbanana.ru — сайт в корне (base '/').
+// Если форкаешь и публикуешь на <user>.github.io/<repo> — задай env BASE='/<repo>'
+// и SITE='https://<user>.github.io' (или поставь свой домен ниже).
+const SITE = process.env.SITE ?? 'https://kusokbanana.ru';
+const BASE = process.env.BASE ?? '/';
 
 export default defineConfig({
   site: SITE,
