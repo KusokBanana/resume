@@ -5,6 +5,7 @@ import { withBase } from '../lib/url';
 import { UI } from '../lib/labels';
 import YandexMetrika from '../components/YandexMetrika.astro';
 import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+import FaviconLinks from '../components/FaviconLinks.astro';
 import '../styles/landing.css';
 
 // Скрытая служебная страница: нигде не линкуется, закрыта в robots.txt и
@@ -21,7 +22,7 @@ const name = content.profile.name.ru;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <link rel="icon" type="image/svg+xml" href={withBase(base, 'favicon.svg')} />
+    <FaviconLinks />
     <title>{name} — форматы и экспорт</title>
     <YandexMetrika />
     <GoogleAnalytics />

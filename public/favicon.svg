@@ -1,6 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#2563eb"/>
-  <text x="50%" y="52%" dominant-baseline="central" text-anchor="middle"
-        font-family="-apple-system, Segoe UI, Roboto, sans-serif"
-        font-size="34" font-weight="700" fill="#fff">SD</text>
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Banana peel -->
+  <circle
+      cx="128"
+      cy="128"
+      r="112"
+      fill="#F2B400"/>
+
+  <!-- Banana flesh -->
+  <circle
+      cx="128"
+      cy="128"
+      r="101"
+      fill="#F8F4E8"/>
+
+  <!-- Graph -->
+
+  <g
+      stroke="#E1A500"
+      stroke-width="10"
+      stroke-linecap="round"
+      fill="#E1A500">
+
+      <!-- spokes -->
+      <line x1="128" y1="128" x2="128" y2="62"/>
+      <line x1="128" y1="128" x2="186" y2="95"/>
+      <line x1="128" y1="128" x2="186" y2="161"/>
+      <line x1="128" y1="128" x2="128" y2="194"/>
+      <line x1="128" y1="128" x2="70" y2="161"/>
+      <line x1="128" y1="128" x2="70" y2="95"/>
+
+      <!-- center -->
+      <circle cx="128" cy="128" r="12" fill="#F8F4E8" stroke="#E1A500"/>
+
+      <!-- nodes -->
+      <circle cx="128" cy="62" r="11"/>
+      <circle cx="186" cy="95" r="11"/>
+      <circle cx="186" cy="161" r="11"/>
+      <circle cx="128" cy="194" r="11"/>
+      <circle cx="70" cy="161" r="11"/>
+      <circle cx="70" cy="95" r="11"/>
+
+  </g>
+
 </svg>

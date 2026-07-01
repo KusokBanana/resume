@@ -8,6 +8,7 @@ import { SECTION_TITLES } from '../lib/labels';
 import ExperienceItem from '../components/ExperienceItem.astro';
 import YandexMetrika from '../components/YandexMetrika.astro';
 import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+import FaviconLinks from '../components/FaviconLinks.astro';
 import type { Localized, SkillItem } from '../schema/index';
 import '../styles/landing.css';
 
@@ -94,7 +95,7 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href={withBase(base, 'favicon.svg')} />
+    <FaviconLinks />
     <title>{name} — резюме</title>
     <meta name="description" content={`${profile.title.ru} · ${tagline.text.ru}`} />
     <link rel="canonical" href={pageUrl} />

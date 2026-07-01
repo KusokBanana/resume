@@ -8,6 +8,7 @@ import { UI } from '../../../lib/labels';
 import Resume from '../../../components/Resume.astro';
 import YandexMetrika from '../../../components/YandexMetrika.astro';
 import GoogleAnalytics from '../../../components/GoogleAnalytics.astro';
+import FaviconLinks from '../../../components/FaviconLinks.astro';
 import '../../../styles/resume.css';
 
 export function getStaticPaths() {
@@ -41,7 +42,7 @@ const mdCanonical = absUrl(site, base, `${lang}/resume.md`);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <link rel="icon" type="image/svg+xml" href={withBase(base, 'favicon.svg')} />
+    <FaviconLinks />
     <title>{doc.profile.name} — {doc.meta.label} ({lang.toUpperCase()})</title>
     <meta name="description" content={doc.summary ?? doc.profile.title} />
     <link rel="canonical" href={canonical} />
