@@ -2,6 +2,12 @@
 dist/
 .astro/
 
+# приватные артефакты поиска работы / писем (репо публичный — не коммитим)
+out/
+# подобранные под вакансию таргеты не публикуем по умолчанию;
+# чтобы опубликовать конкретный — `git add -f targets/tailored-<slug>.yaml`
+targets/tailored-*.yaml
+
 # dependencies
 node_modules/
 

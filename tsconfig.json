@@ -12,6 +12,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "scripts", "*.ts", "*.mjs"],
+  "include": ["src", "scripts", "cli", "*.ts", "*.mjs"],
   "exclude": ["dist", "node_modules"]
 }

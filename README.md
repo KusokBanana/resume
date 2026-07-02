@@ -22,7 +22,9 @@ content/   — ЕДИНЫЙ ИСТОЧНИК ИСТИНЫ (двуязычный 
              languages, education. projects/ — опционально.
 targets/   — ПРОФИЛИ СБОРКИ (язык(и) + система + аудитория + форматы + правила отбора)
 src/       — движок (Zod-схемы, compose, рендереры) + Astro-сайт
-scripts/   — генерация MD/JSON/PDF + LLM-подбор под вакансию (tailor)
+scripts/   — сборка сайта: генерация MD/JSON/TXT/PDF, валидация
+cli/       — локальные AI-инструменты поиска работы (подбор резюме, письмо,
+             поиск/сопоставление вакансий) — см. cli/README.md
 ```
 
 Опыт может быть плоским (`highlights`) или сгруппированным по подсекциям
@@ -92,18 +94,17 @@ formats: [html, pdf, md] # html | pdf | md | json
 select: {}               # правила отбора блоков (по желанию)
 ```
 
-## Идеальное резюме под вакансию (LLM)
+## AI-инструменты поиска работы (CLI)
 
-```bash
-npm run tailor -- --job ./vacancy.txt --lang ru --system general --slug acme
-```
+Локальные команды на OpenAI, отдельные от сборки сайта:
 
-Сейчас [scripts/tailor.ts](scripts/tailor.ts) работает по эвристике (пересечение
-ключевых слов) и пишет предложенный `targets/tailored-<slug>.yaml`, который ты
-ревьюишь перед сборкой (human-in-the-loop). В файле есть спроектированный промпт и
-референс-реализация вызова Claude (`claude-opus-4-8`) — чтобы включить смысловой
-подбор, поставь `@anthropic-ai/sdk`, добавь `ANTHROPIC_API_KEY` в `.env`
-(см. [.env.example](.env.example)) и подключи `tailorWithClaude`.
+- **подбор резюме под вакансию** (`tailor`) — отбирает блоки и пишет `targets/tailored-<slug>.yaml`;
+- **сопроводительное письмо** (`cover-letter`) — по фактам резюме → `out/cover-letters/`;
+- **поиск и сопоставление вакансий** (`find-jobs`) — hh.ru API / ручной файл → `out/jobs/`;
+- **связка** (`apply`) — по выбранной вакансии запускает подбор + письмо.
+
+Живут в [cli/](cli/), результаты пишутся приватно (`out/`, в `.gitignore`).
+Полное руководство, флаги и настройка ключа — в **[cli/README.md](cli/README.md)**.
 
 ## GitHub Pages
 

@@ -15,7 +15,10 @@
     "build:pdf": "tsx scripts/build-pdf.ts",
     "build:favicons": "tsx scripts/build-favicons.ts",
     "build:all": "npm run build && npm run build:md && npm run build:json && npm run build:txt && npm run build:pdf",
-    "tailor": "tsx scripts/tailor.ts"
+    "tailor": "tsx cli/tailor.ts",
+    "cover-letter": "tsx cli/cover-letter.ts",
+    "find-jobs": "tsx cli/find-jobs.ts",
+    "apply": "tsx cli/apply.ts"
   },
   "dependencies": {
     "astro": "^5.13.0",
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
+    "openai": "^6.45.0",
     "playwright": "^1.49.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0"

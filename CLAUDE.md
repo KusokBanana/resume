@@ -20,6 +20,10 @@ npm run build:pdf    # Playwright печатает собранный HTML → d
 npm run build:all    # build + md + json + pdf (правильный порядок)
 npm run preview      # отдаёт dist/ в корне (http://localhost:4321/)
 npm run tailor -- --job <файл|текст> --lang ru --system general --slug acme   # подбор под вакансию (LLM/эвристика)
+npm run cover-letter -- --job <файл|текст> --lang ru --slug acme --company Acme  # письмо (нужен OPENAI_API_KEY) → out/cover-letters/
+npm run find-jobs -- --source hh --lang ru --top 10 --out hh-lead             # поиск вакансий hh.ru + сопоставление → out/jobs/
+npm run find-jobs -- --source file --file ./vacancies.yaml --lang ru --out manual  # тот же поиск из ручного файла (любая площадка)
+npm run apply -- --from hh-lead --id <vacancyId> --lang ru                    # по вакансии из find-jobs: tailor + письмо
 ```
 
 Фреймворка юнит-тестов **нет**. `npm run validate` — это шлюз проверки: запускай после любого изменения content или схемы; при ошибке Zod указывает точный файл и поле.
@@ -52,9 +56,20 @@ npm run tailor -- --job <файл|текст> --lang ru --system general --slug 
 - **Новое место работы**: создай `content/experience/NN-name.yaml` со *следующим* номером (новейшее = наибольший номер; порядок на странице — по дате, не по имени файла и не по priority). Заполни двуязычные поля, `start`/`end`, `tags`. Запусти `npm run validate`.
 - **Новый target/площадка**: добавь `targets/<name>.yaml` (`languages`, `system`, `audience`, `layout`, `formats`, `select`). Он автоматически появится на лендинге и в `getStaticPaths`.
 
-## LLM-подбор под вакансию
+## LLM-команды (OpenAI): подбор, письмо, поиск работы
 
-[scripts/tailor.ts](scripts/tailor.ts) сейчас использует эвристику по ключевым словам и пишет ревьюируемый `targets/tailored-<slug>.yaml` (human-in-the-loop). Интеграция с Claude спроектирована, но не подключена: она использовала бы `@anthropic-ai/sdk` с моделью `claude-opus-4-8` и `ANTHROPIC_API_KEY` из `.env`. Для обычной сборки ключ не нужен.
+**Живут в [cli/](cli/) — отдельно от сборки сайта** (`scripts/` + Astro не зависят от `openai`). Полное руководство по флагам и настройке ключа — в [cli/README.md](cli/README.md). CLI переиспользует движок резюме из `src` (только `loadContent` + схемы), но сайт CLI не импортирует.
+
+Общая инфраструктура в [cli/lib/llm.ts](cli/lib/llm.ts) (`callStructured` — Responses API + Structured Outputs по zod-схеме; `hasOpenAIKey`; `modelName`; загрузка `.env` через нативный `process.loadEnvFile()`, без `dotenv`) и [cli/lib/catalog.ts](cli/lib/catalog.ts) (`catalog`, `keywordScore`/`resumeWords` — дешёвый предфильтр, `profileFacts`). Ключ — **OpenAI API** (`platform.openai.com`), НЕ подписка ChatGPT (раздельные продукты, тарификация по токенам). Модель по умолчанию — `DEFAULT_MODEL` в `llm.ts`; переопределяется env `OPENAI_MODEL` (нужна поддержка Structured Outputs: GPT-4o+/серия GPT-5).
+
+Команды поверх общего слоя:
+
+- **[cli/tailor.ts](cli/tailor.ts)** (`runTailor`) — пишет ревьюируемый `targets/tailored-<slug>.yaml`. LLM выбирает/ранжирует блоки и предлагает переформулировку summary (комментарием в шапке YAML, не подменяя `content/`). Без ключа/при ошибке — откат на эвристику по ключевым словам.
+- **[cli/cover-letter.ts](cli/cover-letter.ts)** (`runCoverLetter`) — письмо строго по фактам резюме → `out/cover-letters/<slug>-<lang>.md`. **Без ключа не работает** (фолбэка нет — письмо без LLM бессмысленно).
+- **[cli/find-jobs.ts](cli/find-jobs.ts)** (`runFindJobs`/`loadMatches`) — сбор вакансий (hh.ru API через [cli/lib/hh.ts](cli/lib/hh.ts) или ручной YAML/JSON-файл) → **два этапа**: дешёвый предфильтр по словам резюме (top-N), затем LLM-ранжирование только top-N одним батч-вызовом (для hh детальные описания тянутся лишь для top-N). Выдача → `out/jobs/<slug>.{json,md}` + таблица в терминал. Без ключа — только эвристический скор.
+- **[cli/apply.ts](cli/apply.ts)** — связка: по `--from <slug> --id <vacancyId>` из результатов find-jobs запускает `runTailor` + `runCoverLetter`.
+
+**Приватность**: `out/` и `targets/tailored-*.yaml` — в `.gitignore` (репо публичный, не светим намерения по поиску работы). Чтобы опубликовать конкретный подобранный вариант на сайте — `git add -f targets/tailored-<slug>.yaml`. hh.ru API: поиск без авторизации, но обязателен заголовок `User-Agent` (см. `hh.ts`).
 
 ## Git
 
