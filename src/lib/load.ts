@@ -15,6 +15,8 @@ import {
   LanguagesSchema,
   EducationSchema,
   InterestsSchema,
+  StatsSchema,
+  ThesesSchema,
   TargetSchema,
 } from '../schema/index';
 
@@ -94,6 +96,20 @@ export function loadContent(): Content {
       : { items: [] },
     'content/interests.yaml',
   );
+  const stats = validate(
+    StatsSchema,
+    existsSync(join(CONTENT_DIR, 'stats.yaml'))
+      ? readYaml(join(CONTENT_DIR, 'stats.yaml'))
+      : { items: [] },
+    'content/stats.yaml',
+  );
+  const theses = validate(
+    ThesesSchema,
+    existsSync(join(CONTENT_DIR, 'theses.yaml'))
+      ? readYaml(join(CONTENT_DIR, 'theses.yaml'))
+      : { items: [] },
+    'content/theses.yaml',
+  );
 
   const experience = listYaml(join(CONTENT_DIR, 'experience')).map((p) =>
     validate(ExperienceSchema, readYaml(p), `content/experience/${basename(p)}`),
@@ -112,6 +128,8 @@ export function loadContent(): Content {
     languages,
     education,
     interests,
+    stats,
+    theses,
   };
 }
 

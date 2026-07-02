@@ -1,0 +1,26 @@
+# Ёмкие лидерские тезисы для блока под полосой цифр (только лендинг).
+# text двуязычен, поддерживает **акцент** (рендерится через renderBold). Порядок — по priority.
+items:
+  - id: one-on-ones
+    priority: 100
+    text:
+      ru: "Провожу **1×1 не для галочки**: решаем проблемы и предотвращаем кризисы."
+      en: "I run **1-on-1s that aren't a formality**: we solve problems and prevent crises."
+
+  - id: autonomy
+    priority: 90
+    text:
+      ru: "Строю **автономные команды** — тащат результат без микроменеджмента."
+      en: "I build **autonomous teams** that deliver without micromanagement."
+
+  - id: hands-on
+    priority: 80
+    text:
+      ru: "Совмещаю **стратегию и hands-on код** — говорю с командой на одном языке."
+      en: "I combine **strategy with hands-on code** — I speak the team's language."
+
+  - id: grow
+    priority: 70
+    text:
+      ru: "Под моим крылом **рождаются сеньоры и лиды**."
+      en: "I take people under my wing — **they grow into seniors and leads**."

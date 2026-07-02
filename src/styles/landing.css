@@ -428,6 +428,66 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   font-weight: 700;
 }
 
+/* ---- Полоса цифр (продающая, под hero) ------------------------------- */
+.stats-band {
+  display: grid;
+  /* 140px даёт ровно 6 колонок в ряд при maxw 980 (иначе 6 цифр ложатся как 5+1). */
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 24px 12px;
+  margin: 4px 0 8px;
+  padding: 30px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.stat {
+  text-align: center;
+  padding: 0 8px;
+}
+.stat-value {
+  font-size: clamp(2.1rem, 6vw, 3.3rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(120deg, #fff 20%, var(--accent) 70%, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stat-label {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+/* ---- Тезисы (лидерские принципы) ------------------------------------- */
+.theses {
+  display: grid;
+  gap: 12px;
+  padding: 40px 0 8px;
+}
+.thesis {
+  margin: 0;
+  padding: 14px 18px;
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface);
+  font-size: clamp(1.02rem, 2.2vw, 1.26rem);
+  line-height: 1.4;
+  color: var(--muted);
+  transition: border-color 0.18s, background 0.18s, transform 0.18s;
+}
+.thesis:hover {
+  border-left-color: var(--violet);
+  background: var(--surface-hover);
+  transform: translateX(2px);
+}
+.thesis strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
 /* ---- Навыки ----------------------------------------------------------- */
 .skill-groups {
   display: grid;
@@ -865,6 +925,15 @@ html.js .interests .reveal:nth-child(3) {
 html.js .results .reveal:nth-child(n + 4) {
   transition-delay: 0.18s;
 }
+html.js .theses .reveal:nth-child(2) {
+  transition-delay: 0.06s;
+}
+html.js .theses .reveal:nth-child(3) {
+  transition-delay: 0.12s;
+}
+html.js .theses .reveal:nth-child(n + 4) {
+  transition-delay: 0.18s;
+}
 
 /* ---- Футер ------------------------------------------------------------ */
 .footer {
@@ -930,6 +999,11 @@ html.js .results .reveal:nth-child(n + 4) {
   .cta-row .btn {
     flex: 1 1 auto;
     justify-content: center;
+  }
+  /* Полоса цифр — ровно 2 колонки, чтобы не рвалась на узких экранах. */
+  .stats-band {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px 10px;
   }
 }
 

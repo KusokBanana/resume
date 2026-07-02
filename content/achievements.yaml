@@ -12,8 +12,8 @@ items:
     priority: 95
     tags: {}
     text:
-      ru: "**Удержал отдел без единого добровольного ухода за 2 года** — на фоне турбулентности в компании (урезание бюджетов, массовые сокращения)."
-      en: "**Zero voluntary attrition over 2 years** — amid company turbulence (budget cuts, mass layoffs)."
+      ru: "**91% удержание команды за 2 года** — сохранил ядро отдела на фоне турбулентности в компании (урезание бюджетов, массовые сокращения)."
+      en: "**91% team retention over 2 years** — kept the core of the department through company turbulence (budget cuts, mass layoffs)."
 
   - id: growth
     priority: 90

@@ -47,6 +47,10 @@ const companyLogos = experience
 // Личные увлечения — только для лендинга, по priority по убыванию.
 const interests = [...content.interests.items].sort((a, b) => b.priority - a.priority);
 
+// Продающая полоса цифр и лидерские тезисы — только лендинг, по priority по убыванию.
+const stats = [...content.stats.items].sort((a, b) => b.priority - a.priority);
+const theses = [...content.theses.items].sort((a, b) => b.priority - a.priority);
+
 /** Навык: языко-нейтральная строка либо двуязычный термин. */
 const isLocalized = (x: SkillItem): x is Localized => typeof x !== 'string';
 
@@ -243,6 +247,44 @@ const jsonLd = {
           )
         }
       </section>
+
+      <!-- ПОЛОСА ЦИФР -->
+      {
+        stats.length > 0 && (
+          <section class="stats-band reveal" aria-label="Ключевые цифры">
+            {stats.map((s) => (
+              <div class="stat">
+                <div class="stat-value">
+                  <span class="lang-ru" data-count>
+                    {s.value.ru}
+                  </span>
+                  <span class="lang-en" data-count>
+                    {s.value.en}
+                  </span>
+                </div>
+                <div class="stat-label">
+                  <span class="lang-ru">{s.label.ru}</span>
+                  <span class="lang-en">{s.label.en}</span>
+                </div>
+              </div>
+            ))}
+          </section>
+        )
+      }
+
+      <!-- ТЕЗИСЫ -->
+      {
+        theses.length > 0 && (
+          <section class="theses" aria-label="Принципы">
+            {theses.map((t) => (
+              <p class="thesis reveal">
+                <span class="lang-ru" set:html={renderBold(t.text.ru)} />
+                <span class="lang-en" set:html={renderBold(t.text.en)} />
+              </p>
+            ))}
+          </section>
+        )
+      }
 
       <!-- РЕЗУЛЬТАТЫ -->
       <section class="section" id="results">
@@ -490,6 +532,54 @@ const jsonLd = {
           revealables.forEach(function (el) {
             io.observe(el);
           });
+        }
+
+        // --- Count-up для полосы цифр: докручиваем числовой префикс от 0.
+        // Без анимации значения уже в DOM (важно для no-JS/reduce-motion/SEO).
+        var band = document.querySelector('.stats-band');
+        if (band && !reduce && 'IntersectionObserver' in window) {
+          // У каждого числа парсим ведущий целый префикс: «50+»→50, «91%»→91,
+          // «10+ лет»→10. Если целого префикса нет («1,5×») — оставляем как есть.
+          var counters = [];
+          band.querySelectorAll('[data-count]').forEach(function (el) {
+            var full = el.textContent;
+            var m = /^(\d+)/.exec(full.trim());
+            if (!m) return;
+            var suffix = full.trim().slice(m[1].length); // «+», «%», « лет»…
+            // Дробные («1,5×», «1.5×») не крутим — 0→1 смотрится странно.
+            if (/^[.,]/.test(suffix)) return;
+            var target = parseInt(m[1], 10);
+            counters.push({ el: el, target: target, suffix: suffix });
+            el.textContent = '0' + suffix;
+          });
+          if (counters.length) {
+            var DURATION = 850;
+            var animate = function (start) {
+              var step = function (now) {
+                var p = Math.min((now - start) / DURATION, 1);
+                var eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+                counters.forEach(function (c) {
+                  c.el.textContent = Math.round(eased * c.target) + c.suffix;
+                });
+                if (p < 1) requestAnimationFrame(step);
+              };
+              requestAnimationFrame(step);
+            };
+            var cio = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (entry) {
+                  if (entry.isIntersecting) {
+                    cio.unobserve(entry.target);
+                    requestAnimationFrame(function (t) {
+                      animate(t);
+                    });
+                  }
+                });
+              },
+              { threshold: 0.35 },
+            );
+            cio.observe(band);
+          }
         }
 
         // --- Лайтбокс фото увлечений.

@@ -224,6 +224,44 @@ export const InterestsSchema = z.object({
 });
 export type Interests = z.infer<typeof InterestsSchema>;
 
+/**
+ * Крупные метрики для «продающей» полосы под hero — только лендинг.
+ * Намеренно НЕ протаскивается через compose/ResumeDocument/экспорты.
+ */
+export const StatsSchema = z.object({
+  items: z
+    .array(
+      z.object({
+        id: z.string(),
+        /** Значение метрики, напр. «50+», «91%», «1,5×». Двуязычно (единицы могут отличаться). */
+        value: Localized,
+        /** Подпись под числом, напр. «собеседований провёл». */
+        label: Localized,
+        priority: z.number().default(0),
+      }),
+    )
+    .default([]),
+});
+export type Stats = z.infer<typeof StatsSchema>;
+
+/**
+ * Ёмкие лидерские тезисы под полосой цифр — только лендинг.
+ * Намеренно НЕ протаскивается через compose/ResumeDocument/экспорты.
+ */
+export const ThesesSchema = z.object({
+  items: z
+    .array(
+      z.object({
+        id: z.string(),
+        /** Текст тезиса; поддерживает **акцент** (renderBold). */
+        text: Localized,
+        priority: z.number().default(0),
+      }),
+    )
+    .default([]),
+});
+export type Theses = z.infer<typeof ThesesSchema>;
+
 /** Весь загруженный и провалидированный content. */
 export interface Content {
   profile: Profile;
@@ -235,6 +273,8 @@ export interface Content {
   languages: Languages;
   education: Education;
   interests: Interests;
+  stats: Stats;
+  theses: Theses;
 }
 
 // ---- Target (профиль сборки) -------------------------------------------
