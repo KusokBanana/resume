@@ -17,6 +17,13 @@ export const GET: APIRoute = ({ params }) => {
   // BOM: статический хостинг отдаёт .md как text/markdown без charset; BOM
   // заставляет браузер распознать UTF-8 (иначе кириллица — кракозябры).
   return new Response(BOM + md, {
-    headers: { 'Content-Type': 'text/markdown; charset=utf-8' },
+    headers: {
+      'Content-Type': 'text/markdown; charset=utf-8',
+      // Имя файла при сохранении. NB: на статическом GitHub Pages заголовки
+      // Response игнорируются (файл отдаётся по расширению) — действует только
+      // в astro dev/preview или при переходе на SSR. Для прод-скачивания имя
+      // задаёт атрибут download="…" на ссылках (см. exports.astro).
+      'Content-Disposition': `inline; filename="resume-${lang}.md"`,
+    },
   });
 };

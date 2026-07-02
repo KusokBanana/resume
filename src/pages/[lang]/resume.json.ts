@@ -13,6 +13,11 @@ export const GET: APIRoute = ({ params }) => {
   const lang = params.lang as Lang;
   const json = toJsonResume(fullDoc(loadContent(), lang));
   return new Response(JSON.stringify(json, null, 2), {
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      // См. resume.md.ts: на статике GitHub Pages не действует; имя файла в
+      // проде задаёт download="…" на ссылках (exports.astro).
+      'Content-Disposition': `inline; filename="resume-${lang}.json"`,
+    },
   });
 };
