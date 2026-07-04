@@ -34,6 +34,10 @@ const site = Astro.site;
 const canonical = absUrl(site, base, `exports/${doc.meta.targetId}/${lang}`);
 const otherUrl = absUrl(site, base, `exports/${doc.meta.targetId}/${other}`);
 const mdCanonical = absUrl(site, base, `${lang}/resume.md`);
+// Заголовок собираем строкой: смешивание литерала «)» и выражения прямо перед
+// </title> заставляло Astro «выдавливать» закрывающую скобку в тело (мусорная «)»
+// вверху PDF/страницы).
+const pageTitle = `${doc.profile.name} — ${doc.meta.label} (${lang.toUpperCase()})`;
 ---
 
 <!doctype html>
@@ -43,7 +47,7 @@ const mdCanonical = absUrl(site, base, `${lang}/resume.md`);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
     <FaviconLinks />
-    <title>{doc.profile.name} — {doc.meta.label} ({lang.toUpperCase()})</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={doc.summary ?? doc.profile.title} />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang={lang} href={canonical} />

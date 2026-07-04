@@ -119,10 +119,6 @@ groups:
           en: Introduced fully automated package build and publish (push → merge → release) — with zero manual steps.
         tags: { audience: [technical] }
       - text:
-          ru: Организовал оптимизацию сборки фронтенда — загрузка страниц ускорилась в 2 раза.
-          en: Organised frontend build optimisation — page loads became 2× faster.
-        tags: { domains: [linkedin-skip] }
-      - text:
           ru: Повысил стабильность релизов и предсказуемость поставки, снизил операционную нагрузку на команды.
           en: Improved release stability and delivery predictability, reduced operational load on teams.
         tags: { audience: [hr, technical], domains: [linkedin-skip] }

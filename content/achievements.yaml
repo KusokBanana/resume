@@ -56,10 +56,3 @@ items:
     text:
       ru: "**Снизил стоимость разработки email-писем** — с «дизайнер + разработчик, ~неделя» до «один разработчик, пара часов»."
       en: "**Cut the cost of building emails** — from “designer + developer, ~a week” to “one developer, a couple of hours”."
-
-  - id: page-load
-    priority: 60
-    tags: {}
-    text:
-      ru: "**Загрузка страниц ускорена в 2×** — инициировал и довёл до результата оптимизацию сборки фронтенда силами команды."
-      en: "**2× faster page loads** — initiated and drove a frontend build optimisation with the team."
