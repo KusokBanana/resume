@@ -488,6 +488,38 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   font-weight: 700;
 }
 
+/* ---- Закрывающий CTA -------------------------------------------------- */
+.cta-final {
+  margin: 56px 0 8px;
+  padding: 40px 32px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(80% 120% at 0% 0%, rgba(59, 130, 246, 0.14), transparent 60%),
+    radial-gradient(80% 120% at 100% 100%, rgba(167, 139, 250, 0.12), transparent 60%),
+    var(--surface);
+  text-align: center;
+}
+.cta-final h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, #fff 30%, var(--accent) 75%, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.cta-final p {
+  margin: 14px auto 24px;
+  max-width: 56ch;
+  color: var(--muted);
+  font-size: clamp(0.98rem, 1.6vw, 1.1rem);
+}
+.cta-final .cta-row {
+  justify-content: center;
+}
+
 /* ---- Навыки ----------------------------------------------------------- */
 .skill-groups {
   display: grid;

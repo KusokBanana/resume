@@ -1,5 +1,6 @@
 ---
-import { loadContent } from '../lib/load';
+import { loadContent, loadTargets } from '../lib/load';
+import { variantSlug } from '../lib/slug';
 import { withBase } from '../lib/url';
 import { absUrl } from '../lib/canonical';
 import { renderBold } from '../lib/inline-md';
@@ -50,6 +51,31 @@ const interests = [...content.interests.items].sort((a, b) => b.priority - a.pri
 // Продающая полоса цифр и лидерские тезисы — только лендинг, по priority по убыванию.
 const stats = [...content.stats.items].sort((a, b) => b.priority - a.priority);
 const theses = [...content.theses.items].sort((a, b) => b.priority - a.priority);
+
+// Скачиваемый PDF: берём самый полный «человеческий» вариант — rich + hr + без
+// отбора по тегам (это hh). С фолбэком, если такого таргета нет.
+const targets = loadTargets();
+const pdfTarget =
+  targets.find(
+    (t) =>
+      t.formats.includes('pdf') &&
+      t.layout === 'rich' &&
+      t.audience === 'hr' &&
+      Object.keys(t.select ?? {}).length === 0,
+  ) ??
+  targets.find((t) => t.formats.includes('pdf') && t.layout === 'rich') ??
+  targets.find((t) => t.formats.includes('pdf'));
+// Опрятное имя файла при скачивании (латиница — не все браузеры дружат с кириллицей в download).
+const pdfNameBase = profile.name.en.replace(/\s+/g, '_');
+const pdfHref = (lang: 'ru' | 'en') =>
+  pdfTarget && pdfTarget.languages.includes(lang)
+    ? withBase(base, `generated/${variantSlug(pdfTarget.id, lang)}.pdf`)
+    : null;
+const pdfRu = pdfHref('ru');
+const pdfEn = pdfHref('en');
+
+// Telegram для закрывающего CTA (если задан в профиле).
+const telegram = profile.links.find((l) => l.kind === 'telegram');
 
 /** Навык: языко-нейтральная строка либо двуязычный термин. */
 const isLocalized = (x: SkillItem): x is Localized => typeof x !== 'string';
@@ -120,14 +146,17 @@ const jsonLd = {
     <script is:inline>
       // Помечаем, что JS активен (включает сворачивание опыта и reveal-анимации).
       document.documentElement.classList.add('js');
-      // Восстанавливаем выбранный язык до отрисовки тела — без мигания.
+      // Язык до отрисовки тела — без мигания. Приоритет: явный выбор из
+      // localStorage → иначе язык браузера (en → английский, всё прочее → ru-дефолт).
       (function () {
         try {
           var l = localStorage.getItem('landing-lang');
-          if (l === 'en' || l === 'ru') {
-            document.documentElement.dataset.lang = l;
-            document.documentElement.setAttribute('lang', l);
+          if (l !== 'en' && l !== 'ru') {
+            var nav = (navigator.language || navigator.userLanguage || '').toLowerCase();
+            l = nav.indexOf('en') === 0 ? 'en' : 'ru';
           }
+          document.documentElement.dataset.lang = l;
+          document.documentElement.setAttribute('lang', l);
         } catch (e) {}
       })();
     </script>
@@ -180,7 +209,7 @@ const jsonLd = {
             <div class="contacts">
               {
                 profile.email && (
-                  <a class="chip" href={`mailto:${profile.email}`}>
+                  <a class="chip" href={`mailto:${profile.email}`} data-goal="contact_email">
                     <span class="ico" set:html={ICON_EMAIL} />
                     <span class="lang-ru">Почта</span>
                     <span class="lang-en">Email</span>
@@ -189,7 +218,13 @@ const jsonLd = {
               }
               {
                 profile.links.map((l) => (
-                  <a class="chip" href={l.url} target="_blank" rel="noopener noreferrer">
+                  <a
+                    class="chip"
+                    href={l.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-goal={`contact_${l.kind ?? 'link'}`}
+                  >
                     <span class="ico" set:html={contactIcon(l.kind)} />
                     {l.label}
                   </a>
@@ -206,6 +241,30 @@ const jsonLd = {
                 <span class="lang-ru">Опыт работы</span>
                 <span class="lang-en">Experience</span>
               </a>
+              {
+                pdfRu && (
+                  <a
+                    class="btn btn-ghost lang-ru"
+                    href={pdfRu}
+                    download={`${pdfNameBase}_CV_ru.pdf`}
+                    data-goal="download_pdf"
+                  >
+                    Скачать PDF
+                  </a>
+                )
+              }
+              {
+                pdfEn && (
+                  <a
+                    class="btn btn-ghost lang-en"
+                    href={pdfEn}
+                    download={`${pdfNameBase}_CV_en.pdf`}
+                    data-goal="download_pdf"
+                  >
+                    Download PDF
+                  </a>
+                )
+              }
             </div>
           </div>
 
@@ -431,6 +490,71 @@ const jsonLd = {
         )
       }
 
+      <!-- ЗАКРЫВАЮЩИЙ CTA -->
+      <section class="cta-final reveal" id="contact">
+        <h2>
+          <span class="lang-ru">Открыт к роли Head of Engineering</span>
+          <span class="lang-en">Open to a Head of Engineering role</span>
+        </h2>
+        <p>
+          <span class="lang-ru">
+            Строю и масштабирую сильные инженерные команды. Давайте обсудим, чем могу быть
+            полезен.
+          </span>
+          <span class="lang-en">
+            I build and scale strong engineering teams. Let's talk about how I can help.
+          </span>
+        </p>
+        <div class="cta-row">
+          {
+            profile.email && (
+              <a class="btn btn-primary" href={`mailto:${profile.email}`} data-goal="cta_email">
+                <span class="lang-ru">Написать на почту</span>
+                <span class="lang-en">Email me</span>
+              </a>
+            )
+          }
+          {
+            telegram && (
+              <a
+                class="btn btn-ghost"
+                href={telegram.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-goal="cta_telegram"
+              >
+                <span class="lang-ru">Написать в Telegram</span>
+                <span class="lang-en">Message on Telegram</span>
+              </a>
+            )
+          }
+          {
+            pdfRu && (
+              <a
+                class="btn btn-ghost lang-ru"
+                href={pdfRu}
+                download={`${pdfNameBase}_CV_ru.pdf`}
+                data-goal="cta_download_pdf"
+              >
+                Скачать PDF
+              </a>
+            )
+          }
+          {
+            pdfEn && (
+              <a
+                class="btn btn-ghost lang-en"
+                href={pdfEn}
+                download={`${pdfNameBase}_CV_en.pdf`}
+                data-goal="cta_download_pdf"
+              >
+                Download PDF
+              </a>
+            )
+          }
+        </div>
+      </section>
+
       <footer class="footer">
         <span class="copy">
           © {year}
@@ -460,6 +584,24 @@ const jsonLd = {
       </figure>
     </div>
 
+    <script is:inline>
+      // Аналитика кликов: любой элемент с data-goal шлёт цель в Яндекс.Метрику
+      // (id продублирован из YandexMetrika.astro) и событие в GA4. Оба необязательны.
+      (function () {
+        var YM_ID = 109991972;
+        document.addEventListener('click', function (ev) {
+          var el = ev.target && ev.target.closest ? ev.target.closest('[data-goal]') : null;
+          if (!el) return;
+          var goal = el.getAttribute('data-goal');
+          try {
+            if (window.gtag) window.gtag('event', goal);
+          } catch (e) {}
+          try {
+            if (window.ym) window.ym(YM_ID, 'reachGoal', goal);
+          } catch (e) {}
+        });
+      })();
+    </script>
     <script is:inline>
       (function () {
         var html = document.documentElement;
