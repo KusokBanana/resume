@@ -35,7 +35,10 @@ function esc(s: string): string {
 function buildHtml(): string {
   const content = loadContent();
   const { profile } = content;
-  const name = profile.name.ru;
+  // Короткое имя для карточки: «Имя Фамилия» (без отчества) — полное в 3 строки
+  // съедает высоту и не оставляет места под CTA.
+  const parts = profile.name.ru.split(' ');
+  const name = parts.length >= 2 ? `${parts[1]} ${parts[0]}` : profile.name.ru;
   const title = profile.title.ru;
   const stats = [...content.stats.items]
     .sort((a, b) => b.priority - a.priority)
@@ -63,6 +66,7 @@ function buildHtml(): string {
   * { box-sizing: border-box; margin: 0; }
   html, body { width: 1200px; height: 630px; }
   body {
+    position: relative;
     display: flex; align-items: center; gap: 56px;
     padding: 72px 80px;
     font-family: -apple-system, 'Segoe UI', Roboto, 'DejaVu Sans', Helvetica, Arial, sans-serif;
@@ -101,6 +105,16 @@ function buildHtml(): string {
     box-shadow: 0 24px 70px rgba(59,130,246,0.35);
   }
   .portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 28px; display: block; }
+  .cta {
+    margin-top: 40px;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 11px 24px; border-radius: 999px;
+    border: 1px solid rgba(110,168,254,0.45);
+    background: rgba(110,168,254,0.10);
+    font-size: 23px; font-weight: 600; color: #cfe0ff;
+  }
+  .cta b { color: #fff; font-weight: 700; }
+  .cta .arrow { color: #6ea8fe; }
 </style>
 </head>
 <body>
@@ -109,6 +123,7 @@ function buildHtml(): string {
     <h1>${esc(name)}</h1>
     <div class="title">${esc(title)}</div>
     <div class="stats">${statCells}</div>
+    <div class="cta">Смотреть резюме <b>kusokbanana.ru</b> <span class="arrow">→</span></div>
   </div>
   ${portrait}
 </body>

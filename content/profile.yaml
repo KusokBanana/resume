@@ -5,6 +5,10 @@ name:
 title:
   ru: Head of Engineering · Руководитель разработки
   en: Head of Engineering
+# Короткий одностроч для мета-тегов (превью в соцсетях/поиске). Держим ~120–150 симв.
+pitch:
+  ru: "Head of Engineering. Построил frontend-отдел с 0 до 11 человек за год, 10+ лет в IT. Строю и масштабирую сильные инженерные команды."
+  en: "Head of Engineering. Built a frontend team from 0 to 11 people in a year, 10+ years in tech. I build and scale strong engineering teams."
 location:
   ru: Москва · Удалённо, готов к командировкам
   en: Moscow · Remote, open to business trips

@@ -61,6 +61,12 @@ export type HighlightGroup = z.infer<typeof HighlightGroup>;
 export const ProfileSchema = z.object({
   name: Localized,
   title: Localized, // headline / желаемая должность
+  /**
+   * Короткий «продающий» одностроч (~120–150 симв.) для мета-тегов:
+   * description / og:description / twitter:description. Соцсети и Google
+   * обрезают длинные описания — держим сжато. Фолбэк — summary, если не задан.
+   */
+  pitch: Localized.optional(),
   location: Localized.optional(),
   email: z.string().email().optional(),
   phone: z.string().optional(),
