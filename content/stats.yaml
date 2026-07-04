@@ -12,22 +12,22 @@ items:
     value: { ru: "3+", en: "3+" }
     label: { ru: года в управлении, en: years leading teams }
 
-  - id: interviews
+  - id: speedup
     priority: 90
+    value: { ru: "1,5×", en: "1.5×" }
+    label: { ru: ускорение разработки с AI, en: faster delivery with AI }
+
+  - id: retention
+    priority: 85
+    value: { ru: "91%", en: "91%" }
+    label: { ru: удержание команды, en: team retention }
+
+  - id: interviews
+    priority: 80
     value: { ru: "50+", en: "50+" }
     label: { ru: собеседований провёл, en: interviews conducted }
 
   - id: hired
-    priority: 85
+    priority: 75
     value: { ru: "10+", en: "10+" }
     label: { ru: человек нанял, en: people hired }
-
-  - id: retention
-    priority: 80
-    value: { ru: "91%", en: "91%" }
-    label: { ru: удержание команды, en: team retention }
-
-  - id: speedup
-    priority: 75
-    value: { ru: "1,5×", en: "1.5×" }
-    label: { ru: ускорение разработки с AI, en: faster delivery with AI }
