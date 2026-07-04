@@ -170,9 +170,11 @@ const jsonLd = {
   <body>
     <header class="nav">
       <a class="brand" href={withBase(base)}>
-        <span class="mono">SD</span>
-        <span class="lang-ru">{profile.name.ru.split(' ')[1] ?? name}</span>
-        <span class="lang-en">{profile.name.en.split(' ')[1] ?? profile.name.en}</span>
+        <img class="mono" src={withBase(base, 'favicon.svg')} width="34" height="34" alt="" />
+        <span class="brand-name" aria-hidden="true">
+          <span class="lang-ru">{profile.name.ru}</span>
+          <span class="lang-en">{profile.name.en}</span>
+        </span>
       </a>
       <div class="lang-toggle" role="group" aria-label="Language">
         <button type="button" data-set-lang="ru">RU</button>
@@ -678,6 +680,25 @@ const jsonLd = {
           revealables.forEach(function (el) {
             io.observe(el);
           });
+        }
+
+        // --- Имя в шапке проявляется, когда крупное имя из hero ушло за верх.
+        var navEl = document.querySelector('.nav');
+        var heroName = document.querySelector('.hero h1');
+        if (navEl && heroName) {
+          if (!('IntersectionObserver' in window)) {
+            navEl.classList.add('scrolled');
+          } else {
+            var navIo = new IntersectionObserver(
+              function (entries) {
+                navEl.classList.toggle('scrolled', !entries[0].isIntersecting);
+              },
+              // Отрицательный top ≈ высоте шапки: срабатывает, когда имя
+              // уходит под неё, а не когда полностью покидает вьюпорт.
+              { rootMargin: '-64px 0px 0px 0px', threshold: 0 },
+            );
+            navIo.observe(heroName);
+          }
         }
 
         // --- Count-up для полосы цифр: докручиваем числовой префикс от 0.
