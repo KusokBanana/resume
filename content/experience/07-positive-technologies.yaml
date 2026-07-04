@@ -6,8 +6,11 @@ role:
   ru: Руководитель отдела разработки интерфейсов (Engineering Manager)
   en: Head of UI Development (Engineering Manager)
 location:
-  ru: Москва · Удалённо · кибербезопасность
-  en: Moscow · Remote · cybersecurity
+  ru: Москва · удалёнка
+  en: Moscow · remote
+industry:
+  ru: кибербезопасность
+  en: cybersecurity
 start: "2024-03"
 end: present
 tags:
@@ -123,4 +126,9 @@ groups:
           ru: Повысил стабильность релизов и предсказуемость поставки, снизил операционную нагрузку на команды.
           en: Improved release stability and delivery predictability, reduced operational load on teams.
         tags: { audience: [hr, technical], domains: [linkedin-skip] }
+metrics:
+  - { ru: "**4** команды", en: "**4** teams" }
+  - { ru: "отдел **0→11** за год", en: "department **0→11** in a year" }
+  - { ru: "**6** выросли до Senior/Lead", en: "**6** promoted to Senior/Lead" }
+  - { ru: "**5+** продуктов", en: "**5+** products" }
 stack: [React, Angular, TypeScript, Python, GitLab CI, Jira, Figma]

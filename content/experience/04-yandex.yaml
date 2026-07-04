@@ -6,8 +6,11 @@ role:
   ru: Fullstack-разработчик
   en: Fullstack Developer
 location:
-  ru: Москва
-  en: Moscow
+  ru: Москва · офис
+  en: Moscow · office
+industry:
+  ru: инфраструктура
+  en: infrastructure
 start: "2018-12"
 end: "2022-05"
 tags:
@@ -66,6 +69,8 @@ highlights:
       ru: "Разработал сервис заказа на закупку и производство серверного оборудования: по минимально необходимой конфигурации подбирает оптимальное по стоимости железо."
       en: "Built a procurement/manufacturing ordering service: from a minimal required configuration it selects the most cost-optimal hardware."
     tags: { audience: [hr, technical] }
+metrics:
+  - { ru: "**8+** внутренних сервисов", en: "**8+** internal services" }
 stack:
   - TypeScript
   - React

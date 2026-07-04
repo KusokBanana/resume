@@ -603,6 +603,16 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
 .tl-company a:hover {
   text-decoration: underline;
 }
+/* Индустрия — тонкий бейдж у названия компании. */
+.tl-industry {
+  padding: 2px 9px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 12px;
+}
 .tl-meta {
   margin: 4px 0 0;
   font-size: 13px;
@@ -617,6 +627,26 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   color: var(--muted);
   font-size: 0.92em;
   white-space: nowrap;
+}
+/* Чипы масштаба под датами: короткие «кричащие» метрики, привязанные к месту. */
+.tl-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 0;
+}
+.tl-metric {
+  padding: 4px 11px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.tl-metric strong {
+  color: var(--accent);
+  font-weight: 700;
 }
 .tl-summary {
   margin: 12px 0 0;

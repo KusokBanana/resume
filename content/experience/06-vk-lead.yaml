@@ -6,8 +6,11 @@ role:
   ru: Руководитель команды разработки (Team Lead)
   en: Team Lead
 location:
-  ru: Москва · удалённо
+  ru: Москва · удалёнка
   en: Moscow · remote
+industry:
+  ru: финтех
+  en: fintech
 start: "2023-04"
 end: "2023-12"
 tags:
@@ -68,4 +71,8 @@ highlights:
       ru: Hands-on разрабатывал интерфейсы финтеха ВКонтакте и сервиса «Кабинет выплат» (Cashout).
       en: Hands-on development of VK fintech UIs and the Cashout service.
     tags: {}
+metrics:
+  - { ru: "**10 000+** пользователей", en: "**10,000+** users" }
+  - { ru: "выплаты **10 000 000+ ₽** в месяц", en: "**10,000,000+ ₽** in monthly payouts" }
+  - { ru: "команда **4** разработчика", en: "team of **4** engineers" }
 stack: [TypeScript, React]

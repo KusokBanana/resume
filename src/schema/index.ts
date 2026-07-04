@@ -112,6 +112,8 @@ export const ExperienceSchema = z.object({
   logo: z.string().optional(),
   role: Localized,
   location: Localized.optional(),
+  /** Индустрия/домен для бейджа у названия компании (напр. «финтех»). Только лендинг. */
+  industry: Localized.optional(),
   start: YearMonth,
   end: EndDate,
   summary: Localized.optional(),
@@ -119,6 +121,12 @@ export const ExperienceSchema = z.object({
   highlights: z.array(Highlight).default([]),
   /** Сгруппированные пункты с подзаголовками (для богатого опыта). */
   groups: z.array(HighlightGroup).default([]),
+  /**
+   * Короткие «кричащие» метрики масштаба для чипов на лендинге
+   * (напр. «**~100M** MAU»). Поддерживают **акцент**. Только лендинг —
+   * в compose/экспорты не идут.
+   */
+  metrics: z.array(Localized).default([]),
   stack: z.array(z.string()).default([]),
   tags: Tags,
   priority: z.number().default(0),

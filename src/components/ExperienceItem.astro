@@ -40,6 +40,14 @@ const hasCollapse = hiddenCount > 0;
         e.company
       )
     }
+    {
+      e.industry && (
+        <span class="tl-industry">
+          <span class="lang-ru">{e.industry.ru}</span>
+          <span class="lang-en">{e.industry.en}</span>
+        </span>
+      )
+    }
   </p>
   <p class="tl-meta">
     <span class="lang-ru">{dateRange('ru')}</span>
@@ -56,6 +64,18 @@ const hasCollapse = hiddenCount > 0;
       )
     }
   </p>
+  {
+    e.metrics.length > 0 && (
+      <div class="tl-metrics">
+        {e.metrics.map((m) => (
+          <>
+            <span class="tl-metric lang-ru" set:html={renderBold(m.ru)} />
+            <span class="tl-metric lang-en" set:html={renderBold(m.en)} />
+          </>
+        ))}
+      </div>
+    )
+  }
   {
     e.summary && (
       <p class="tl-summary">

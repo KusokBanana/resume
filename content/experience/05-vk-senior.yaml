@@ -8,6 +8,9 @@ role:
 location:
   ru: Москва · гибрид
   en: Moscow · hybrid
+industry:
+  ru: финтех
+  en: fintech
 start: "2022-08"
 end: "2023-04"
 tags:
@@ -29,4 +32,6 @@ highlights:
       ru: Разрабатывал интерфейсы сервиса «Кабинет выплат».
       en: Built the Cashout service UI.
     tags: {}
+metrics:
+  - { ru: "**~100M** MAU", en: "**~100M** MAU" }
 stack: [TypeScript, React]
