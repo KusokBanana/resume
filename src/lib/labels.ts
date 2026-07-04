@@ -32,3 +32,43 @@ export function sectionTitle(s: Section, lang: Lang): string {
 export function endLabel(end: string, lang: Lang): string {
   return end === 'present' ? UI.present[lang] : end;
 }
+
+/** Число месяцев между YYYY[-MM] включительно; end='present' → до текущего месяца. */
+function monthsBetween(start: string, end: string, now: Date): number {
+  const parse = (s: string): [number, number] => {
+    const [y, m] = s.split('-');
+    return [Number(y), m ? Number(m) : 1];
+  };
+  const [sy, sm] = parse(start);
+  const [ey, em] = end === 'present' ? [now.getFullYear(), now.getMonth() + 1] : parse(end);
+  return Math.max((ey * 12 + em) - (sy * 12 + sm) + 1, 1);
+}
+
+/** Русская плюрализация: pluralRu(n, 'год', 'года', 'лет'). */
+function pluralRu(n: number, one: string, few: string, many: string): string {
+  const m10 = n % 10;
+  const m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return one;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return few;
+  return many;
+}
+
+/** Суммарный стаж на месте работы: «2 года 7 мес.» / «2 yrs 7 mos». */
+export function durationLabel(
+  start: string,
+  end: string,
+  lang: Lang,
+  now = new Date(),
+): string {
+  const total = monthsBetween(start, end, now);
+  const y = Math.floor(total / 12);
+  const m = total % 12;
+  if (lang === 'ru') {
+    const yl = y ? `${y} ${pluralRu(y, 'год', 'года', 'лет')}` : '';
+    const ml = m ? `${m} мес.` : '';
+    return [yl, ml].filter(Boolean).join(' ') || '1 мес.';
+  }
+  const yl = y ? `${y} ${y === 1 ? 'yr' : 'yrs'}` : '';
+  const ml = m ? `${m} ${m === 1 ? 'mo' : 'mos'}` : '';
+  return [yl, ml].filter(Boolean).join(' ') || '1 mo';
+}

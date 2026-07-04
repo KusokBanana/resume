@@ -608,6 +608,16 @@ html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
   font-size: 13px;
   color: var(--faint);
 }
+/* Суммарный стаж рядом с датами — тонкая пилюля. */
+.tl-duration {
+  margin-left: 8px;
+  padding: 1px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.92em;
+  white-space: nowrap;
+}
 .tl-summary {
   margin: 12px 0 0;
   color: var(--muted);

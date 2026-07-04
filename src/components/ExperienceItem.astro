@@ -1,7 +1,7 @@
 ---
 import { withBase } from '../lib/url';
 import { renderBold } from '../lib/inline-md';
-import { UI, endLabel } from '../lib/labels';
+import { UI, endLabel, durationLabel } from '../lib/labels';
 import type { Experience, Lang } from '../schema/index';
 
 interface Props {
@@ -44,6 +44,8 @@ const hasCollapse = hiddenCount > 0;
   <p class="tl-meta">
     <span class="lang-ru">{dateRange('ru')}</span>
     <span class="lang-en">{dateRange('en')}</span>
+    <span class="tl-duration lang-ru">{durationLabel(e.start, e.end, 'ru')}</span>
+    <span class="tl-duration lang-en">{durationLabel(e.start, e.end, 'en')}</span>
     {
       e.location && (
         <>
