@@ -53,6 +53,9 @@ jobs:
       - name: Generate PDF
         run: npm run build:pdf
 
+      - name: Generate OG image
+        run: npm run build:og
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:

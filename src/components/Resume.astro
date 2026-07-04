@@ -85,6 +85,16 @@ const range = (s: string, e: string) => `${s} — ${endLabel(e, lang)}`;
                 <p class="meta">
                   {[range(e.start, e.end), e.location].filter(Boolean).join(' · ')}
                 </p>
+                {e.metrics.length > 0 && (
+                  <p class="metrics">
+                    {e.metrics.map((m, i) => (
+                      <>
+                        {i > 0 && ' · '}
+                        <span set:html={inlineHtml(m)} />
+                      </>
+                    ))}
+                  </p>
+                )}
                 {e.summary && <p>{e.summary}</p>}
                 {e.highlights.length > 0 && (
                   <ul>

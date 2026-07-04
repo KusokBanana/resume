@@ -41,6 +41,7 @@ export function renderMarkdown(doc: ResumeDocument, sections: Section[]): string
           .filter(Boolean)
           .join(' · ');
         out.push(`*${meta}*`);
+        if (e.metrics.length) out.push(e.metrics.join(' · '));
         if (e.summary) out.push(e.summary);
         for (const h of e.highlights) out.push(`- ${h}`);
         for (const g of e.groups) {

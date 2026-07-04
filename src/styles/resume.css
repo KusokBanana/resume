@@ -148,6 +148,14 @@ body::before {
   font-size: 13px;
   margin: 2px 0 6px;
 }
+.resume .item .metrics {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+.resume .item .metrics strong {
+  color: var(--accent);
+}
 .resume ul {
   margin: 6px 0;
   padding-left: 18px;
@@ -233,8 +241,19 @@ body::before {
   .resume li::marker {
     color: inherit;
   }
-  .resume section,
+  /* Разрывы страниц: заголовок секции не отрывается от контента; крупные блоки
+     опыта (длиннее страницы) свободно переносятся, но подсекции и пункты — цельные. */
+  .resume h2 {
+    break-after: avoid;
+  }
+  .resume .item h3 {
+    break-after: avoid;
+  }
   .resume .item {
+    break-inside: auto;
+  }
+  .resume .group,
+  .resume li {
     break-inside: avoid;
   }
   a {

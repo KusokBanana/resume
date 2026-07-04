@@ -357,6 +357,7 @@ export interface ResumeDocument {
     start: string;
     end: string;
     summary?: string;
+    metrics: string[];
     highlights: string[];
     groups: { title: string; highlights: string[] }[];
     stack: string[];

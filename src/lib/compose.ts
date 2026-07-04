@@ -135,6 +135,7 @@ export function compose(
       start: e.start,
       end: e.end,
       summary: e.summary ? pick(e.summary, lang) : undefined,
+      metrics: e.metrics.map((m) => pick(m, lang)),
       highlights: localizeHighlights(e.highlights, target, lang, includeAll),
       groups: localizeGroups(e.groups, target, lang, includeAll),
       stack: e.stack,
