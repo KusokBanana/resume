@@ -59,13 +59,11 @@ function monthsBetween(start: string, end: string, now: Date): number {
   return Math.max(ey * 12 + em - (sy * 12 + sm) + 1, 1);
 }
 
-/** Русская плюрализация: pluralRu(n, 'год', 'года', 'лет'). */
+/** Русская плюрализация через платформенный Intl.PluralRules: pluralRu(n, 'год', 'года', 'лет'). */
+const ruPlural = new Intl.PluralRules('ru');
 function pluralRu(n: number, one: string, few: string, many: string): string {
-  const m10 = n % 10;
-  const m100 = n % 100;
-  if (m10 === 1 && m100 !== 11) return one;
-  if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return few;
-  return many;
+  const cat = ruPlural.select(n);
+  return cat === 'one' ? one : cat === 'few' ? few : many;
 }
 
 /** Суммарный стаж на месте работы: «2 года 7 мес.» / «2 yrs 7 mos». */

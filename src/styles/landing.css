@@ -11,7 +11,9 @@
   --surface-hover: rgba(255, 255, 255, 0.05);
   --ink: #ecedf2;
   --muted: #9a9bab;
-  --faint: #6a6b7d;
+  /* --faint поднят с #6a6b7d до #808298: старое значение давало ~3.8:1 на тёмном
+     фоне и не проходило WCAG AA (4.5:1) для текста (Lighthouse). Теперь ~5:1. */
+  --faint: #808298;
   --accent: #6ea8fe;
   --accent-strong: #3b82f6;
   --violet: #a78bfa;
@@ -1039,7 +1041,6 @@ html.js .theses .reveal:nth-child(n + 4) {
 }
 .footer .machine {
   font-size: 12px;
-  opacity: 0.85;
 }
 .footer .machine a {
   color: var(--faint);
