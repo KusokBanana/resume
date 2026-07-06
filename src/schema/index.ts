@@ -90,9 +90,7 @@ export const ProfileSchema = z.object({
    * `knowsAbout` — это то, по чему AI-рекрутер/поиск матчит профиль.
    * Ручной список (не из skills): лидерские формулировки, а не технологии.
    */
-  keywords: z
-    .object({ ru: z.array(z.string()), en: z.array(z.string()) })
-    .optional(),
+  keywords: z.object({ ru: z.array(z.string()), en: z.array(z.string()) }).optional(),
 });
 export type Profile = z.infer<typeof ProfileSchema>;
 

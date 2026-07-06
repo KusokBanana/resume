@@ -46,35 +46,35 @@ const pageTitle = `${doc.profile.name} — ${doc.meta.label} (${lang.toUpperCase
     <link rel="alternate" hreflang={other} href={otherUrl} />
     <link rel="alternate" type="text/markdown" href={mdCanonical} />
   </Fragment>
-    <nav class="toolbar">
-      <a href={withBase(base, 'exports')}>← {UI.variants[lang]}</a>
-      <a href={withBase(base, `exports/${doc.meta.targetId}/${other}`)}>
-        {other.toUpperCase()}
-      </a>
-      <span class="spacer"></span>
-      {
-        formats.includes('pdf') && (
-          <a href={withBase(base, `generated/${slug}.pdf`)} download>
-            {UI.downloadPdf[lang]}
-          </a>
-        )
-      }
-      {
-        formats.includes('md') && (
-          <a href={withBase(base, `generated/${slug}.md`)} download>
-            {UI.downloadMd[lang]}
-          </a>
-        )
-      }
-      {
-        formats.includes('txt') && (
-          <a href={withBase(base, `generated/${slug}.txt`)} download>
-            {UI.downloadTxt[lang]}
-          </a>
-        )
-      }
-    </nav>
-    <main class="page">
-      <Resume doc={doc} sections={sections} />
-    </main>
+  <nav class="toolbar">
+    <a href={withBase(base, 'exports')}>← {UI.variants[lang]}</a>
+    <a href={withBase(base, `exports/${doc.meta.targetId}/${other}`)}>
+      {other.toUpperCase()}
+    </a>
+    <span class="spacer"></span>
+    {
+      formats.includes('pdf') && (
+        <a href={withBase(base, `generated/${slug}.pdf`)} download>
+          {UI.downloadPdf[lang]}
+        </a>
+      )
+    }
+    {
+      formats.includes('md') && (
+        <a href={withBase(base, `generated/${slug}.md`)} download>
+          {UI.downloadMd[lang]}
+        </a>
+      )
+    }
+    {
+      formats.includes('txt') && (
+        <a href={withBase(base, `generated/${slug}.txt`)} download>
+          {UI.downloadTxt[lang]}
+        </a>
+      )
+    }
+  </nav>
+  <main class="page">
+    <Resume doc={doc} sections={sections} />
+  </main>
 </BaseLayout>

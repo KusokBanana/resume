@@ -32,6 +32,15 @@ jobs:
 
       - run: npm ci
 
+      - name: Format check
+        run: npm run format:check
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Type-check (.astro + TS)
+        run: npm run check
+
       - name: Validate content
         run: npm run validate
 

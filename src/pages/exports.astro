@@ -17,89 +17,113 @@ const name = content.profile.name.ru;
 ---
 
 <BaseLayout title={`${name} — форматы и экспорт`} dataLang robots="noindex, nofollow">
-    <header class="nav">
-      <a class="brand" href={withBase(base)}>
-        <span class="mono">SD</span>
-        <Bilingual ru="← на резюме" en="← Back to resume" />
-      </a>
-      <LangToggle />
-    </header>
+  <header class="nav">
+    <a class="brand" href={withBase(base)}>
+      <span class="mono">SD</span>
+      <Bilingual ru="← на резюме" en="← Back to resume" />
+    </a>
+    <LangToggle />
+  </header>
 
-    <main class="wrap">
-      <section class="section">
-        <div class="section-head">
-          <h2>
-            <Bilingual ru="Форматы и экспорт" en="Formats & export" />
-          </h2>
-        </div>
-        <p class="tagline" style="margin-top:0">
-          <Bilingual
-            ru="Личная утилита: открыть нужный вариант и скопировать/скачать для вставки в систему. Не индексируется и не отображается на сайте."
-            en="Personal utility: open a variant and copy/download it to paste into a system. Not indexed, not linked from the site."
-          />
-        </p>
+  <main class="wrap">
+    <section class="section">
+      <div class="section-head">
+        <h2>
+          <Bilingual ru="Форматы и экспорт" en="Formats & export" />
+        </h2>
+      </div>
+      <p class="tagline" style="margin-top:0">
+        <Bilingual
+          ru="Личная утилита: открыть нужный вариант и скопировать/скачать для вставки в систему. Не индексируется и не отображается на сайте."
+          en="Personal utility: open a variant and copy/download it to paste into a system. Not indexed, not linked from the site."
+        />
+      </p>
 
-        <div class="variants">
-          {
-            targets.map((t) => (
-              <article class="variant">
-                <h3>{t.label.ru}</h3>
-                <div class="badges">
-                  <span class="badge">{t.system}</span>
-                  <span class="badge alt">{t.audience}</span>
-                  <span class="badge">{t.layout}</span>
-                </div>
-                {t.languages.map((lang) => {
-                  const slug = variantSlug(t.id, lang);
-                  return (
-                    <div class="langrow">
-                      <span class="lcode">{lang.toUpperCase()}</span>
-                      <a class="open" href={withBase(base, `exports/${t.id}/${lang}`)}>
-                        {UI.viewOnline[lang]}
+      <div class="variants">
+        {
+          targets.map((t) => (
+            <article class="variant">
+              <h3>{t.label.ru}</h3>
+              <div class="badges">
+                <span class="badge">{t.system}</span>
+                <span class="badge alt">{t.audience}</span>
+                <span class="badge">{t.layout}</span>
+              </div>
+              {t.languages.map((lang) => {
+                const slug = variantSlug(t.id, lang);
+                return (
+                  <div class="langrow">
+                    <span class="lcode">{lang.toUpperCase()}</span>
+                    <a class="open" href={withBase(base, `exports/${t.id}/${lang}`)}>
+                      {UI.viewOnline[lang]}
+                    </a>
+                    {t.formats.includes('pdf') && (
+                      <a
+                        class="file"
+                        href={withBase(base, `generated/${slug}.pdf`)}
+                        download
+                      >
+                        PDF
                       </a>
-                      {t.formats.includes('pdf') && (
-                        <a class="file" href={withBase(base, `generated/${slug}.pdf`)} download>
-                          PDF
-                        </a>
-                      )}
-                      {t.formats.includes('md') && (
-                        <a class="file" href={withBase(base, `generated/${slug}.md`)} download>
-                          MD
-                        </a>
-                      )}
-                      {t.formats.includes('txt') && (
-                        <a class="file" href={withBase(base, `generated/${slug}.txt`)} download>
-                          TXT
-                        </a>
-                      )}
-                      {t.formats.includes('json') && (
-                        <a class="file" href={withBase(base, `generated/${slug}.json`)} download>
-                          JSON
-                        </a>
-                      )}
-                    </div>
-                  );
-                })}
-              </article>
-            ))
-          }
-        </div>
-      </section>
+                    )}
+                    {t.formats.includes('md') && (
+                      <a
+                        class="file"
+                        href={withBase(base, `generated/${slug}.md`)}
+                        download
+                      >
+                        MD
+                      </a>
+                    )}
+                    {t.formats.includes('txt') && (
+                      <a
+                        class="file"
+                        href={withBase(base, `generated/${slug}.txt`)}
+                        download
+                      >
+                        TXT
+                      </a>
+                    )}
+                    {t.formats.includes('json') && (
+                      <a
+                        class="file"
+                        href={withBase(base, `generated/${slug}.json`)}
+                        download
+                      >
+                        JSON
+                      </a>
+                    )}
+                  </div>
+                );
+              })}
+            </article>
+          ))
+        }
+      </div>
+    </section>
 
-      <section class="section">
-        <div class="section-head">
-          <h2>
-            <Bilingual ru="Каноническое (для ИИ)" en="Canonical (for AI)" />
-          </h2>
-        </div>
-        <div class="langrow">
-          <span class="lcode">AI</span>
-          <a class="open" href={withBase(base, 'llms.txt')}>llms.txt</a>
-          <a class="file" href={withBase(base, 'ru/resume.md')} download="resume-ru.md">resume.md (ru)</a>
-          <a class="file" href={withBase(base, 'en/resume.md')} download="resume-en.md">resume.md (en)</a>
-          <a class="file" href={withBase(base, 'ru/resume.json')} download="resume-ru.json">resume.json (ru)</a>
-          <a class="file" href={withBase(base, 'en/resume.json')} download="resume-en.json">resume.json (en)</a>
-        </div>
-      </section>
-    </main>
+    <section class="section">
+      <div class="section-head">
+        <h2>
+          <Bilingual ru="Каноническое (для ИИ)" en="Canonical (for AI)" />
+        </h2>
+      </div>
+      <div class="langrow">
+        <span class="lcode">AI</span>
+        <a class="open" href={withBase(base, 'llms.txt')}>llms.txt</a>
+        <a class="file" href={withBase(base, 'ru/resume.md')} download="resume-ru.md"
+          >resume.md (ru)</a
+        >
+        <a class="file" href={withBase(base, 'en/resume.md')} download="resume-en.md"
+          >resume.md (en)</a
+        >
+        <a class="file" href={withBase(base, 'ru/resume.json')} download="resume-ru.json"
+          >resume.json (ru)</a
+        >
+        <a class="file" href={withBase(base, 'en/resume.json')} download="resume-en.json"
+          >resume.json (en)</a
+        >
+      </div>
+    </section>
+  </main>
 </BaseLayout>

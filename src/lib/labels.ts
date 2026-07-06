@@ -19,10 +19,6 @@ export const UI = {
   downloadTxt: { ru: 'Скачать TXT', en: 'Download TXT' },
   viewOnline: { ru: 'Смотреть онлайн', en: 'View online' },
   variants: { ru: 'Варианты резюме', en: 'Resume variants' },
-  sourceOfTruth: {
-    ru: 'Единый источник истины, собирается автоматически.',
-    en: 'Single source of truth, built automatically.',
-  },
 } as const satisfies Record<string, Record<Lang, string>>;
 
 export function sectionTitle(s: Section, lang: Lang): string {
@@ -58,8 +54,9 @@ function monthsBetween(start: string, end: string, now: Date): number {
     return [Number(y), m ? Number(m) : 1];
   };
   const [sy, sm] = parse(start);
-  const [ey, em] = end === 'present' ? [now.getFullYear(), now.getMonth() + 1] : parse(end);
-  return Math.max((ey * 12 + em) - (sy * 12 + sm) + 1, 1);
+  const [ey, em] =
+    end === 'present' ? [now.getFullYear(), now.getMonth() + 1] : parse(end);
+  return Math.max(ey * 12 + em - (sy * 12 + sm) + 1, 1);
 }
 
 /** Русская плюрализация: pluralRu(n, 'год', 'года', 'лет'). */

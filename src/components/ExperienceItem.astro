@@ -28,7 +28,17 @@ const hasCollapse = hiddenCount > 0;
     <Bilingual ru={e.role.ru} en={e.role.en} />
   </h3>
   <p class="tl-company">
-    {e.logo && <img class="tl-logo" src={withBase(base, e.logo)} alt="" loading="lazy" />}
+    {
+      e.logo && (
+        <img
+          class="tl-logo"
+          src={withBase(base, e.logo)}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      )
+    }
     {
       e.companyUrl ? (
         <a href={e.companyUrl} target="_blank" rel="noopener noreferrer">
@@ -47,7 +57,10 @@ const hasCollapse = hiddenCount > 0;
     }
   </p>
   <p class="tl-meta">
-    <Bilingual ru={dateRange(e.start, e.end, 'ru')} en={dateRange(e.start, e.end, 'en')} />
+    <Bilingual
+      ru={dateRange(e.start, e.end, 'ru')}
+      en={dateRange(e.start, e.end, 'en')}
+    />
     <Bilingual
       class="tl-duration"
       ru={durationLabel(e.start, e.end, 'ru')}
@@ -66,7 +79,12 @@ const hasCollapse = hiddenCount > 0;
     e.metrics.length > 0 && (
       <div class="tl-metrics">
         {e.metrics.map((m) => (
-          <Bilingual class="tl-metric" html ru={renderInline(m.ru)} en={renderInline(m.en)} />
+          <Bilingual
+            class="tl-metric"
+            html
+            ru={renderInline(m.ru)}
+            en={renderInline(m.en)}
+          />
         ))}
       </div>
     )
@@ -82,7 +100,12 @@ const hasCollapse = hiddenCount > 0;
     lead.length > 0 && (
       <ul class="tl-points">
         {lead.map((h) => (
-          <Bilingual as="li" html ru={renderInline(h.text.ru)} en={renderInline(h.text.en)} />
+          <Bilingual
+            as="li"
+            html
+            ru={renderInline(h.text.ru)}
+            en={renderInline(h.text.en)}
+          />
         ))}
       </ul>
     )
@@ -94,7 +117,12 @@ const hasCollapse = hiddenCount > 0;
         {restHighlights.length > 0 && (
           <ul class="tl-points">
             {restHighlights.map((h) => (
-              <Bilingual as="li" html ru={renderInline(h.text.ru)} en={renderInline(h.text.en)} />
+              <Bilingual
+                as="li"
+                html
+                ru={renderInline(h.text.ru)}
+                en={renderInline(h.text.en)}
+              />
             ))}
           </ul>
         )}
@@ -105,7 +133,12 @@ const hasCollapse = hiddenCount > 0;
             </h4>
             <ul class="tl-points">
               {g.highlights.map((h) => (
-                <Bilingual as="li" html ru={renderInline(h.text.ru)} en={renderInline(h.text.en)} />
+                <Bilingual
+                  as="li"
+                  html
+                  ru={renderInline(h.text.ru)}
+                  en={renderInline(h.text.en)}
+                />
               ))}
             </ul>
           </div>
@@ -124,7 +157,9 @@ const hasCollapse = hiddenCount > 0;
         <span class="tl-toggle-less">
           <Bilingual ru="Свернуть" en="Collapse" />
         </span>
-        <span class="tl-chevron" aria-hidden="true">▾</span>
+        <span class="tl-chevron" aria-hidden="true">
+          ▾
+        </span>
       </button>
     )
   }

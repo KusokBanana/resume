@@ -82,7 +82,9 @@ const lang = doc.meta.language;
                   {e.companyUrl ? <a href={e.companyUrl}>{e.company}</a> : e.company}
                 </h3>
                 <p class="meta">
-                  {[dateRange(e.start, e.end, lang), e.location].filter(Boolean).join(' · ')}
+                  {[dateRange(e.start, e.end, lang), e.location]
+                    .filter(Boolean)
+                    .join(' · ')}
                 </p>
                 {e.metrics.length > 0 && (
                   <p class="metrics">
@@ -183,7 +185,10 @@ const lang = doc.meta.language;
               <div class="item">
                 <h3>{e.institution}</h3>
                 <p class="meta">
-                  {[[e.degree, e.field].filter(Boolean).join(', '), educationPeriod(e, lang)]
+                  {[
+                    [e.degree, e.field].filter(Boolean).join(', '),
+                    educationPeriod(e, lang),
+                  ]
                     .filter(Boolean)
                     .join(' · ')}
                 </p>

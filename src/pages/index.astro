@@ -24,7 +24,8 @@ const name = profile.name.ru; // язык документа по умолчан
 // Tagline для hero: человеко-ориентированный general-вариант (с фолбэком).
 const variantsByPriority = [...content.summary.variants].sort(byPriority);
 const tagline =
-  content.summary.variants.find((v) => v.id === 'summary-general') ?? variantsByPriority[0];
+  content.summary.variants.find((v) => v.id === 'summary-general') ??
+  variantsByPriority[0];
 
 // Топ ключевых результатов по priority.
 const results = [...content.achievements.items].sort(byPriority).slice(0, 6);
@@ -142,16 +143,20 @@ const jsonLd = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogTitle} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={metaDesc} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="google-site-verification" content="av7FBCkzLKf20h9nwG9qptHSQe7fj6RBNwrTKG6zNT4" />
+    <meta
+      name="google-site-verification"
+      content="av7FBCkzLKf20h9nwG9qptHSQe7fj6RBNwrTKG6zNT4"
+    />
     <meta name="yandex-verification" content="5872f59cc3bd95f6" />
     <link rel="alternate" type="text/markdown" hreflang="ru" href={mdRu} />
     <link rel="alternate" type="text/markdown" hreflang="en" href={mdEn} />
     <link rel="alternate" type="text/plain" title="llms.txt" href={llmsUrl} />
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline>
       // Помечаем, что JS активен (включает сворачивание опыта и reveal-анимации).
       document.documentElement.classList.add('js');
@@ -170,409 +175,445 @@ const jsonLd = {
       })();
     </script>
   </Fragment>
-    <header class="nav">
-      <a class="brand" href={withBase(base)}>
-        <img class="mono" src={withBase(base, 'favicon.svg')} width="34" height="34" alt="" />
-        <span class="brand-name" aria-hidden="true">
-          <Bilingual ru={profile.name.ru} en={profile.name.en} />
-        </span>
-      </a>
-      <LangToggle />
-    </header>
+  <header class="nav">
+    <a class="brand" href={withBase(base)}>
+      <img
+        class="mono"
+        src={withBase(base, 'favicon.svg')}
+        width="34"
+        height="34"
+        alt=""
+      />
+      <span class="brand-name" aria-hidden="true">
+        <Bilingual ru={profile.name.ru} en={profile.name.en} />
+      </span>
+    </a>
+    <LangToggle />
+  </header>
 
-    <main class="wrap">
-      <!-- HERO -->
-      <section class="hero">
-        <div class="hero-grid">
-          <div class="hero-main">
-            <p class="eyebrow">
-              <Bilingual ru="Открыт к предложениям" en="Open to opportunities" />
-            </p>
-            <h1>
-              <Bilingual ru={profile.name.ru} en={profile.name.en} />
-            </h1>
-            <p class="title">
-              <Bilingual ru={profile.title.ru} en={profile.title.en} />
-            </p>
-            {
-              profile.location && (
-                <p class="location">
-                  <Bilingual ru={profile.location.ru} en={profile.location.en} />
-                </p>
-              )
-            }
-            <p class="tagline">
-              <Bilingual ru={tagline.text.ru} en={tagline.text.en} />
-            </p>
-
-            <div class="contacts">
-              {
-                profile.email && (
-                  <a class="chip" href={`mailto:${profile.email}`} data-goal="contact_email">
-                    <span class="ico" set:html={ICON_EMAIL} />
-                    <Bilingual ru="Почта" en="Email" />
-                  </a>
-                )
-              }
-              {
-                profile.links.map((l) => (
-                  <a
-                    class="chip"
-                    href={l.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-goal={`contact_${l.kind ?? 'link'}`}
-                  >
-                    <span class="ico" set:html={contactIcon(l.kind)} />
-                    {l.label}
-                  </a>
-                ))
-              }
-            </div>
-
-            <div class="cta-row">
-              <a class="btn btn-primary" href="#results">
-                <Bilingual ru="Ключевые результаты" en="Key results" />
-              </a>
-              <a class="btn btn-ghost" href="#experience">
-                <Bilingual ru="Опыт работы" en="Experience" />
-              </a>
-              {
-                pdfRu && (
-                  <a
-                    class="btn btn-ghost lang-ru"
-                    href={pdfRu}
-                    download={`${pdfNameBase}_CV_ru.pdf`}
-                    data-goal="download_pdf"
-                  >
-                    Скачать PDF
-                  </a>
-                )
-              }
-              {
-                pdfEn && (
-                  <a
-                    class="btn btn-ghost lang-en"
-                    href={pdfEn}
-                    download={`${pdfNameBase}_CV_en.pdf`}
-                    data-goal="download_pdf"
-                  >
-                    Download PDF
-                  </a>
-                )
-              }
-            </div>
-          </div>
-
-          <div class="hero-portrait">
-            <div class="portrait-frame">
-              {
-                profile.photo ? (
-                  <img
-                    class="portrait-img"
-                    src={withBase(base, profile.photo)}
-                    alt={profile.name.ru}
-                    loading="eager"
-                  />
-                ) : (
-                  <div class="portrait-fallback" aria-hidden="true">
-                    SD
-                  </div>
-                )
-              }
-            </div>
-          </div>
-        </div>
-
-        {
-          companyLogos.length > 0 && (
-            <div class="logos">
-              <span class="logos-label">
-                <Bilingual ru="Опыт в компаниях" en="Experience at" />
-              </span>
-              <div class="logos-row">
-                {companyLogos.map((c) => (
-                  <a class="logo" href={`#exp-${c.expId}`} title={c.company}>
-                    <img src={withBase(base, c.logo)} alt={c.company} loading="lazy" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          )
-        }
-      </section>
-
-      <!-- ПОЛОСА ЦИФР -->
-      {
-        stats.length > 0 && (
-          <section class="stats-band reveal" aria-label="Ключевые цифры">
-            {stats.map((s) => (
-              <div class="stat">
-                <div class="stat-value">
-                  <Bilingual as="span" data-count="" ru={s.value.ru} en={s.value.en} />
-                </div>
-                <div class="stat-label">
-                  <Bilingual ru={s.label.ru} en={s.label.en} />
-                </div>
-              </div>
-            ))}
-          </section>
-        )
-      }
-
-      <!-- ТЕЗИСЫ -->
-      {
-        theses.length > 0 && (
-          <section class="theses" aria-label="Принципы">
-            {theses.map((t) => (
-              <p class="thesis reveal">
-                <Bilingual ru={renderInline(t.text.ru)} en={renderInline(t.text.en)} html />
+  <main class="wrap">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-main">
+          <p class="eyebrow">
+            <Bilingual ru="Открыт к предложениям" en="Open to opportunities" />
+          </p>
+          <h1>
+            <Bilingual ru={profile.name.ru} en={profile.name.en} />
+          </h1>
+          <p class="title">
+            <Bilingual ru={profile.title.ru} en={profile.title.en} />
+          </p>
+          {
+            profile.location && (
+              <p class="location">
+                <Bilingual ru={profile.location.ru} en={profile.location.en} />
               </p>
-            ))}
-          </section>
-        )
-      }
-
-      <!-- РЕЗУЛЬТАТЫ -->
-      <section class="section" id="results">
-        <div class="section-head reveal">
-          <span class="num">01</span>
-          <h2>
-            <Bilingual ru={SECTION_TITLES.achievements.ru} en={SECTION_TITLES.achievements.en} />
-          </h2>
-        </div>
-        <div class="results">
-          {
-            results.map((a) => (
-              <article class="result reveal">
-                <div class="body">
-                  <Bilingual ru={renderInline(a.text.ru)} en={renderInline(a.text.en)} html />
-                </div>
-              </article>
-            ))
+            )
           }
-        </div>
-      </section>
+          <p class="tagline">
+            <Bilingual ru={tagline.text.ru} en={tagline.text.en} />
+          </p>
 
-      <!-- ОПЫТ -->
-      <section class="section" id="experience">
-        <div class="section-head reveal">
-          <span class="num">02</span>
-          <h2>
-            <Bilingual ru={SECTION_TITLES.experience.ru} en={SECTION_TITLES.experience.en} />
-          </h2>
-        </div>
-        <div class="timeline">
-          {experience.map((e) => <ExperienceItem e={e} base={base} />)}
-        </div>
-      </section>
-
-      <!-- НАВЫКИ -->
-      <section class="section" id="skills">
-        <div class="section-head reveal">
-          <span class="num">03</span>
-          <h2>
-            <Bilingual ru={SECTION_TITLES.skills.ru} en={SECTION_TITLES.skills.en} />
-          </h2>
-        </div>
-        <div class="skill-groups">
-          {
-            skillGroups.map((g) => (
-              <div class="skill-group reveal">
-                <h3>
-                  <Bilingual ru={g.name.ru} en={g.name.en} />
-                </h3>
-                <div class="tags">
-                  {g.items.map((it) =>
-                    isLocalized(it) ? (
-                      <span class="tag">
-                        <Bilingual ru={it.ru} en={it.en} />
-                      </span>
-                    ) : (
-                      <span class="tag">{it}</span>
-                    ),
-                  )}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </section>
-
-      {
-        interests.length > 0 && (
-          <section class="section" id="beyond">
-            <div class="section-head reveal">
-              <span class="num">04</span>
-              <h2>
-                <Bilingual ru="Помимо работы" en="Beyond work" />
-              </h2>
-            </div>
-            <p class="beyond-lead">
-              <Bilingual
-                ru="Заряжаюсь там, где нужны фокус, баланс и немного смелости."
-                en="I recharge where focus, balance and a bit of courage are required."
-              />
-            </p>
-            <div class="interests">
-              {interests.map((it) =>
-                it.photo ? (
-                  <button
-                    class="interest interest-clickable reveal"
-                    type="button"
-                    data-photo={withBase(base, it.photo)}
-                    data-caption-ru={it.label.ru}
-                    data-caption-en={it.label.en}
-                  >
-                    {it.icon && (
-                      <span class="interest-ico" aria-hidden="true">
-                        {it.icon}
-                      </span>
-                    )}
-                    <Bilingual ru={it.label.ru} en={it.label.en} />
-                    <span class="interest-zoom" aria-hidden="true">⤢</span>
-                  </button>
-                ) : (
-                  <span class="interest reveal">
-                    {it.icon && (
-                      <span class="interest-ico" aria-hidden="true">
-                        {it.icon}
-                      </span>
-                    )}
-                    <Bilingual ru={it.label.ru} en={it.label.en} />
-                  </span>
-                ),
-              )}
-            </div>
+          <div class="contacts">
             {
-              profile.instagram && (
+              profile.email && (
                 <a
-                  class="beyond-link reveal"
-                  href={profile.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  class="chip"
+                  href={`mailto:${profile.email}`}
+                  data-goal="contact_email"
                 >
-                  <span class="beyond-link-ico" aria-hidden="true">
-                    ✦
-                  </span>
-                  <Bilingual ru="Больше личного" en="A bit more personal" />
-                  <span class="beyond-link-arrow" aria-hidden="true">
-                    →
-                  </span>
+                  <span class="ico" set:html={ICON_EMAIL} />
+                  <Bilingual ru="Почта" en="Email" />
                 </a>
               )
             }
-          </section>
+            {
+              profile.links.map((l) => (
+                <a
+                  class="chip"
+                  href={l.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-goal={`contact_${l.kind ?? 'link'}`}
+                >
+                  <span class="ico" set:html={contactIcon(l.kind)} />
+                  {l.label}
+                </a>
+              ))
+            }
+          </div>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#results">
+              <Bilingual ru="Ключевые результаты" en="Key results" />
+            </a>
+            <a class="btn btn-ghost" href="#experience">
+              <Bilingual ru="Опыт работы" en="Experience" />
+            </a>
+            {
+              pdfRu && (
+                <a
+                  class="btn btn-ghost lang-ru"
+                  href={pdfRu}
+                  download={`${pdfNameBase}_CV_ru.pdf`}
+                  data-goal="download_pdf"
+                >
+                  Скачать PDF
+                </a>
+              )
+            }
+            {
+              pdfEn && (
+                <a
+                  class="btn btn-ghost lang-en"
+                  href={pdfEn}
+                  download={`${pdfNameBase}_CV_en.pdf`}
+                  data-goal="download_pdf"
+                >
+                  Download PDF
+                </a>
+              )
+            }
+          </div>
+        </div>
+
+        <div class="hero-portrait">
+          <div class="portrait-frame">
+            {
+              profile.photo ? (
+                <img
+                  class="portrait-img"
+                  src={withBase(base, profile.photo)}
+                  alt={profile.name.ru}
+                  width="640"
+                  height="640"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                />
+              ) : (
+                <div class="portrait-fallback" aria-hidden="true">
+                  SD
+                </div>
+              )
+            }
+          </div>
+        </div>
+      </div>
+
+      {
+        companyLogos.length > 0 && (
+          <div class="logos">
+            <span class="logos-label">
+              <Bilingual ru="Опыт в компаниях" en="Experience at" />
+            </span>
+            <div class="logos-row">
+              {companyLogos.map((c) => (
+                <a class="logo" href={`#exp-${c.expId}`} title={c.company}>
+                  <img
+                    src={withBase(base, c.logo)}
+                    alt={c.company}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
         )
       }
+    </section>
 
-      <!-- ЗАКРЫВАЮЩИЙ CTA -->
-      <section class="cta-final reveal" id="contact">
+    <!-- ПОЛОСА ЦИФР -->
+    {
+      stats.length > 0 && (
+        <section class="stats-band reveal" aria-label="Ключевые цифры">
+          {stats.map((s) => (
+            <div class="stat">
+              <div class="stat-value">
+                <Bilingual as="span" data-count="" ru={s.value.ru} en={s.value.en} />
+              </div>
+              <div class="stat-label">
+                <Bilingual ru={s.label.ru} en={s.label.en} />
+              </div>
+            </div>
+          ))}
+        </section>
+      )
+    }
+
+    <!-- ТЕЗИСЫ -->
+    {
+      theses.length > 0 && (
+        <section class="theses" aria-label="Принципы">
+          {theses.map((t) => (
+            <p class="thesis reveal">
+              <Bilingual ru={renderInline(t.text.ru)} en={renderInline(t.text.en)} html />
+            </p>
+          ))}
+        </section>
+      )
+    }
+
+    <!-- РЕЗУЛЬТАТЫ -->
+    <section class="section" id="results">
+      <div class="section-head reveal">
+        <span class="num">01</span>
         <h2>
           <Bilingual
-            ru="Открыт к роли Head of Engineering"
-            en="Open to a Head of Engineering role"
+            ru={SECTION_TITLES.achievements.ru}
+            en={SECTION_TITLES.achievements.en}
           />
         </h2>
-        <p>
+      </div>
+      <div class="results">
+        {
+          results.map((a) => (
+            <article class="result reveal">
+              <div class="body">
+                <Bilingual
+                  ru={renderInline(a.text.ru)}
+                  en={renderInline(a.text.en)}
+                  html
+                />
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ОПЫТ -->
+    <section class="section" id="experience">
+      <div class="section-head reveal">
+        <span class="num">02</span>
+        <h2>
           <Bilingual
-            ru="Строю и масштабирую сильные инженерные команды. Давайте обсудим, чем могу быть полезен."
-            en="I build and scale strong engineering teams. Let's talk about how I can help."
+            ru={SECTION_TITLES.experience.ru}
+            en={SECTION_TITLES.experience.en}
           />
-        </p>
-        <div class="cta-row">
-          {
-            profile.email && (
-              <a class="btn btn-primary" href={`mailto:${profile.email}`} data-goal="cta_email">
-                <Bilingual ru="Написать на почту" en="Email me" />
-              </a>
-            )
-          }
-          {
-            telegram && (
-              <a
-                class="btn btn-ghost"
-                href={telegram.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-goal="cta_telegram"
-              >
-                <Bilingual ru="Написать в Telegram" en="Message on Telegram" />
-              </a>
-            )
-          }
-          {
-            pdfRu && (
-              <a
-                class="btn btn-ghost lang-ru"
-                href={pdfRu}
-                download={`${pdfNameBase}_CV_ru.pdf`}
-                data-goal="cta_download_pdf"
-              >
-                Скачать PDF
-              </a>
-            )
-          }
-          {
-            pdfEn && (
-              <a
-                class="btn btn-ghost lang-en"
-                href={pdfEn}
-                download={`${pdfNameBase}_CV_en.pdf`}
-                data-goal="cta_download_pdf"
-              >
-                Download PDF
-              </a>
-            )
-          }
-        </div>
-      </section>
+        </h2>
+      </div>
+      <div class="timeline">
+        {experience.map((e) => <ExperienceItem e={e} base={base} />)}
+      </div>
+    </section>
 
-      <footer class="footer">
-        <span class="copy">
-          © {year}
-          <Bilingual ru={profile.name.ru} en={profile.name.en} />
-        </span>
-        <!-- Машиночитаемая версия: видимый указатель для ИИ-ассистентов
+    <!-- НАВЫКИ -->
+    <section class="section" id="skills">
+      <div class="section-head reveal">
+        <span class="num">03</span>
+        <h2>
+          <Bilingual ru={SECTION_TITLES.skills.ru} en={SECTION_TITLES.skills.en} />
+        </h2>
+      </div>
+      <div class="skill-groups">
+        {
+          skillGroups.map((g) => (
+            <div class="skill-group reveal">
+              <h3>
+                <Bilingual ru={g.name.ru} en={g.name.en} />
+              </h3>
+              <div class="tags">
+                {g.items.map((it) =>
+                  isLocalized(it) ? (
+                    <span class="tag">
+                      <Bilingual ru={it.ru} en={it.en} />
+                    </span>
+                  ) : (
+                    <span class="tag">{it}</span>
+                  ),
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    {
+      interests.length > 0 && (
+        <section class="section" id="beyond">
+          <div class="section-head reveal">
+            <span class="num">04</span>
+            <h2>
+              <Bilingual ru="Помимо работы" en="Beyond work" />
+            </h2>
+          </div>
+          <p class="beyond-lead">
+            <Bilingual
+              ru="Заряжаюсь там, где нужны фокус, баланс и немного смелости."
+              en="I recharge where focus, balance and a bit of courage are required."
+            />
+          </p>
+          <div class="interests">
+            {interests.map((it) =>
+              it.photo ? (
+                <button
+                  class="interest interest-clickable reveal"
+                  type="button"
+                  data-photo={withBase(base, it.photo)}
+                  data-caption-ru={it.label.ru}
+                  data-caption-en={it.label.en}
+                >
+                  {it.icon && (
+                    <span class="interest-ico" aria-hidden="true">
+                      {it.icon}
+                    </span>
+                  )}
+                  <Bilingual ru={it.label.ru} en={it.label.en} />
+                  <span class="interest-zoom" aria-hidden="true">
+                    ⤢
+                  </span>
+                </button>
+              ) : (
+                <span class="interest reveal">
+                  {it.icon && (
+                    <span class="interest-ico" aria-hidden="true">
+                      {it.icon}
+                    </span>
+                  )}
+                  <Bilingual ru={it.label.ru} en={it.label.en} />
+                </span>
+              ),
+            )}
+          </div>
+          {profile.instagram && (
+            <a
+              class="beyond-link reveal"
+              href={profile.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="beyond-link-ico" aria-hidden="true">
+                ✦
+              </span>
+              <Bilingual ru="Больше личного" en="A bit more personal" />
+              <span class="beyond-link-arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
+          )}
+        </section>
+      )
+    }
+
+    <!-- ЗАКРЫВАЮЩИЙ CTA -->
+    <section class="cta-final reveal" id="contact">
+      <h2>
+        <Bilingual
+          ru="Открыт к роли Head of Engineering"
+          en="Open to a Head of Engineering role"
+        />
+      </h2>
+      <p>
+        <Bilingual
+          ru="Строю и масштабирую сильные инженерные команды. Давайте обсудим, чем могу быть полезен."
+          en="I build and scale strong engineering teams. Let's talk about how I can help."
+        />
+      </p>
+      <div class="cta-row">
+        {
+          profile.email && (
+            <a
+              class="btn btn-primary"
+              href={`mailto:${profile.email}`}
+              data-goal="cta_email"
+            >
+              <Bilingual ru="Написать на почту" en="Email me" />
+            </a>
+          )
+        }
+        {
+          telegram && (
+            <a
+              class="btn btn-ghost"
+              href={telegram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-goal="cta_telegram"
+            >
+              <Bilingual ru="Написать в Telegram" en="Message on Telegram" />
+            </a>
+          )
+        }
+        {
+          pdfRu && (
+            <a
+              class="btn btn-ghost lang-ru"
+              href={pdfRu}
+              download={`${pdfNameBase}_CV_ru.pdf`}
+              data-goal="cta_download_pdf"
+            >
+              Скачать PDF
+            </a>
+          )
+        }
+        {
+          pdfEn && (
+            <a
+              class="btn btn-ghost lang-en"
+              href={pdfEn}
+              download={`${pdfNameBase}_CV_en.pdf`}
+              data-goal="cta_download_pdf"
+            >
+              Download PDF
+            </a>
+          )
+        }
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="copy">
+        © {year}
+        <Bilingual ru={profile.name.ru} en={profile.name.en} />
+      </span>
+      <!-- Машиночитаемая версия: видимый указатель для ИИ-ассистентов
              (которые читают рендер, а не <head>) и сигнал «как данные» для людей. -->
-        <span class="machine">
-          <Bilingual ru="Это резюме доступно как данные:" en="This resume is available as data:" />
-          <a href={llmsUrl}>llms.txt</a>
-          <span class="sep" aria-hidden="true">·</span>
-          <a href={mdEn}>Markdown</a>
-          <span class="sep" aria-hidden="true">·</span>
-          <a href={jsonEn}>JSON Resume</a>
-        </span>
-      </footer>
-    </main>
+      <span class="machine">
+        <Bilingual
+          ru="Это резюме доступно как данные:"
+          en="This resume is available as data:"
+        />
+        <a href={llmsUrl}>llms.txt</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a href={mdEn}>Markdown</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a href={jsonEn}>JSON Resume</a>
+      </span>
+    </footer>
+  </main>
 
-    <!-- Лайтбокс для фото увлечений (наполняется по клику на чип). -->
-    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
-      <button class="lightbox-close" type="button" aria-label="Close">×</button>
-      <figure class="lightbox-fig">
-        <img class="lightbox-img" src="" alt="" />
-        <figcaption class="lightbox-cap"></figcaption>
-      </figure>
-    </div>
+  <!-- Лайтбокс для фото увлечений (наполняется по клику на чип). -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+    <button class="lightbox-close" type="button" aria-label="Close">×</button>
+    <figure class="lightbox-fig">
+      <img class="lightbox-img" src="" alt="" decoding="async" />
+      <figcaption class="lightbox-cap"></figcaption>
+    </figure>
+  </div>
 
-    <script define:vars={{ YM_ID: YANDEX_COUNTER_ID }}>
-      // Аналитика кликов: любой элемент с data-goal шлёт цель в Яндекс.Метрику
-      // и событие в GA4. Оба необязательны. YM_ID приходит из src/lib/analytics.ts.
-      (function () {
-        document.addEventListener('click', function (ev) {
-          var el = ev.target && ev.target.closest ? ev.target.closest('[data-goal]') : null;
-          if (!el) return;
-          var goal = el.getAttribute('data-goal');
-          try {
-            if (window.gtag) window.gtag('event', goal);
-          } catch (e) {}
-          try {
-            if (window.ym) window.ym(YM_ID, 'reachGoal', goal);
-          } catch (e) {}
-        });
-      })();
-    </script>
-    <script>
-      import '../scripts/landing.ts';
-    </script>
+  <script is:inline define:vars={{ YM_ID: YANDEX_COUNTER_ID }}>
+    // Аналитика кликов: любой элемент с data-goal шлёт цель в Яндекс.Метрику
+    // и событие в GA4. Оба необязательны. YM_ID приходит из src/lib/analytics.ts.
+    (function () {
+      document.addEventListener('click', function (ev) {
+        var el = ev.target && ev.target.closest ? ev.target.closest('[data-goal]') : null;
+        if (!el) return;
+        var goal = el.getAttribute('data-goal');
+        try {
+          if (window.gtag) window.gtag('event', goal);
+        } catch (e) {}
+        try {
+          if (window.ym) window.ym(YM_ID, 'reachGoal', goal);
+        } catch (e) {}
+      });
+    })();
+  </script>
+  <script>
+    import '../scripts/landing.ts';
+  </script>
 </BaseLayout>

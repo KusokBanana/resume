@@ -9,6 +9,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "test": "tsx --test test/*.test.ts",
+    "check": "astro check",
+    "format": "prettier --write \"src/**/*.{ts,astro}\" \"scripts/**/*.ts\" \"test/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.{ts,astro}\" \"scripts/**/*.ts\" \"test/**/*.ts\"",
     "validate": "tsx scripts/validate.ts",
     "build:md": "tsx scripts/build-md.ts",
     "build:json": "tsx scripts/build-json.ts",
@@ -28,9 +31,12 @@
     "zod": "^3.24.0"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "@types/node": "^22.10.0",
     "openai": "^6.45.0",
     "playwright": "^1.49.0",
+    "prettier": "^3.9.4",
+    "prettier-plugin-astro": "^0.14.1",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0"
   }

@@ -11,10 +11,7 @@ test('escapeHtml экранирует &, <, > (кавычки не трогае�
 
 test('renderInline: **жирный** → <strong>, с экранированием вокруг', () => {
   assert.equal(renderInline('**bold**'), '<strong>bold</strong>');
-  assert.equal(
-    renderInline('**a** & <b>'),
-    '<strong>a</strong> &amp; &lt;b&gt;',
-  );
+  assert.equal(renderInline('**a** & <b>'), '<strong>a</strong> &amp; &lt;b&gt;');
   // амперсанд внутри жирного тоже экранируется до вставки <strong>
   assert.equal(renderInline('**A&B**'), '<strong>A&amp;B</strong>');
 });

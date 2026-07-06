@@ -6,8 +6,7 @@ import type { ResumeDocument } from '../schema/index';
  * 'present' трактуется как отсутствие endDate.
  */
 export function toJsonResume(doc: ResumeDocument): Record<string, unknown> {
-  const endDate = (end?: string) =>
-    !end || end === 'present' ? undefined : end;
+  const endDate = (end?: string) => (!end || end === 'present' ? undefined : end);
 
   return {
     $schema:
@@ -18,9 +17,7 @@ export function toJsonResume(doc: ResumeDocument): Record<string, unknown> {
       email: doc.profile.email,
       phone: doc.profile.phone,
       summary: doc.summary,
-      location: doc.profile.location
-        ? { address: doc.profile.location }
-        : undefined,
+      location: doc.profile.location ? { address: doc.profile.location } : undefined,
       profiles: doc.profile.links.map((l) => ({
         network: l.kind ?? l.label,
         url: l.url,

@@ -14,10 +14,7 @@ export const GET: APIRoute = ({ site }) => {
     summary.variants.find((v) => v.id === 'summary-general') ?? summary.variants[0];
   const u = (path: string) => absUrl(site, base, path);
 
-  const contacts = [
-    profile.email,
-    ...profile.links.map((l) => `${l.label}: ${l.url}`),
-  ]
+  const contacts = [profile.email, ...profile.links.map((l) => `${l.label}: ${l.url}`)]
     .filter(Boolean)
     .join(' · ');
 

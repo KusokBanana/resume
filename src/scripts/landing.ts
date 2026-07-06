@@ -129,8 +129,14 @@ const lb = document.getElementById('lightbox');
 if (lb) {
   const lbImg = lb.querySelector<HTMLImageElement>('.lightbox-img')!;
   const lbCap = lb.querySelector<HTMLElement>('.lightbox-cap')!;
+  const lbClose = lb.querySelector<HTMLButtonElement>('.lightbox-close')!;
   let lastFocused: HTMLElement | null = null;
-  const openLightbox = (src: string | null, capRu: string | null, capEn: string | null, alt: string | null) => {
+  const openLightbox = (
+    src: string | null,
+    capRu: string | null,
+    capEn: string | null,
+    alt: string | null,
+  ) => {
     lbImg.setAttribute('src', src || '');
     lbImg.setAttribute('alt', alt || '');
     lbCap.innerHTML = '';
@@ -145,6 +151,7 @@ if (lb) {
     lb.classList.add('open');
     lb.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    lbClose.focus(); // фокус в диалог для клавиатуры
   };
   const closeLightbox = () => {
     lb.classList.remove('open');
@@ -170,6 +177,14 @@ if (lb) {
     if (t === lb || t.classList.contains('lightbox-close')) closeLightbox();
   });
   document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape' && lb.classList.contains('open')) closeLightbox();
+    if (!lb.classList.contains('open')) return;
+    if (ev.key === 'Escape') {
+      closeLightbox();
+    } else if (ev.key === 'Tab') {
+      // Единственный фокусируемый элемент в диалоге — крестик: держим фокус на нём
+      // (aria-modal="true" обещает, что фокус не уходит на фон под лайтбоксом).
+      ev.preventDefault();
+      lbClose.focus();
+    }
   });
 }

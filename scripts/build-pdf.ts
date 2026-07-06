@@ -62,7 +62,9 @@ async function main() {
   for (const { t, lang } of jobs) {
     const slug = variantSlug(t.id, lang);
     // ?nostats=1 — глушим Яндекс.Метрику, чтобы печать PDF не создавала фейковых заходов.
-    await page.goto(`${baseUrl}/exports/${t.id}/${lang}/?nostats=1`, { waitUntil: 'networkidle' });
+    await page.goto(`${baseUrl}/exports/${t.id}/${lang}/?nostats=1`, {
+      waitUntil: 'networkidle',
+    });
     await page.emulateMedia({ media: 'print' });
     await page.pdf({
       path: join(OUT, `${slug}.pdf`),

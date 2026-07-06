@@ -2,7 +2,7 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
-import { ZodError, type ZodType } from 'zod';
+import { z, ZodError } from 'zod';
 import {
   type Content,
   type Target,
@@ -29,7 +29,11 @@ function readYaml(path: string): unknown {
   return parseYaml(readFileSync(path, 'utf8'));
 }
 
-function validate<T>(schema: ZodType<T>, data: unknown, where: string): T {
+function validate<S extends z.ZodTypeAny>(
+  schema: S,
+  data: unknown,
+  where: string,
+): z.output<S> {
   try {
     return schema.parse(data);
   } catch (err) {
@@ -51,8 +55,14 @@ function listYaml(dir: string): string[] {
     .map((f) => join(dir, f));
 }
 
+// Кэш в пределах процесса: YAML не меняется во время сборки, а loadContent
+// зовётся из каждой страницы/эндпоинта — парсим один раз.
+let contentCache: Content | undefined;
+let targetsCache: Target[] | undefined;
+
 /** Загружает и валидирует весь content. Бросает читаемую ошибку при проблемах. */
 export function loadContent(): Content {
+  if (contentCache) return contentCache;
   const profile = validate(
     ProfileSchema,
     readYaml(join(CONTENT_DIR, 'profile.yaml')),
@@ -118,7 +128,7 @@ export function loadContent(): Content {
     validate(ProjectSchema, readYaml(p), `content/projects/${basename(p)}`),
   );
 
-  return {
+  contentCache = {
     profile,
     summary,
     achievements,
@@ -131,10 +141,12 @@ export function loadContent(): Content {
     stats,
     theses,
   };
+  return contentCache;
 }
 
 /** Загружает и валидирует все targets из targets/. */
 export function loadTargets(): Target[] {
+  if (targetsCache) return targetsCache;
   const targets = listYaml(TARGETS_DIR).map((p) =>
     validate(TargetSchema, readYaml(p), `targets/${basename(p)}`),
   );
@@ -143,7 +155,8 @@ export function loadTargets(): Target[] {
     if (ids.has(t.id)) throw new Error(`Дублирующийся target id: ${t.id}`);
     ids.add(t.id);
   }
-  return targets;
+  targetsCache = targets;
+  return targetsCache;
 }
 
 export { ROOT, CONTENT_DIR, TARGETS_DIR };
