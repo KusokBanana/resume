@@ -21,16 +21,16 @@ summary:
 highlights:
   # Универсальные пункты (видны и в ATS-варианте)
   - text:
-      ru: "Создал и развивал библиотеку UI-компонентов: перевёл на неё большинство проектов отдела, ускорил разработку новых интерфейсов в разы."
-      en: "Built and grew a UI component library: migrated most of the team's projects to it, multiplying the speed of new UI development."
+      ru: "Создал и развивал библиотеку UI-компонентов, перевёл на неё большинство проектов отдела — новые интерфейсы стали собираться в разы быстрее."
+      en: "Built and grew a UI component library and moved most of the team's projects onto it, so new interfaces came together several times faster."
     tags: {}
   - text:
       ru: Менторил коллег по backend- и frontend-разработке.
       en: Mentored colleagues in backend and frontend development.
     tags: {}
   - text:
-      ru: Выступал product owner части продуктов — развитие и поддержка.
-      en: Acted as product owner for several products — growth and support.
+      ru: "Был product owner нескольких продуктов: отвечал за их развитие и поддержку."
+      en: "Was product owner for several of the products: responsible for their growth and support."
     tags: {}
   # Детальный список конкретных сервисов (скрывается в ATS-варианте ради краткости)
   - text:
@@ -42,32 +42,32 @@ highlights:
       en: Extended and maintained the server ordering and provisioning platform for company services.
     tags: { audience: [hr, technical] }
   - text:
-      ru: "Разработал сервис комплектации, разукомплектации и перекомплектации оборудования (серверные компоненты, части беспилотных автомобилей и др.)."
-      en: "Built a service for assembling, disassembling and re-assembling equipment (server components, self-driving-car parts, etc.)."
+      ru: "Сделал сервис комплектации, разукомплектации и перекомплектации оборудования — от серверных компонентов до частей беспилотных автомобилей."
+      en: "Built a service for assembling, disassembling and re-assembling equipment — from server components to self-driving-car parts."
     tags: { audience: [hr, technical] }
   - text:
-      ru: Разработал платформу ремонта оборудования — полный цикл от заявки до получения отремонтированного оборудования из сервисного центра.
-      en: Built an equipment-repair platform — full cycle from request to receiving repaired hardware from the service centre.
+      ru: "Поднял платформу ремонта оборудования, закрывающую весь цикл: от заявки до возврата починенного железа из сервисного центра."
+      en: "Stood up an equipment-repair platform that covered the whole cycle: from the request to getting the repaired hardware back from the service centre."
     tags: { audience: [hr, technical] }
   - text:
-      ru: Разработал интерфейс исполнения заявок в дата-центрах (замена компонентов и серверов).
-      en: Built a UI for fulfilling data-centre work orders (component and server replacement).
+      ru: Собрал интерфейс исполнения заявок в дата-центрах — замену компонентов и серверов.
+      en: Built the UI for fulfilling data-centre work orders — component and server replacement.
     tags: { audience: [hr, technical] }
   - text:
-      ru: Разработал систему технического учёта материальных активов компании.
-      en: Built a technical asset-tracking system for the company's physical assets.
+      ru: Написал систему технического учёта материальных активов компании.
+      en: Wrote a technical asset-tracking system for the company's physical assets.
     tags: { audience: [hr, technical] }
   - text:
-      ru: Разработал интерфейс автоматизированной инвентаризации производства серверного оборудования на заводе.
-      en: Built a UI for automated inventory of server-hardware manufacturing at the factory.
+      ru: Автоматизировал инвентаризацию производства серверного оборудования на заводе — сделал для этого отдельный интерфейс.
+      en: Automated inventory of server-hardware manufacturing on the factory floor with a dedicated UI.
     tags: { audience: [hr, technical] }
   - text:
       ru: Разработал сервис транзакционного изменения состояния оборудования в системах инвентарного и количественного учёта.
       en: Built a service for transactional equipment-state changes across inventory and quantity-accounting systems.
     tags: { audience: [hr, technical] }
   - text:
-      ru: "Разработал сервис заказа на закупку и производство серверного оборудования: по минимально необходимой конфигурации подбирает оптимальное по стоимости железо."
-      en: "Built a procurement/manufacturing ordering service: from a minimal required configuration it selects the most cost-optimal hardware."
+      ru: "Построил сервис заказа на закупку и производство серверов: по минимально необходимой конфигурации он подбирает самое выгодное по цене железо."
+      en: "Built a procurement and manufacturing ordering service: given a minimal required configuration, it picks the most cost-effective hardware."
     tags: { audience: [hr, technical] }
 metrics:
   - { ru: "**8+** внутренних сервисов", en: "**8+** internal services" }

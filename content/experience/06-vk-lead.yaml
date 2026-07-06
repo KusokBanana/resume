@@ -17,15 +17,15 @@ tags:
   domains: [frontend, leadership, fintech]
 summary:
   ru: >-
-    Финтех ВКонтакте — «Кабинет выплат» (Cashout): полноценный интерфейс
-    самостоятельного вывода средств, где авторы выбирают источник заработка
-    по монетизациям в соцсети ВКонтакте и выводят нужную сумму. Highload-сервис
-    в экосистеме ВКонтакте. Повышение из роли старшего фронтенд-разработчика.
+    Финтех ВКонтакте, продукт «Кабинет выплат» (Cashout): полноценный интерфейс
+    самостоятельного вывода средств, где автор выбирает источник заработка по своим
+    монетизациям и выводит нужную сумму. Highload-сервис в экосистеме VK. На эту
+    роль вырос из старшего фронтенд-разработчика.
   en: >-
-    VK fintech — Cashout: a full self-service money-withdrawal product where
-    creators pick a monetisation earnings source on the VKontakte social network
-    and cash out the amount they want. A high-load service within the VK ecosystem.
-    Promoted from senior frontend developer.
+    VK fintech, the Cashout product: a full self-service money-withdrawal interface
+    where a creator picks an earnings source among their monetisations and cashes out
+    the amount they need. A high-load service inside the VK ecosystem. I grew into this
+    role from senior frontend developer.
 highlights:
   - text:
       ru: Руководил кросс-функциональной командой разработки (4 разработчика) и продуктом «Кабинет выплат» (Cashout).
@@ -34,10 +34,10 @@ highlights:
   - text:
       ru: >-
         Развивал ядро продукта — самостоятельный вывод средств: автор выбирает источник
-        заработка и выводит нужную сумму; рядом — аналитика заработка и сопутствующие функции.
+        заработка и выводит нужную сумму, а рядом живут аналитика заработка и сопутствующие функции.
       en: >-
-        Drove the product core — self-service withdrawal: a creator picks an earnings source
-        and cashes out the amount they need; alongside it, earnings analytics and related features.
+        Drove the product core, self-service withdrawal: a creator picks an earnings source
+        and cashes out what they need, with earnings analytics and related features alongside.
     tags: {}
   - text:
       ru: "Масштаб сервиса: десятки тысяч авторов и выплаты на десятки миллионов рублей в месяц."
@@ -49,15 +49,15 @@ highlights:
     tags: {}
   - text:
       ru: >-
-        Выстраивал взаимодействие со смежными отделами — тестирование, дизайн, аналитика,
-        маркетинг и PR, редактура, документооборот, юридический — ради отказоустойчивости
-        сервиса, качества UX, отслеживания метрик роста, привлечения клиентов и корректных
-        выплат самозанятым, ИП и юрлицам.
+        Налаживал работу со смежными отделами (тестирование, дизайн, аналитика, маркетинг
+        и PR, редактура, документооборот, юристы), чтобы сервис держал нагрузку, UX
+        оставался качественным, метрики роста отслеживались, а выплаты самозанятым,
+        ИП и юрлицам уходили корректно.
       en: >-
-        Built collaboration across adjacent departments — QA, design, analytics,
-        marketing & PR, editorial, document flow, legal — for service resilience, UX
-        quality, growth-metric tracking, customer acquisition and correct payouts to
-        self-employed individuals, sole proprietors and legal entities.
+        Worked closely with adjacent departments (QA, design, analytics, marketing and PR,
+        editorial, document flow, legal) so the service stayed resilient, the UX stayed
+        solid, growth metrics were tracked, and payouts to the self-employed, sole
+        proprietors and legal entities went out correctly.
     tags: { audience: [hr, technical] }
   - text:
       ru: Интегрировал смежные отделы для автоматизации рутинных процессов.

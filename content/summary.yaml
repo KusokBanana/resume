@@ -7,21 +7,21 @@ variants:
       audience: [hr, technical]
     text:
       ru: >-
-        Инженерный руководитель, 10+ лет в IT, более 3 лет в управлении командами.
-        Построил frontend-направление в Positive Technologies с нуля до отдела из
-        11 человек (4 кросс-функциональные команды). Ранее — Яндекс и VK. Совмещаю
-        стратегию, процессы и hands-on разработку на React / Angular / TypeScript.
-        В прошлом — fullstack-разработчик: при необходимости берусь и за backend
-        (Python, PHP, Node.js). Внедряю AI-assisted development в работу команд —
-        ускорил разработку в 1,5 раза.
+        Инженерный руководитель, 10+ лет в IT и 3+ года в управлении командами.
+        В Positive Technologies построил frontend-направление с нуля и вырастил его
+        до отдела в 11 человек и четырёх кросс-функциональных команд. До этого работал
+        в Яндексе и VK. Совмещаю стратегию и процессы с hands-on разработкой на React,
+        Angular и TypeScript. Вырос из fullstack-разработчика, поэтому при необходимости
+        закрываю и backend: Python, PHP, Node.js. Внедрил AI-assisted development
+        в командах, и разработка ускорилась в полтора раза.
       en: >-
         Engineering manager with 10+ years in tech and 3+ years leading teams.
-        Built the frontend function at Positive Technologies from scratch to an
-        11-person department (4 cross-functional teams). Previously at Yandex and VK.
-        I combine strategy, process and hands-on development in React / Angular /
-        TypeScript. Formerly a full-stack developer — I can take on backend when
-        needed (Python, PHP, Node.js). I bring AI-assisted development into team
-        workflows — sped up delivery by 1.5×.
+        At Positive Technologies I built the frontend function from scratch and grew it
+        into an 11-person department across four cross-functional teams. Before that,
+        Yandex and VK. I pair strategy and process with hands-on work in React, Angular
+        and TypeScript. I came up as a full-stack developer, so I still cover backend
+        when it's needed: Python, PHP, Node.js. Bringing AI-assisted development into the
+        teams sped up our delivery by half.
 
   - id: summary-ats
     priority: 20

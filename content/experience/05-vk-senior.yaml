@@ -17,12 +17,12 @@ tags:
   domains: [frontend, fintech]
 highlights:
   - text:
-      ru: Разрабатывал highload-интерфейсы финтеха ВКонтакте — продукта внутри одной из крупнейших соцсетей рунета (~100 млн MAU).
-      en: Built high-load VK fintech UIs — a product inside one of the largest social networks in the region (~100M MAU).
+      ru: Разрабатывал highload-интерфейсы финтеха ВКонтакте — продукта внутри одной из крупнейших соцсетей рунета с аудиторией около 100 млн MAU.
+      en: Built high-load VK fintech UIs, part of one of the region's largest social networks, with an audience of roughly 100M MAU.
     tags: {}
   - text:
-      ru: "Работал в условиях высокой нагрузки: большой трафик и объёмы данных, повышенные требования к стабильности, производительности и отказоустойчивости клиентских интерфейсов."
-      en: "Worked under high load: significant traffic and data volumes, with elevated client-side stability, performance and resilience requirements."
+      ru: "Работал под высокой нагрузкой: большой трафик и объёмы данных, жёсткие требования к стабильности и производительности клиентских интерфейсов."
+      en: "Worked under real load: heavy traffic and data volumes, with hard requirements on client-side stability and performance."
     tags: { audience: [technical] }
   - text:
       ru: "Внедрил feature-flags: релизы несколько раз в день и выборочный раскат функциональности на отдельные категории пользователей."

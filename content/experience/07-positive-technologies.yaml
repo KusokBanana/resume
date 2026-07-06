@@ -17,30 +17,30 @@ tags:
   domains: [engineering-management, frontend, leadership]
 summary:
   ru: >-
-    Frontend-направление продуктов дирекции информационных технологий. В подчинении
-    4 кросс-функциональные команды: техлиды, frontend-разработчики и UX/UI-дизайнеры.
-    Полная ответственность за направление — от стратегии и найма до технологических
-    решений и пользовательского результата. Выступал владельцем интерфейсного
-    направления, балансируя интересы бизнеса, пользователей и команды.
+    Frontend-направление продуктов дирекции информационных технологий: четыре
+    кросс-функциональные команды из техлидов, frontend-разработчиков и UX/UI-дизайнеров.
+    Отвечал за направление целиком — от стратегии и найма до технических решений
+    и того, что в итоге видел пользователь. Держал баланс между интересами бизнеса,
+    продукта и команды.
   en: >-
-    Frontend function across the IT directorate's products. Led 4 cross-functional
-    teams: tech leads, frontend engineers and UX/UI designers. Full ownership of the
-    function — from strategy and hiring to technical decisions and user outcomes.
-    Acted as the owner of the UI domain, balancing business, user and team interests.
+    The frontend function across the IT directorate's products: four cross-functional
+    teams of tech leads, frontend engineers and UX/UI designers. I owned the function
+    end to end, from strategy and hiring through to technical decisions and what users
+    actually saw, holding the balance between the business, the product and the team.
 groups:
   - title: { ru: Продукты, en: Products }
     highlights:
       - text:
-          ru: Руководил полным циклом разработки интерфейсов — от Low-Fidelity-прототипов до промышленного релиза и развития на проде.
-          en: Led the full UI lifecycle — from low-fidelity prototypes to production release and ongoing evolution.
+          ru: Вёл полный цикл разработки интерфейсов, от low-fi-прототипов до промышленного релиза и дальнейшего развития на проде.
+          en: Ran the full UI lifecycle, from low-fidelity prototypes through to production release and continued work on prod.
         tags: {}
       - text:
-          ru: "Вёл интерфейсы продуктов: Корпоративный портал, Партнёрский портал, Aim (автоматизация управления инфраструктурой), Preboarding (найм и онбординг) и ряд менее крупных."
-          en: "Owned UIs for: Corporate Portal, Partner Portal, Aim (infrastructure-management automation), Preboarding (hiring and onboarding) and several smaller products."
+          ru: "Отвечал за интерфейсы Корпоративного и Партнёрского порталов, Aim (автоматизация управления инфраструктурой), Preboarding (найм и онбординг) и нескольких продуктов поменьше."
+          en: "Owned the UIs of the Corporate and Partner portals, Aim (infrastructure-management automation), Preboarding (hiring and onboarding) and a handful of smaller products."
         tags: {}
       - text:
-          ru: Обеспечил стабильную поставку интерфейсных решений для продуктов с активной пользовательской базой.
-          en: Ensured stable delivery of UI solutions for products with an active user base.
+          ru: Держал стабильную поставку интерфейсов для продуктов с живой пользовательской базой.
+          en: Kept UI delivery steady for products with a live user base.
         tags: { audience: [hr, technical], domains: [linkedin-skip] }
   - title: { ru: Команды и процессы, en: Teams & process }
     highlights:
@@ -49,34 +49,34 @@ groups:
           en: "Built the frontend function from scratch: hiring, onboarding, ownership areas, strategy; scaled the department from 0 to 11 people in a year."
         tags: {}
       - text:
-          ru: "Принял команды «по наследству»: внедрил процессы, повысил управляемость и прозрачность, выстроил рабочие и доверительные отношения."
-          en: "Inherited existing teams: introduced process, improved manageability and transparency, built trust and working relationships."
+          ru: "Часть команд досталась «по наследству»: навёл процессы, сделал работу прозрачной и управляемой, выстроил доверительные рабочие отношения."
+          en: "Some teams came to me by inheritance: I put process in place, made the work transparent and manageable, and built trusting working relationships."
         tags: { domains: [linkedin-skip] }
       - text:
-          ru: Провёл полную замену команды в одном из продуктов с бесшовной интеграцией нового интерфейса на современном стеке — без остановки развития продукта.
-          en: Fully replaced a product's team with a seamless migration to a modern-stack UI — without pausing product development.
+          ru: Полностью сменил команду на одном из продуктов и бесшовно перевёл интерфейс на современный стек, не останавливая развитие продукта.
+          en: Fully replaced a product's team and migrated its UI to a modern stack seamlessly, without pausing product development.
         tags: { audience: [hr, technical] }
       - text:
-          ru: Внедрил процесс дизайн-ревью — число визуальных багов снизилось со стабильных 5–10 до 0–1 на релиз.
-          en: Introduced a design-review process — visual bugs dropped from a steady 5–10 to 0–1 per release.
+          ru: Запустил дизайн-ревью, и визуальные баги упали со стабильных 5–10 до 0–1 на релиз.
+          en: Started running design review, and visual bugs fell from a steady 5–10 to 0–1 per release.
         tags: {}
       - text:
-          ru: "Перестроил процесс разработки email-писем: вместо связки «дизайнер + разработчик, ~неделя» — один разработчик за пару часов."
-          en: Reworked the email-building process — from "designer + developer, ~a week" to one developer in a couple of hours.
+          ru: "Перестроил разработку email-писем: там, где раньше уходила неделя на связку «дизайнер плюс разработчик», теперь справляется один разработчик за пару часов."
+          en: "Reworked how we build emails: what used to take a designer and a developer about a week now takes one developer a couple of hours."
         tags: { audience: [hr, technical], domains: [linkedin-skip] }
   - title: { ru: Люди, en: People }
     highlights:
       - text:
-          ru: "Развивал команду через индивидуальные планы развития (ИПР): 3 человека выросли до Senior, 3 — до лидов."
-          en: "Grew the team via individual development plans: 3 people reached Senior, 3 became leads."
+          ru: "Развивал команду через индивидуальные планы развития (ИПР): трое доросли до Senior, ещё трое стали лидами."
+          en: "Grew the team through individual development plans: three reached Senior, three more became leads."
         tags: {}
       - text:
-          ru: Удержал отдел без единого добровольного ухода за 2 года на фоне турбулентности в компании (урезание бюджетов, массовые сокращения); потери — только в рамках общекорпоративного сокращения штата.
-          en: Kept the department with zero voluntary attrition over 2 years amid company turbulence (budget cuts, mass layoffs); the only losses were part of company-wide reductions.
+          ru: За два года отдел не покинул добровольно ни один человек, и это на фоне турбулентности в компании — урезаний бюджетов и массовых сокращений; потери были только в рамках общекорпоративного сокращения штата.
+          en: Over two years not a single person left the department voluntarily, and that was amid company turbulence — budget cuts and mass layoffs; the only losses came with company-wide reductions.
         tags: {}
       - text:
-          ru: Повысил автономность команд и снизил bus-factor — уменьшил зависимость от отдельных специалистов.
-          en: Increased team autonomy and reduced the bus factor — lowered dependence on individual specialists.
+          ru: "Повысил автономность команд и снизил bus-factor: работа перестала завязываться на отдельных людях."
+          en: "Made the teams more autonomous and lowered the bus factor: the work no longer hinged on individual people."
         tags: { audience: [hr, technical], domains: [linkedin-skip] }
       - text:
           ru: Принимал сложные управленческие решения, включая расставание с сотрудниками в рамках оптимизации команды.
@@ -85,16 +85,16 @@ groups:
   - title: { ru: Технологии и hands-on, en: Technology & hands-on }
     highlights:
       - text:
-          ru: Внедрил AI-assisted development (Claude и аналогичные инструменты) — ускорил разработку в ~1,5 раза за счёт прототипирования, рефакторинга, написания кода и код-ревью.
-          en: Introduced AI-assisted development (Claude and similar) — sped up delivery ~1.5× across prototyping, refactoring, coding and code review.
+          ru: "Внедрил AI-assisted development (Claude и подобные инструменты): прототипирование, рефакторинг, написание кода и ревью ускорились примерно в полтора раза."
+          en: "Brought in AI-assisted development (Claude and similar): prototyping, refactoring, coding and review got about 1.5× faster."
         tags: {}
       - text:
-          ru: "Оснастил библиотеку компонентов поддержкой llms.txt — машиночитаемой документацией для LLM-инструментов: AI-ассистенты используют компоненты корректно «из коробки», без ручного контекста."
-          en: Added llms.txt support to the component library — machine-readable docs for LLM tools, so AI assistants use components correctly out of the box without manual context.
+          ru: Добавил в библиотеку компонентов поддержку llms.txt — машиночитаемую документацию для LLM. Теперь AI-ассистенты используют компоненты корректно из коробки, без ручного контекста.
+          en: Added llms.txt support to the component library — machine-readable docs for LLMs. AI assistants now use the components correctly out of the box, without hand-fed context.
         tags: { audience: [technical] }
       - text:
-          ru: Участвовал в разработке ключевых частей интерфейсов на React и Angular — точечный hands-on в сложных и критичных местах.
-          en: Contributed hands-on to key UI parts in React and Angular — targeted work in complex, critical areas.
+          ru: Сам садился за код ключевых частей интерфейсов на React и Angular — точечно, в сложных и критичных местах.
+          en: Got hands-on with the code of key UI parts in React and Angular — selectively, in the complex and critical spots.
         tags: {}
       - text:
           ru: Прорабатывал архитектурные решения, проводил код-ревью; владею frontend-архитектурой и стандартами разработки интерфейсов.
@@ -115,8 +115,8 @@ groups:
           en: Automated the release cycle (scripts + CI/CD) — release prep dropped from 2 hours to 10 minutes.
         tags: {}
       - text:
-          ru: Внедрил полностью автоматическую сборку и публикацию пакетов по схеме push → merge → release — без единого ручного действия.
-          en: Introduced fully automated package build and publish (push → merge → release) — with zero manual steps.
+          ru: Сделал сборку и публикацию пакетов полностью автоматическими — от push до merge и release без единого ручного шага.
+          en: Made package build and publish fully automatic — from push to merge to release with zero manual steps.
         tags: { audience: [technical] }
       - text:
           ru: Повысил стабильность релизов и предсказуемость поставки, снизил операционную нагрузку на команды.
