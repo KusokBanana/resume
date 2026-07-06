@@ -204,11 +204,6 @@ export function compose(
   };
 }
 
-/** Какие секции и в каком порядке показывать (из target.sections). */
-export function orderedSections(target: Target): Target['sections'] {
-  return target.sections;
-}
-
 /** Все валидные пары (target, язык) — удобно для getStaticPaths и скриптов. */
 export function targetLangPairs(targets: Target[]): { target: Target; lang: Lang }[] {
   return targets.flatMap((t) => t.languages.map((lang) => ({ target: t, lang })));

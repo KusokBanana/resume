@@ -2,6 +2,7 @@ import { readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import { chromium } from 'playwright';
 import { loadContent, ROOT } from '../src/lib/load';
+import { escapeHtml as esc } from '../src/lib/inline';
 
 /**
  * Генерация OG-картинки для соцсетей (1200×630) → dist/og.png.
@@ -26,10 +27,6 @@ function photoDataUri(rel?: string): string | null {
   if (!existsSync(p)) return null;
   const mime = MIME[extname(p).toLowerCase()] ?? 'image/jpeg';
   return `data:${mime};base64,${readFileSync(p).toString('base64')}`;
-}
-
-function esc(s: string): string {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function buildHtml(): string {

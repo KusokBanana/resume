@@ -1,7 +1,7 @@
 ---
 import type { ResumeDocument, Section } from '../schema/index';
-import { sectionTitle, endLabel, UI } from '../lib/labels';
-import { inlineHtml } from '../lib/inline';
+import { sectionTitle, endLabel, dateRange, UI } from '../lib/labels';
+import { renderInline } from '../lib/inline';
 
 interface Props {
   doc: ResumeDocument;
@@ -9,7 +9,6 @@ interface Props {
 }
 const { doc, sections } = Astro.props;
 const lang = doc.meta.language;
-const range = (s: string, e: string) => `${s} — ${endLabel(e, lang)}`;
 ---
 
 <article class="resume" data-layout={doc.meta.layout} lang={lang}>
@@ -65,7 +64,7 @@ const range = (s: string, e: string) => `${s} — ${endLabel(e, lang)}`;
             <h2>{sectionTitle('achievements', lang)}</h2>
             <ul>
               {doc.achievements.map((a) => (
-                <li set:html={inlineHtml(a)} />
+                <li set:html={renderInline(a)} />
               ))}
             </ul>
           </section>
@@ -83,14 +82,14 @@ const range = (s: string, e: string) => `${s} — ${endLabel(e, lang)}`;
                   {e.companyUrl ? <a href={e.companyUrl}>{e.company}</a> : e.company}
                 </h3>
                 <p class="meta">
-                  {[range(e.start, e.end), e.location].filter(Boolean).join(' · ')}
+                  {[dateRange(e.start, e.end, lang), e.location].filter(Boolean).join(' · ')}
                 </p>
                 {e.metrics.length > 0 && (
                   <p class="metrics">
                     {e.metrics.map((m, i) => (
                       <>
                         {i > 0 && ' · '}
-                        <span set:html={inlineHtml(m)} />
+                        <span set:html={renderInline(m)} />
                       </>
                     ))}
                   </p>
@@ -99,7 +98,7 @@ const range = (s: string, e: string) => `${s} — ${endLabel(e, lang)}`;
                 {e.highlights.length > 0 && (
                   <ul>
                     {e.highlights.map((h) => (
-                      <li set:html={inlineHtml(h)} />
+                      <li set:html={renderInline(h)} />
                     ))}
                   </ul>
                 )}
@@ -108,7 +107,7 @@ const range = (s: string, e: string) => `${s} — ${endLabel(e, lang)}`;
                     <h4>{g.title}</h4>
                     <ul>
                       {g.highlights.map((h) => (
-                        <li set:html={inlineHtml(h)} />
+                        <li set:html={renderInline(h)} />
                       ))}
                     </ul>
                   </div>
@@ -157,6 +156,19 @@ const range = (s: string, e: string) => `${s} — ${endLabel(e, lang)}`;
             {doc.skills.map((g) => (
               <p class="skills-line">
                 <strong>{g.name}:</strong> {g.items.join(', ')}
+              </p>
+            ))}
+          </section>
+        );
+      }
+
+      if (section === 'languages' && doc.languages.length > 0) {
+        return (
+          <section>
+            <h2>{sectionTitle('languages', lang)}</h2>
+            {doc.languages.map((l) => (
+              <p class="skills-line">
+                <strong>{l.name}:</strong> {l.level}
               </p>
             ))}
           </section>

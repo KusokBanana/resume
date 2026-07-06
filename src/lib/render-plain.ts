@@ -1,5 +1,5 @@
 import type { ResumeDocument, Section, Lang } from '../schema/index';
-import { sectionTitle, endLabel, UI } from './labels';
+import { sectionTitle, endLabel, dateRange, UI } from './labels';
 
 /**
  * Рендер ResumeDocument в «плоский» plain text под textarea hh/LinkedIn.
@@ -10,9 +10,6 @@ import { sectionTitle, endLabel, UI } from './labels';
  * пункты — юникод-буллетом `•`. После вставки структура (буллеты + переносы)
  * остаётся. Документ строится по секциям — нужный блок копируется в своё поле.
  */
-const dateRange = (start: string, end: string, lang: Lang) =>
-  `${start} — ${endLabel(end, lang)}`;
-
 /** Убираем markdown-жирный `**...**`, оставляя сам текст. */
 const stripBold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '$1');
 

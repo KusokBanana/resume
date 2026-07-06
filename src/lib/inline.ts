@@ -1,12 +1,14 @@
 /**
- * Минимальный inline-markdown → HTML для текстовых пунктов: только **жирный**.
- * Экранирует HTML-спецсимволы (контент доверенный, но экранирование — гигиена).
- * В Markdown-выводе `**...**` и так работает нативно, поэтому конвертер нужен только для HTML.
+ * Минимальный inline-markdown для HTML: экранирование спецсимволов + **жирный**.
+ * Контент доверенный, но экранирование — гигиена. В Markdown-выводе `**...**`
+ * работает нативно, поэтому конвертер нужен только там, где мы вставляем HTML
+ * (лендинг, HTML-резюме, OG-карточка).
  */
-export function inlineHtml(s: string): string {
-  const esc = s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-  return esc.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+export function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/** Экранирует HTML и превращает `**жирный**` в `<strong>`. */
+export function renderInline(s: string): string {
+  return escapeHtml(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 }

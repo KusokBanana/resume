@@ -3,7 +3,7 @@ import { loadContent, loadTargets } from '../lib/load';
 import { variantSlug } from '../lib/slug';
 import { withBase } from '../lib/url';
 import { absUrl } from '../lib/canonical';
-import { renderBold } from '../lib/inline-md';
+import { renderInline } from '../lib/inline';
 import { contactIcon, ICON_EMAIL } from '../lib/icons';
 import { SECTION_TITLES } from '../lib/labels';
 import ExperienceItem from '../components/ExperienceItem.astro';
@@ -351,8 +351,8 @@ const jsonLd = {
           <section class="theses" aria-label="Принципы">
             {theses.map((t) => (
               <p class="thesis reveal">
-                <span class="lang-ru" set:html={renderBold(t.text.ru)} />
-                <span class="lang-en" set:html={renderBold(t.text.en)} />
+                <span class="lang-ru" set:html={renderInline(t.text.ru)} />
+                <span class="lang-en" set:html={renderInline(t.text.en)} />
               </p>
             ))}
           </section>
@@ -373,8 +373,8 @@ const jsonLd = {
             results.map((a) => (
               <article class="result reveal">
                 <div class="body">
-                  <span class="lang-ru" set:html={renderBold(a.text.ru)} />
-                  <span class="lang-en" set:html={renderBold(a.text.en)} />
+                  <span class="lang-ru" set:html={renderInline(a.text.ru)} />
+                  <span class="lang-en" set:html={renderInline(a.text.en)} />
                 </div>
               </article>
             ))

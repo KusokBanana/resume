@@ -1,8 +1,5 @@
-import type { ResumeDocument, Section, Lang } from '../schema/index';
-import { sectionTitle, endLabel, UI } from './labels';
-
-const dateRange = (start: string, end: string, lang: Lang) =>
-  `${start} — ${endLabel(end, lang)}`;
+import type { ResumeDocument, Section } from '../schema/index';
+import { sectionTitle, endLabel, dateRange, UI } from './labels';
 
 /** Рендерит ResumeDocument в Markdown. sections задаёт состав и порядок. */
 export function renderMarkdown(doc: ResumeDocument, sections: Section[]): string {

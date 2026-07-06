@@ -1,17 +1,14 @@
 ---
 import { withBase } from '../lib/url';
-import { renderBold } from '../lib/inline-md';
-import { UI, endLabel, durationLabel } from '../lib/labels';
-import type { Experience, Lang } from '../schema/index';
+import { renderInline } from '../lib/inline';
+import { UI, dateRange, durationLabel } from '../lib/labels';
+import type { Experience } from '../schema/index';
 
 interface Props {
   e: Experience;
   base: string;
 }
 const { e, base } = Astro.props;
-
-const dateRange = (lang: Lang) =>
-  `${e.start} — ${e.end === 'present' ? endLabel('present', lang) : e.end}`;
 
 // Превью: первые N плоских пунктов видны всегда; остальное (хвост плоских пунктов,
 // все группы, стек) уходит под сворачивание. Группы НЕ дробим — так заголовки
@@ -50,8 +47,8 @@ const hasCollapse = hiddenCount > 0;
     }
   </p>
   <p class="tl-meta">
-    <span class="lang-ru">{dateRange('ru')}</span>
-    <span class="lang-en">{dateRange('en')}</span>
+    <span class="lang-ru">{dateRange(e.start, e.end, 'ru')}</span>
+    <span class="lang-en">{dateRange(e.start, e.end, 'en')}</span>
     <span class="tl-duration lang-ru">{durationLabel(e.start, e.end, 'ru')}</span>
     <span class="tl-duration lang-en">{durationLabel(e.start, e.end, 'en')}</span>
     {
@@ -69,8 +66,8 @@ const hasCollapse = hiddenCount > 0;
       <div class="tl-metrics">
         {e.metrics.map((m) => (
           <>
-            <span class="tl-metric lang-ru" set:html={renderBold(m.ru)} />
-            <span class="tl-metric lang-en" set:html={renderBold(m.en)} />
+            <span class="tl-metric lang-ru" set:html={renderInline(m.ru)} />
+            <span class="tl-metric lang-en" set:html={renderInline(m.en)} />
           </>
         ))}
       </div>
@@ -89,8 +86,8 @@ const hasCollapse = hiddenCount > 0;
       <ul class="tl-points">
         {lead.map((h) => (
           <>
-            <li class="lang-ru" set:html={renderBold(h.text.ru)} />
-            <li class="lang-en" set:html={renderBold(h.text.en)} />
+            <li class="lang-ru" set:html={renderInline(h.text.ru)} />
+            <li class="lang-en" set:html={renderInline(h.text.en)} />
           </>
         ))}
       </ul>
@@ -104,8 +101,8 @@ const hasCollapse = hiddenCount > 0;
           <ul class="tl-points">
             {restHighlights.map((h) => (
               <>
-                <li class="lang-ru" set:html={renderBold(h.text.ru)} />
-                <li class="lang-en" set:html={renderBold(h.text.en)} />
+                <li class="lang-ru" set:html={renderInline(h.text.ru)} />
+                <li class="lang-en" set:html={renderInline(h.text.en)} />
               </>
             ))}
           </ul>
@@ -119,8 +116,8 @@ const hasCollapse = hiddenCount > 0;
             <ul class="tl-points">
               {g.highlights.map((h) => (
                 <>
-                  <li class="lang-ru" set:html={renderBold(h.text.ru)} />
-                  <li class="lang-en" set:html={renderBold(h.text.en)} />
+                  <li class="lang-ru" set:html={renderInline(h.text.ru)} />
+                  <li class="lang-en" set:html={renderInline(h.text.en)} />
                 </>
               ))}
             </ul>

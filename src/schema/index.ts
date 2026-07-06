@@ -267,7 +267,7 @@ export const ThesesSchema = z.object({
     .array(
       z.object({
         id: z.string(),
-        /** Текст тезиса; поддерживает **акцент** (renderBold). */
+        /** Текст тезиса; поддерживает **акцент** (renderInline). */
         text: Localized,
         priority: z.number().default(0),
       }),

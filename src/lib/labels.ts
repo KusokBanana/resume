@@ -33,6 +33,11 @@ export function endLabel(end: string, lang: Lang): string {
   return end === 'present' ? UI.present[lang] : end;
 }
 
+/** Диапазон дат «начало — конец» с локализованным `present`. */
+export function dateRange(start: string, end: string, lang: Lang): string {
+  return `${start} — ${endLabel(end, lang)}`;
+}
+
 /** Число месяцев между YYYY[-MM] включительно; end='present' → до текущего месяца. */
 function monthsBetween(start: string, end: string, now: Date): number {
   const parse = (s: string): [number, number] => {
