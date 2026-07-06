@@ -1,0 +1,159 @@
+---
+import { loadContent } from '../../lib/load';
+import { withBase } from '../../lib/url';
+import { byPriority, byStartDesc } from '../../lib/compose';
+import { contactIcon, ICON_EMAIL } from '../../lib/icons';
+import { pdfDownloads } from '../../lib/downloads';
+import Bilingual from '../Bilingual.astro';
+
+const content = loadContent();
+const { profile } = content;
+const base = import.meta.env.BASE_URL;
+
+// Tagline: человеко-ориентированный general-вариант (с фолбэком по priority).
+const tagline =
+  content.summary.variants.find((v) => v.id === 'summary-general') ??
+  [...content.summary.variants].sort(byPriority)[0];
+
+// Логотипы компаний: уникальные, в порядке от новейшего опыта; expId — якорь.
+const companyLogos = [...content.experience]
+  .sort(byStartDesc)
+  .filter((e) => e.logo)
+  .reduce<{ company: string; logo: string; expId: string }[]>((acc, e) => {
+    if (!acc.some((c) => c.company === e.company)) {
+      acc.push({ company: e.company, logo: e.logo!, expId: e.id });
+    }
+    return acc;
+  }, []);
+
+const pdf = pdfDownloads(base);
+---
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-main">
+      <p class="eyebrow">
+        <Bilingual ru="Открыт к предложениям" en="Open to opportunities" />
+      </p>
+      <h1>
+        <Bilingual ru={profile.name.ru} en={profile.name.en} />
+      </h1>
+      <p class="title">
+        <Bilingual ru={profile.title.ru} en={profile.title.en} />
+      </p>
+      {
+        profile.location && (
+          <p class="location">
+            <Bilingual ru={profile.location.ru} en={profile.location.en} />
+          </p>
+        )
+      }
+      <p class="tagline">
+        <Bilingual ru={tagline.text.ru} en={tagline.text.en} />
+      </p>
+
+      <div class="contacts">
+        {
+          profile.email && (
+            <a class="chip" href={`mailto:${profile.email}`} data-goal="contact_email">
+              <span class="ico" set:html={ICON_EMAIL} />
+              <Bilingual ru="Почта" en="Email" />
+            </a>
+          )
+        }
+        {
+          profile.links.map((l) => (
+            <a
+              class="chip"
+              href={l.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-goal={`contact_${l.kind ?? 'link'}`}
+            >
+              <span class="ico" set:html={contactIcon(l.kind)} />
+              {l.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#results">
+          <Bilingual ru="Ключевые результаты" en="Key results" />
+        </a>
+        <a class="btn btn-ghost" href="#experience">
+          <Bilingual ru="Опыт работы" en="Experience" />
+        </a>
+        {
+          pdf.ru && (
+            <a
+              class="btn btn-ghost lang-ru"
+              href={pdf.ru}
+              download={`${pdf.nameBase}_CV_ru.pdf`}
+              data-goal="download_pdf"
+            >
+              Скачать PDF
+            </a>
+          )
+        }
+        {
+          pdf.en && (
+            <a
+              class="btn btn-ghost lang-en"
+              href={pdf.en}
+              download={`${pdf.nameBase}_CV_en.pdf`}
+              data-goal="download_pdf"
+            >
+              Download PDF
+            </a>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="hero-portrait">
+      <div class="portrait-frame">
+        {
+          profile.photo ? (
+            <img
+              class="portrait-img"
+              src={withBase(base, profile.photo)}
+              alt={profile.name.ru}
+              width="640"
+              height="640"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          ) : (
+            <div class="portrait-fallback" aria-hidden="true">
+              SD
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+
+  {
+    companyLogos.length > 0 && (
+      <div class="logos">
+        <span class="logos-label">
+          <Bilingual ru="Опыт в компаниях" en="Experience at" />
+        </span>
+        <div class="logos-row">
+          {companyLogos.map((c) => (
+            <a class="logo" href={`#exp-${c.expId}`} title={c.company}>
+              <img
+                src={withBase(base, c.logo)}
+                alt={c.company}
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+    )
+  }
+</section>

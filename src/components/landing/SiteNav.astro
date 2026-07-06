@@ -1,0 +1,19 @@
+---
+import { loadContent } from '../../lib/load';
+import { withBase } from '../../lib/url';
+import LangToggle from '../LangToggle.astro';
+import Bilingual from '../Bilingual.astro';
+
+const { profile } = loadContent();
+const base = import.meta.env.BASE_URL;
+---
+
+<header class="nav">
+  <a class="brand" href={withBase(base)} aria-label={profile.name.ru}>
+    <img class="mono" src={withBase(base, 'favicon.svg')} width="34" height="34" alt="" />
+    <span class="brand-name" aria-hidden="true">
+      <Bilingual ru={profile.name.ru} en={profile.name.en} />
+    </span>
+  </a>
+  <LangToggle />
+</header>

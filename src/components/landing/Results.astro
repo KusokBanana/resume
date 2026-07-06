@@ -1,0 +1,33 @@
+---
+import { loadContent } from '../../lib/load';
+import { byPriority } from '../../lib/compose';
+import { renderInline } from '../../lib/inline';
+import { SECTION_TITLES } from '../../lib/labels';
+import Bilingual from '../Bilingual.astro';
+
+// Топ ключевых результатов по priority.
+const results = [...loadContent().achievements.items].sort(byPriority).slice(0, 6);
+---
+
+<section class="section" id="results">
+  <div class="section-head reveal">
+    <span class="num">01</span>
+    <h2>
+      <Bilingual
+        ru={SECTION_TITLES.achievements.ru}
+        en={SECTION_TITLES.achievements.en}
+      />
+    </h2>
+  </div>
+  <div class="results">
+    {
+      results.map((a) => (
+        <article class="result reveal">
+          <div class="body">
+            <Bilingual ru={renderInline(a.text.ru)} en={renderInline(a.text.en)} html />
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,25 @@
+---
+import { loadContent } from '../../lib/load';
+import { byPriority } from '../../lib/compose';
+import Bilingual from '../Bilingual.astro';
+
+// Продающая полоса цифр — только лендинг, по priority по убыванию.
+const stats = [...loadContent().stats.items].sort(byPriority);
+---
+
+{
+  stats.length > 0 && (
+    <section class="stats-band reveal" aria-label="Ключевые цифры">
+      {stats.map((s) => (
+        <div class="stat">
+          <div class="stat-value">
+            <Bilingual as="span" data-count="" ru={s.value.ru} en={s.value.en} />
+          </div>
+          <div class="stat-label">
+            <Bilingual ru={s.label.ru} en={s.label.en} />
+          </div>
+        </div>
+      ))}
+    </section>
+  )
+}

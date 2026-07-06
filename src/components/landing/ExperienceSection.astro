@@ -1,0 +1,23 @@
+---
+import { loadContent } from '../../lib/load';
+import { byStartDesc } from '../../lib/compose';
+import { SECTION_TITLES } from '../../lib/labels';
+import ExperienceItem from '../ExperienceItem.astro';
+import Bilingual from '../Bilingual.astro';
+
+// Опыт — по дате начала по убыванию (новейшее сверху), как в основном резюме.
+const experience = [...loadContent().experience].sort(byStartDesc);
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="section" id="experience">
+  <div class="section-head reveal">
+    <span class="num">02</span>
+    <h2>
+      <Bilingual ru={SECTION_TITLES.experience.ru} en={SECTION_TITLES.experience.en} />
+    </h2>
+  </div>
+  <div class="timeline">
+    {experience.map((e) => <ExperienceItem e={e} base={base} />)}
+  </div>
+</section>

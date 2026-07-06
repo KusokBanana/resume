@@ -1,0 +1,33 @@
+---
+import { loadContent } from '../../lib/load';
+import { absUrl } from '../../lib/canonical';
+import Bilingual from '../Bilingual.astro';
+
+const { profile } = loadContent();
+const base = import.meta.env.BASE_URL;
+const site = Astro.site;
+const llmsUrl = absUrl(site, base, 'llms.txt');
+const mdEn = absUrl(site, base, 'en/resume.md');
+const jsonEn = absUrl(site, base, 'en/resume.json');
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <span class="copy">
+    © {year}
+    <Bilingual ru={profile.name.ru} en={profile.name.en} />
+  </span>
+  <!-- Машиночитаемая версия: видимый указатель для ИИ-ассистентов
+       (которые читают рендер, а не <head>) и сигнал «как данные» для людей. -->
+  <span class="machine">
+    <Bilingual
+      ru="Это резюме доступно как данные:"
+      en="This resume is available as data:"
+    />
+    <a href={llmsUrl}>llms.txt</a>
+    <span class="sep" aria-hidden="true">·</span>
+    <a href={mdEn}>Markdown</a>
+    <span class="sep" aria-hidden="true">·</span>
+    <a href={jsonEn}>JSON Resume</a>
+  </span>
+</footer>

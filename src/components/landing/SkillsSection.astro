@@ -1,0 +1,43 @@
+---
+import { loadContent } from '../../lib/load';
+import { byPriority } from '../../lib/compose';
+import { SECTION_TITLES } from '../../lib/labels';
+import Bilingual from '../Bilingual.astro';
+import type { Localized, SkillItem } from '../../schema/index';
+
+const skillGroups = [...loadContent().skills.groups].sort(byPriority);
+
+/** Навык: языко-нейтральная строка либо двуязычный термин. */
+const isLocalized = (x: SkillItem): x is Localized => typeof x !== 'string';
+---
+
+<section class="section" id="skills">
+  <div class="section-head reveal">
+    <span class="num">03</span>
+    <h2>
+      <Bilingual ru={SECTION_TITLES.skills.ru} en={SECTION_TITLES.skills.en} />
+    </h2>
+  </div>
+  <div class="skill-groups">
+    {
+      skillGroups.map((g) => (
+        <div class="skill-group reveal">
+          <h3>
+            <Bilingual ru={g.name.ru} en={g.name.en} />
+          </h3>
+          <div class="tags">
+            {g.items.map((it) =>
+              isLocalized(it) ? (
+                <span class="tag">
+                  <Bilingual ru={it.ru} en={it.en} />
+                </span>
+              ) : (
+                <span class="tag">{it}</span>
+              ),
+            )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

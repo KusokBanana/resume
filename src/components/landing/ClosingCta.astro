@@ -1,0 +1,71 @@
+---
+import { loadContent } from '../../lib/load';
+import { pdfDownloads } from '../../lib/downloads';
+import Bilingual from '../Bilingual.astro';
+
+const { profile } = loadContent();
+const base = import.meta.env.BASE_URL;
+const telegram = profile.links.find((l) => l.kind === 'telegram');
+const pdf = pdfDownloads(base);
+---
+
+<section class="cta-final reveal" id="contact">
+  <h2>
+    <Bilingual
+      ru="Открыт к роли Head of Engineering"
+      en="Open to a Head of Engineering role"
+    />
+  </h2>
+  <p>
+    <Bilingual
+      ru="Строю и масштабирую сильные инженерные команды. Давайте обсудим, чем могу быть полезен."
+      en="I build and scale strong engineering teams. Let's talk about how I can help."
+    />
+  </p>
+  <div class="cta-row">
+    {
+      profile.email && (
+        <a class="btn btn-primary" href={`mailto:${profile.email}`} data-goal="cta_email">
+          <Bilingual ru="Написать на почту" en="Email me" />
+        </a>
+      )
+    }
+    {
+      telegram && (
+        <a
+          class="btn btn-ghost"
+          href={telegram.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-goal="cta_telegram"
+        >
+          <Bilingual ru="Написать в Telegram" en="Message on Telegram" />
+        </a>
+      )
+    }
+    {
+      pdf.ru && (
+        <a
+          class="btn btn-ghost lang-ru"
+          href={pdf.ru}
+          download={`${pdf.nameBase}_CV_ru.pdf`}
+          data-goal="cta_download_pdf"
+        >
+          Скачать PDF
+        </a>
+      )
+    }
+    {
+      pdf.en && (
+        <a
+          class="btn btn-ghost lang-en"
+          href={pdf.en}
+          download={`${pdf.nameBase}_CV_en.pdf`}
+          data-goal="cta_download_pdf"
+        >
+          Download PDF
+        </a>
+      )
+    }
+  </div>
+</section>

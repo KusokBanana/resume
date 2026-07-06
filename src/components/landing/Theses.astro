@@ -1,0 +1,21 @@
+---
+import { loadContent } from '../../lib/load';
+import { byPriority } from '../../lib/compose';
+import { renderInline } from '../../lib/inline';
+import Bilingual from '../Bilingual.astro';
+
+// Лидерские тезисы — только лендинг, по priority по убыванию.
+const theses = [...loadContent().theses.items].sort(byPriority);
+---
+
+{
+  theses.length > 0 && (
+    <section class="theses" aria-label="Принципы">
+      {theses.map((t) => (
+        <p class="thesis reveal">
+          <Bilingual ru={renderInline(t.text.ru)} en={renderInline(t.text.en)} html />
+        </p>
+      ))}
+    </section>
+  )
+}

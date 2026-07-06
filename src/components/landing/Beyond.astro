@@ -1,0 +1,80 @@
+---
+import { loadContent } from '../../lib/load';
+import { withBase } from '../../lib/url';
+import { byPriority } from '../../lib/compose';
+import Bilingual from '../Bilingual.astro';
+
+const content = loadContent();
+const { profile } = content;
+const base = import.meta.env.BASE_URL;
+
+// Личные увлечения — только лендинг, по priority по убыванию.
+const interests = [...content.interests.items].sort(byPriority);
+---
+
+{
+  interests.length > 0 && (
+    <section class="section" id="beyond">
+      <div class="section-head reveal">
+        <span class="num">04</span>
+        <h2>
+          <Bilingual ru="Помимо работы" en="Beyond work" />
+        </h2>
+      </div>
+      <p class="beyond-lead">
+        <Bilingual
+          ru="Заряжаюсь там, где нужны фокус, баланс и немного смелости."
+          en="I recharge where focus, balance and a bit of courage are required."
+        />
+      </p>
+      <div class="interests">
+        {interests.map((it) =>
+          it.photo ? (
+            <button
+              class="interest interest-clickable reveal"
+              type="button"
+              data-photo={withBase(base, it.photo)}
+              data-caption-ru={it.label.ru}
+              data-caption-en={it.label.en}
+            >
+              {it.icon && (
+                <span class="interest-ico" aria-hidden="true">
+                  {it.icon}
+                </span>
+              )}
+              <Bilingual ru={it.label.ru} en={it.label.en} />
+              <span class="interest-zoom" aria-hidden="true">
+                ⤢
+              </span>
+            </button>
+          ) : (
+            <span class="interest reveal">
+              {it.icon && (
+                <span class="interest-ico" aria-hidden="true">
+                  {it.icon}
+                </span>
+              )}
+              <Bilingual ru={it.label.ru} en={it.label.en} />
+            </span>
+          ),
+        )}
+      </div>
+      {profile.instagram && (
+        <a
+          class="beyond-link reveal"
+          href={profile.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="beyond-link-ico" aria-hidden="true">
+            ✦
+          </span>
+          <Bilingual ru="Больше личного" en="A bit more personal" />
+          <span class="beyond-link-arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+      )}
+    </section>
+  )
+}
