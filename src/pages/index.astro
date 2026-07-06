@@ -2,7 +2,6 @@
 import { loadContent } from '../lib/load';
 import { absUrl } from '../lib/canonical';
 import { byPriority, byStartDesc } from '../lib/compose';
-import { YANDEX_COUNTER_ID } from '../lib/analytics';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/landing/SiteNav.astro';
 import Hero from '../components/landing/Hero.astro';
@@ -139,24 +138,8 @@ const jsonLd = {
     </figure>
   </div>
 
-  <script is:inline define:vars={{ YM_ID: YANDEX_COUNTER_ID }}>
-    // Аналитика кликов: любой элемент с data-goal шлёт цель в Яндекс.Метрику
-    // и событие в GA4. Оба необязательны. YM_ID приходит из src/lib/analytics.ts.
-    (function () {
-      document.addEventListener('click', function (ev) {
-        var el = ev.target && ev.target.closest ? ev.target.closest('[data-goal]') : null;
-        if (!el) return;
-        var goal = el.getAttribute('data-goal');
-        try {
-          if (window.gtag) window.gtag('event', goal);
-        } catch (e) {}
-        try {
-          if (window.ym) window.ym(YM_ID, 'reachGoal', goal);
-        } catch (e) {}
-      });
-    })();
-  </script>
   <script>
     import '../scripts/landing';
+    import '../scripts/goals';
   </script>
 </BaseLayout>

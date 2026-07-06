@@ -12,30 +12,30 @@
   <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
 </div>
 
-<script is:inline>
-  (function () {
-    var html = document.documentElement;
-    var buttons = document.querySelectorAll('[data-set-lang]');
-    function sync(l) {
-      buttons.forEach(function (b) {
-        b.setAttribute(
-          'aria-pressed',
-          b.getAttribute('data-set-lang') === l ? 'true' : 'false',
-        );
-      });
-    }
-    buttons.forEach(function (b) {
-      b.addEventListener('click', function () {
-        var l = b.getAttribute('data-set-lang');
-        html.dataset.lang = l;
-        html.setAttribute('lang', l);
-        try {
-          localStorage.setItem('landing-lang', l);
-        } catch (e) {}
-        sync(l);
-      });
+<script>
+  // Бандлится Astro. Раскладку и анти-мигание задаёт инлайн-скрипт в <head>;
+  // здесь только реакция на клики + синхронизация aria-pressed.
+  const html = document.documentElement;
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-set-lang]');
+  const sync = (lang: string) => {
+    buttons.forEach((b) => {
+      b.setAttribute('aria-pressed', b.dataset.setLang === lang ? 'true' : 'false');
     });
-    // Начальное состояние — по языку, выставленному head-скриптом.
-    sync(html.dataset.lang || 'ru');
-  })();
+  };
+  buttons.forEach((b) => {
+    b.addEventListener('click', () => {
+      const lang = b.dataset.setLang;
+      if (!lang) return;
+      html.dataset.lang = lang;
+      html.setAttribute('lang', lang);
+      try {
+        localStorage.setItem('landing-lang', lang);
+      } catch {
+        /* приватный режим — просто не запоминаем выбор */
+      }
+      sync(lang);
+    });
+  });
+  // Начальное состояние — по языку, выставленному head-скриптом.
+  sync(html.dataset.lang || 'ru');
 </script>
