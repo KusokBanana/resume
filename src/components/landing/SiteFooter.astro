@@ -14,7 +14,7 @@ const year = new Date().getFullYear();
 
 <footer class="footer">
   <span class="copy">
-    © {year}
+    © {year}{' '}
     <Bilingual ru={profile.name.ru} en={profile.name.en} />
   </span>
   <!-- Машиночитаемая версия: видимый указатель для ИИ-ассистентов
@@ -23,7 +23,7 @@ const year = new Date().getFullYear();
     <Bilingual
       ru="Это резюме доступно как данные:"
       en="This resume is available as data:"
-    />
+    />{' '}
     <a href={llmsUrl}>llms.txt</a>
     <span class="sep" aria-hidden="true">·</span>
     <a href={mdEn}>Markdown</a>
