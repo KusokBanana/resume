@@ -12,7 +12,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 npm run dev          # dev-сервер Astro (лендинг + все варианты, ru/en)
-npm run validate     # загрузка+валидация всего content и targets через Zod, сборка каждого варианта — ближайший аналог тестов
+npm test             # юнит-тесты чистой логики (node:test через tsx): compose/isRelevant, даты+плюрализация, inline, withBase
+npm run validate     # загрузка+валидация всего content и targets через Zod, сборка каждого варианта
 npm run build        # astro build → dist/ (только HTML). ВНИМАНИЕ: чистит dist/, включая dist/generated/
 npm run build:md     # рендер Markdown → dist/generated/
 npm run build:json   # рендер JSON Resume → dist/generated/
@@ -26,7 +27,7 @@ npm run find-jobs -- --source file --file ./vacancies.yaml --lang ru --out manua
 npm run apply -- --from hh-lead --id <vacancyId> --lang ru                    # по вакансии из find-jobs: tailor + письмо
 ```
 
-Фреймворка юнит-тестов **нет**. `npm run validate` — это шлюз проверки: запускай после любого изменения content или схемы; при ошибке Zod указывает точный файл и поле.
+Тесты чистой логики — `npm test` ([test/](test/), `node:test` через `tsx`, без доп. зависимостей): покрыты `compose`/`isRelevant`, даты и русская плюрализация ([labels.ts](src/lib/labels.ts)), inline-markdown, `withBase`. `npm run validate` — интеграционный шлюз: загрузка+валидация всего content/targets через Zod и сборка каждого варианта; запускай после любого изменения content или схемы (при ошибке Zod указывает точный файл и поле). Прогоняй оба после изменений в движке.
 
 Важен порядок: `astro build` сначала чистит `dist/`, поэтому артефакты `generated/` (md/json/pdf) **должны создаваться после** `build`. Всегда используй `build:all`, либо `build` и затем генераторы — никогда `build` в одиночку, если нужны скачиваемые файлы. Для `build:pdf` нужен Chromium: `npx playwright install chromium`.
 
@@ -42,7 +43,9 @@ npm run apply -- --from hh-lead --id <vacancyId> --lang ru                    # 
 
 - **[src/schema/index.ts](src/schema/index.ts)** — Zod-схемы + интерфейс `ResumeDocument` (единая форма, которую потребляют все рендереры). `Localized = {ru, en}`. Элементы навыков и пункты опыта полиморфны/сгруппированы — см. `SkillItem`, `HighlightGroup`.
 - **[src/lib/compose.ts](src/lib/compose.ts)** — логика отбора. Блок включается, если: его `systems` пуст или содержит систему target'а; его `audience` пуст или содержит аудиторию target'а; и он проходит `select.includeTags/excludeTags/includeIds/excludeIds`. **Пункты (highlights) фильтруются попунктно** по тому же правилу `isRelevant` — так один блок опыта даёт полный список для HR и сжатый для ATS. **Опыт сортируется по дате начала по убыванию** (`byStartDesc`); остальные секции — по `priority`.
-- Все рендереры принимают `ResumeDocument`: **[Resume.astro](src/components/Resume.astro)** (HTML; `data-layout` переключает rich/ATS), **[render-md.ts](src/lib/render-md.ts)**, **[export-jsonresume.ts](src/lib/export-jsonresume.ts)** (схема jsonresume.org). PDF — это Playwright, печатающий уже собранные HTML-страницы, которые отдаёт крошечный встроенный статик-сервер ([scripts/build-pdf.ts](scripts/build-pdf.ts)).
+- Все рендереры принимают `ResumeDocument`: **[Resume.astro](src/components/Resume.astro)** (HTML; `data-layout` переключает rich/ATS), **[render-md.ts](src/lib/render-md.ts)** (Markdown), **[render-plain.ts](src/lib/render-plain.ts)** (plain-text для textarea hh/LinkedIn; там же лимиты длины), **[export-jsonresume.ts](src/lib/export-jsonresume.ts)** (схема jsonresume.org). PDF — это Playwright, печатающий уже собранные HTML-страницы, которые отдаёт крошечный встроенный статик-сервер ([scripts/build-pdf.ts](scripts/build-pdf.ts)).
+- Общие для рендереров/компонентов: строки UI и хелперы дат/периодов/плюрализации — [labels.ts](src/lib/labels.ts) (`UI` типизирован `as const`); сборка текстовых документов — [text.ts](src/lib/text.ts); inline-markdown (`**жирный**`) — [inline.ts](src/lib/inline.ts) (`renderInline`/`escapeHtml`); id счётчиков аналитики — [analytics.ts](src/lib/analytics.ts).
+- Сайт-слой: страницы обёрнуты в [BaseLayout.astro](src/layouts/BaseLayout.astro) (общий `<head>`: charset/viewport/фавиконки/аналитика/title + слот `head`). Двуязычие в разметке — компонент [Bilingual.astro](src/components/Bilingual.astro) (`ru`/`en`, пропсы `as`/`class`/`html` + проброс атрибутов; рендерит пару `.lang-ru`/`.lang-en`, которую CSS показывает по `data-lang`). Переключатель языка — [LangToggle.astro](src/components/LangToggle.astro). Поведение лендинга (reveal/count-up/лайтбокс/сворачивание) — бандл-скрипт [src/scripts/landing.ts](src/scripts/landing.ts); инлайн в `<head>` остаётся только установка языка до отрисовки (без мигания).
 
 ### Конвенции и подводные камни
 

@@ -11,7 +11,7 @@ export const SECTION_TITLES: Record<Section, Record<Lang, string>> = {
   education: { ru: 'Образование', en: 'Education' },
 };
 
-export const UI: Record<string, Record<Lang, string>> = {
+export const UI = {
   present: { ru: 'наст. время', en: 'present' },
   stack: { ru: 'Стек', en: 'Stack' },
   downloadPdf: { ru: 'Скачать PDF', en: 'Download PDF' },
@@ -23,7 +23,7 @@ export const UI: Record<string, Record<Lang, string>> = {
     ru: 'Единый источник истины, собирается автоматически.',
     en: 'Single source of truth, built automatically.',
   },
-};
+} as const satisfies Record<string, Record<Lang, string>>;
 
 export function sectionTitle(s: Section, lang: Lang): string {
   return SECTION_TITLES[s][lang];
@@ -36,6 +36,19 @@ export function endLabel(end: string, lang: Lang): string {
 /** Диапазон дат «начало — конец» с локализованным `present`. */
 export function dateRange(start: string, end: string, lang: Lang): string {
   return `${start} — ${endLabel(end, lang)}`;
+}
+
+/**
+ * Период образования как «2015 — 2019» (обе даты необязательны). Пустая строка,
+ * если нет ни начала, ни конца. Обёртку (скобки / позицию) добавляет вызывающий.
+ */
+export function educationPeriod(
+  edu: { start?: string; end?: string },
+  lang: Lang,
+): string {
+  return [edu.start, edu.end ? endLabel(edu.end, lang) : undefined]
+    .filter(Boolean)
+    .join(' — ');
 }
 
 /** Число месяцев между YYYY[-MM] включительно; end='present' → до текущего месяца. */

@@ -1,5 +1,6 @@
 import type { ResumeDocument, Section, Lang } from '../schema/index';
-import { sectionTitle, endLabel, dateRange, UI } from './labels';
+import { sectionTitle, dateRange, educationPeriod, UI } from './labels';
+import { joinBlocks, joinInline } from './text';
 
 /**
  * Рендер ResumeDocument в «плоский» plain text под textarea hh/LinkedIn.
@@ -30,7 +31,7 @@ export function experienceDescription(
     for (const h of g.highlights) out.push(`• ${stripBold(h)}`);
   }
   if (e.stack.length) out.push(`${UI.stack[lang]}: ${e.stack.join(', ')}`);
-  return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  return joinInline(out);
 }
 
 export function renderPlain(doc: ResumeDocument, sections: Section[]): string {
@@ -96,16 +97,12 @@ export function renderPlain(doc: ResumeDocument, sections: Section[]): string {
       heading('education');
       for (const e of doc.education) {
         const parts = [e.degree, e.field].filter(Boolean).join(', ');
-        const when =
-          e.start || e.end
-            ? ` (${[e.start, e.end ? endLabel(e.end, lang) : undefined]
-                .filter(Boolean)
-                .join(' — ')})`
-            : '';
+        const period = educationPeriod(e, lang);
+        const when = period ? ` (${period})` : '';
         out.push(`${e.institution}${parts ? ` — ${parts}` : ''}${when}`);
       }
     }
   }
 
-  return out.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+  return joinBlocks(out);
 }

@@ -8,6 +8,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "tsx --test test/*.test.ts",
     "validate": "tsx scripts/validate.ts",
     "build:md": "tsx scripts/build-md.ts",
     "build:json": "tsx scripts/build-json.ts",

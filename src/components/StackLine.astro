@@ -1,0 +1,20 @@
+---
+/** Строка стека «Стек: …» для карточки опыта. Пусто — ничего не рендерит. */
+import { UI } from '../lib/labels';
+import Bilingual from './Bilingual.astro';
+
+interface Props {
+  stack: string[];
+}
+const { stack } = Astro.props;
+---
+{
+  stack.length > 0 && (
+    <p class="tl-stackline">
+      <span class="tl-stacklabel">
+        <Bilingual ru={UI.stack.ru} en={UI.stack.en} />:
+      </span>{' '}
+      {stack.join(', ')}
+    </p>
+  )
+}

@@ -3,17 +3,24 @@
  * Переключатель языка RU/EN. Кнопки переключают data-lang на <html> (CSS
  * показывает нужные .lang-ru/.lang-en) и запоминают выбор в localStorage —
  * тот же ключ, что читает инлайн-скрипт в <head> лендинга (без мигания).
+ * `aria-pressed` отражает активный язык для скринридеров.
  */
 ---
 <div class="lang-toggle" role="group" aria-label="Language">
-  <button type="button" data-set-lang="ru">RU</button>
-  <button type="button" data-set-lang="en">EN</button>
+  <button type="button" data-set-lang="ru" aria-pressed="false">RU</button>
+  <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
 </div>
 
 <script is:inline>
   (function () {
     var html = document.documentElement;
-    document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+    var buttons = document.querySelectorAll('[data-set-lang]');
+    function sync(l) {
+      buttons.forEach(function (b) {
+        b.setAttribute('aria-pressed', b.getAttribute('data-set-lang') === l ? 'true' : 'false');
+      });
+    }
+    buttons.forEach(function (b) {
       b.addEventListener('click', function () {
         var l = b.getAttribute('data-set-lang');
         html.dataset.lang = l;
@@ -21,7 +28,10 @@
         try {
           localStorage.setItem('landing-lang', l);
         } catch (e) {}
+        sync(l);
       });
     });
+    // Начальное состояние — по языку, выставленному head-скриптом.
+    sync(html.dataset.lang || 'ru');
   })();
 </script>

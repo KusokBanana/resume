@@ -1,6 +1,6 @@
 ---
 import type { ResumeDocument, Section } from '../schema/index';
-import { sectionTitle, endLabel, dateRange, UI } from '../lib/labels';
+import { sectionTitle, dateRange, educationPeriod, UI } from '../lib/labels';
 import { renderInline } from '../lib/inline';
 
 interface Props {
@@ -183,12 +183,7 @@ const lang = doc.meta.language;
               <div class="item">
                 <h3>{e.institution}</h3>
                 <p class="meta">
-                  {[
-                    [e.degree, e.field].filter(Boolean).join(', '),
-                    [e.start, e.end ? endLabel(e.end, lang) : undefined]
-                      .filter(Boolean)
-                      .join(' — '),
-                  ]
+                  {[[e.degree, e.field].filter(Boolean).join(', '), educationPeriod(e, lang)]
                     .filter(Boolean)
                     .join(' · ')}
                 </p>

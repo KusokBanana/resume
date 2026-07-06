@@ -1,8 +1,9 @@
 ---
 import { withBase } from '../lib/url';
 import { renderInline } from '../lib/inline';
-import { UI, dateRange, durationLabel } from '../lib/labels';
+import { dateRange, durationLabel } from '../lib/labels';
 import Bilingual from './Bilingual.astro';
+import StackLine from './StackLine.astro';
 import type { Experience } from '../schema/index';
 
 interface Props {
@@ -109,14 +110,7 @@ const hasCollapse = hiddenCount > 0;
             </ul>
           </div>
         ))}
-        {e.stack.length > 0 && (
-          <p class="tl-stackline">
-            <span class="tl-stacklabel">
-              <Bilingual ru={UI.stack.ru} en={UI.stack.en} />:
-            </span>{' '}
-            {e.stack.join(', ')}
-          </p>
-        )}
+        <StackLine stack={e.stack} />
       </div>
     )
   }
@@ -135,14 +129,5 @@ const hasCollapse = hiddenCount > 0;
     )
   }
 
-  {
-    !hasCollapse && e.stack.length > 0 && (
-      <p class="tl-stackline">
-        <span class="tl-stacklabel">
-          <Bilingual ru={UI.stack.ru} en={UI.stack.en} />:
-        </span>{' '}
-        {e.stack.join(', ')}
-      </p>
-    )
-  }
+  {!hasCollapse && <StackLine stack={e.stack} />}
 </article>

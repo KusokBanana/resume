@@ -1,5 +1,6 @@
 import type { ResumeDocument, Section } from '../schema/index';
-import { sectionTitle, endLabel, dateRange, UI } from './labels';
+import { sectionTitle, dateRange, educationPeriod, UI } from './labels';
+import { joinBlocks } from './text';
 
 /** Рендерит ResumeDocument в Markdown. sections задаёт состав и порядок. */
 export function renderMarkdown(doc: ResumeDocument, sections: Section[]): string {
@@ -78,16 +79,12 @@ export function renderMarkdown(doc: ResumeDocument, sections: Section[]): string
       out.push(`\n## ${sectionTitle('education', lang)}\n`);
       for (const e of doc.education) {
         const parts = [e.degree, e.field].filter(Boolean).join(', ');
-        const when =
-          e.start || e.end
-            ? ` (${[e.start, e.end ? endLabel(e.end, lang) : undefined]
-                .filter(Boolean)
-                .join(' — ')})`
-            : '';
+        const period = educationPeriod(e, lang);
+        const when = period ? ` (${period})` : '';
         out.push(`- **${e.institution}**${parts ? ` — ${parts}` : ''}${when}`);
       }
     }
   }
 
-  return out.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+  return joinBlocks(out);
 }
