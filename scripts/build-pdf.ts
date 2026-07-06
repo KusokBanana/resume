@@ -5,22 +5,12 @@ import { join, extname } from 'node:path';
 import { chromium } from 'playwright';
 import { loadTargets, ROOT } from '../src/lib/load';
 import { variantSlug } from '../src/lib/slug';
+import { MIME } from './lib/mime';
 
 const DIST = join(ROOT, 'dist');
 const OUT = join(DIST, 'generated');
 const BASE = process.env.BASE ?? '/';
 const PORT = 4399;
-
-const MIME: Record<string, string> = {
-  '.html': 'text/html; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.js': 'text/javascript; charset=utf-8',
-  '.svg': 'image/svg+xml',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.json': 'application/json',
-  '.woff2': 'font/woff2',
-};
 
 /** Минимальный статик-сервер dist с учётом base-префикса (для корректных ссылок на CSS). */
 function startServer(): Promise<ReturnType<typeof createServer>> {

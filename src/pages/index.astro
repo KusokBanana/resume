@@ -3,13 +3,15 @@ import { loadContent, loadTargets } from '../lib/load';
 import { variantSlug } from '../lib/slug';
 import { withBase } from '../lib/url';
 import { absUrl } from '../lib/canonical';
+import { byPriority, byStartDesc } from '../lib/compose';
 import { renderInline } from '../lib/inline';
 import { contactIcon, ICON_EMAIL } from '../lib/icons';
+import { YANDEX_COUNTER_ID } from '../lib/analytics';
 import { SECTION_TITLES } from '../lib/labels';
 import ExperienceItem from '../components/ExperienceItem.astro';
-import YandexMetrika from '../components/YandexMetrika.astro';
-import GoogleAnalytics from '../components/GoogleAnalytics.astro';
-import FaviconLinks from '../components/FaviconLinks.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LangToggle from '../components/LangToggle.astro';
+import Bilingual from '../components/Bilingual.astro';
 import type { Localized, SkillItem } from '../schema/index';
 import '../styles/landing.css';
 
@@ -20,19 +22,17 @@ const { profile } = content;
 const name = profile.name.ru; // язык документа по умолчанию — ru
 
 // Tagline для hero: человеко-ориентированный general-вариант (с фолбэком).
-const byPriority = [...content.summary.variants].sort((a, b) => b.priority - a.priority);
+const variantsByPriority = [...content.summary.variants].sort(byPriority);
 const tagline =
-  content.summary.variants.find((v) => v.id === 'summary-general') ?? byPriority[0];
+  content.summary.variants.find((v) => v.id === 'summary-general') ?? variantsByPriority[0];
 
 // Топ ключевых результатов по priority.
-const results = [...content.achievements.items]
-  .sort((a, b) => b.priority - a.priority)
-  .slice(0, 6);
+const results = [...content.achievements.items].sort(byPriority).slice(0, 6);
 
-const skillGroups = [...content.skills.groups].sort((a, b) => b.priority - a.priority);
+const skillGroups = [...content.skills.groups].sort(byPriority);
 
 // Опыт — по дате начала по убыванию (новейшее сверху), как в основном резюме.
-const experience = [...content.experience].sort((a, b) => b.start.localeCompare(a.start));
+const experience = [...content.experience].sort(byStartDesc);
 
 // Логотипы компаний для hero-полосы: уникальные, в порядке от новейшего опыта.
 const companyLogos = experience
@@ -46,11 +46,11 @@ const companyLogos = experience
   }, []);
 
 // Личные увлечения — только для лендинга, по priority по убыванию.
-const interests = [...content.interests.items].sort((a, b) => b.priority - a.priority);
+const interests = [...content.interests.items].sort(byPriority);
 
 // Продающая полоса цифр и лидерские тезисы — только лендинг, по priority по убыванию.
-const stats = [...content.stats.items].sort((a, b) => b.priority - a.priority);
-const theses = [...content.theses.items].sort((a, b) => b.priority - a.priority);
+const stats = [...content.stats.items].sort(byPriority);
+const theses = [...content.theses.items].sort(byPriority);
 
 // Скачиваемый PDF: берём самый полный «человеческий» вариант — rich + hr + без
 // отбора по тегам (это hh). С фолбэком, если такого таргета нет.
@@ -128,13 +128,8 @@ const jsonLd = {
 };
 ---
 
-<!doctype html>
-<html lang="ru" data-lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <FaviconLinks />
-    <title>{name} — резюме</title>
+<BaseLayout title={`${name} — резюме`} dataLang>
+  <Fragment slot="head">
     <meta name="description" content={metaDesc} />
     <link rel="canonical" href={pageUrl} />
     <meta property="og:type" content="profile" />
@@ -172,22 +167,15 @@ const jsonLd = {
         } catch (e) {}
       })();
     </script>
-    <YandexMetrika />
-    <GoogleAnalytics />
-  </head>
-  <body>
+  </Fragment>
     <header class="nav">
       <a class="brand" href={withBase(base)}>
         <img class="mono" src={withBase(base, 'favicon.svg')} width="34" height="34" alt="" />
         <span class="brand-name" aria-hidden="true">
-          <span class="lang-ru">{profile.name.ru}</span>
-          <span class="lang-en">{profile.name.en}</span>
+          <Bilingual ru={profile.name.ru} en={profile.name.en} />
         </span>
       </a>
-      <div class="lang-toggle" role="group" aria-label="Language">
-        <button type="button" data-set-lang="ru">RU</button>
-        <button type="button" data-set-lang="en">EN</button>
-      </div>
+      <LangToggle />
     </header>
 
     <main class="wrap">
@@ -196,28 +184,23 @@ const jsonLd = {
         <div class="hero-grid">
           <div class="hero-main">
             <p class="eyebrow">
-              <span class="lang-ru">Открыт к предложениям</span>
-              <span class="lang-en">Open to opportunities</span>
+              <Bilingual ru="Открыт к предложениям" en="Open to opportunities" />
             </p>
             <h1>
-              <span class="lang-ru">{profile.name.ru}</span>
-              <span class="lang-en">{profile.name.en}</span>
+              <Bilingual ru={profile.name.ru} en={profile.name.en} />
             </h1>
             <p class="title">
-              <span class="lang-ru">{profile.title.ru}</span>
-              <span class="lang-en">{profile.title.en}</span>
+              <Bilingual ru={profile.title.ru} en={profile.title.en} />
             </p>
             {
               profile.location && (
                 <p class="location">
-                  <span class="lang-ru">{profile.location.ru}</span>
-                  <span class="lang-en">{profile.location.en}</span>
+                  <Bilingual ru={profile.location.ru} en={profile.location.en} />
                 </p>
               )
             }
             <p class="tagline">
-              <span class="lang-ru">{tagline.text.ru}</span>
-              <span class="lang-en">{tagline.text.en}</span>
+              <Bilingual ru={tagline.text.ru} en={tagline.text.en} />
             </p>
 
             <div class="contacts">
@@ -225,8 +208,7 @@ const jsonLd = {
                 profile.email && (
                   <a class="chip" href={`mailto:${profile.email}`} data-goal="contact_email">
                     <span class="ico" set:html={ICON_EMAIL} />
-                    <span class="lang-ru">Почта</span>
-                    <span class="lang-en">Email</span>
+                    <Bilingual ru="Почта" en="Email" />
                   </a>
                 )
               }
@@ -248,12 +230,10 @@ const jsonLd = {
 
             <div class="cta-row">
               <a class="btn btn-primary" href="#results">
-                <span class="lang-ru">Ключевые результаты</span>
-                <span class="lang-en">Key results</span>
+                <Bilingual ru="Ключевые результаты" en="Key results" />
               </a>
               <a class="btn btn-ghost" href="#experience">
-                <span class="lang-ru">Опыт работы</span>
-                <span class="lang-en">Experience</span>
+                <Bilingual ru="Опыт работы" en="Experience" />
               </a>
               {
                 pdfRu && (
@@ -306,8 +286,7 @@ const jsonLd = {
           companyLogos.length > 0 && (
             <div class="logos">
               <span class="logos-label">
-                <span class="lang-ru">Опыт в компаниях</span>
-                <span class="lang-en">Experience at</span>
+                <Bilingual ru="Опыт в компаниях" en="Experience at" />
               </span>
               <div class="logos-row">
                 {companyLogos.map((c) => (
@@ -336,8 +315,7 @@ const jsonLd = {
                   </span>
                 </div>
                 <div class="stat-label">
-                  <span class="lang-ru">{s.label.ru}</span>
-                  <span class="lang-en">{s.label.en}</span>
+                  <Bilingual ru={s.label.ru} en={s.label.en} />
                 </div>
               </div>
             ))}
@@ -351,8 +329,7 @@ const jsonLd = {
           <section class="theses" aria-label="Принципы">
             {theses.map((t) => (
               <p class="thesis reveal">
-                <span class="lang-ru" set:html={renderInline(t.text.ru)} />
-                <span class="lang-en" set:html={renderInline(t.text.en)} />
+                <Bilingual ru={renderInline(t.text.ru)} en={renderInline(t.text.en)} html />
               </p>
             ))}
           </section>
@@ -364,8 +341,7 @@ const jsonLd = {
         <div class="section-head reveal">
           <span class="num">01</span>
           <h2>
-            <span class="lang-ru">{SECTION_TITLES.achievements.ru}</span>
-            <span class="lang-en">{SECTION_TITLES.achievements.en}</span>
+            <Bilingual ru={SECTION_TITLES.achievements.ru} en={SECTION_TITLES.achievements.en} />
           </h2>
         </div>
         <div class="results">
@@ -373,8 +349,7 @@ const jsonLd = {
             results.map((a) => (
               <article class="result reveal">
                 <div class="body">
-                  <span class="lang-ru" set:html={renderInline(a.text.ru)} />
-                  <span class="lang-en" set:html={renderInline(a.text.en)} />
+                  <Bilingual ru={renderInline(a.text.ru)} en={renderInline(a.text.en)} html />
                 </div>
               </article>
             ))
@@ -387,8 +362,7 @@ const jsonLd = {
         <div class="section-head reveal">
           <span class="num">02</span>
           <h2>
-            <span class="lang-ru">{SECTION_TITLES.experience.ru}</span>
-            <span class="lang-en">{SECTION_TITLES.experience.en}</span>
+            <Bilingual ru={SECTION_TITLES.experience.ru} en={SECTION_TITLES.experience.en} />
           </h2>
         </div>
         <div class="timeline">
@@ -401,8 +375,7 @@ const jsonLd = {
         <div class="section-head reveal">
           <span class="num">03</span>
           <h2>
-            <span class="lang-ru">{SECTION_TITLES.skills.ru}</span>
-            <span class="lang-en">{SECTION_TITLES.skills.en}</span>
+            <Bilingual ru={SECTION_TITLES.skills.ru} en={SECTION_TITLES.skills.en} />
           </h2>
         </div>
         <div class="skill-groups">
@@ -410,15 +383,13 @@ const jsonLd = {
             skillGroups.map((g) => (
               <div class="skill-group reveal">
                 <h3>
-                  <span class="lang-ru">{g.name.ru}</span>
-                  <span class="lang-en">{g.name.en}</span>
+                  <Bilingual ru={g.name.ru} en={g.name.en} />
                 </h3>
                 <div class="tags">
                   {g.items.map((it) =>
                     isLocalized(it) ? (
                       <span class="tag">
-                        <span class="lang-ru">{it.ru}</span>
-                        <span class="lang-en">{it.en}</span>
+                        <Bilingual ru={it.ru} en={it.en} />
                       </span>
                     ) : (
                       <span class="tag">{it}</span>
@@ -437,17 +408,14 @@ const jsonLd = {
             <div class="section-head reveal">
               <span class="num">04</span>
               <h2>
-                <span class="lang-ru">Помимо работы</span>
-                <span class="lang-en">Beyond work</span>
+                <Bilingual ru="Помимо работы" en="Beyond work" />
               </h2>
             </div>
             <p class="beyond-lead">
-              <span class="lang-ru">
-                Заряжаюсь там, где нужны фокус, баланс и немного смелости.
-              </span>
-              <span class="lang-en">
-                I recharge where focus, balance and a bit of courage are required.
-              </span>
+              <Bilingual
+                ru="Заряжаюсь там, где нужны фокус, баланс и немного смелости."
+                en="I recharge where focus, balance and a bit of courage are required."
+              />
             </p>
             <div class="interests">
               {interests.map((it) =>
@@ -464,8 +432,7 @@ const jsonLd = {
                         {it.icon}
                       </span>
                     )}
-                    <span class="lang-ru">{it.label.ru}</span>
-                    <span class="lang-en">{it.label.en}</span>
+                    <Bilingual ru={it.label.ru} en={it.label.en} />
                     <span class="interest-zoom" aria-hidden="true">⤢</span>
                   </button>
                 ) : (
@@ -475,8 +442,7 @@ const jsonLd = {
                         {it.icon}
                       </span>
                     )}
-                    <span class="lang-ru">{it.label.ru}</span>
-                    <span class="lang-en">{it.label.en}</span>
+                    <Bilingual ru={it.label.ru} en={it.label.en} />
                   </span>
                 ),
               )}
@@ -492,8 +458,7 @@ const jsonLd = {
                   <span class="beyond-link-ico" aria-hidden="true">
                     ✦
                   </span>
-                  <span class="lang-ru">Больше личного</span>
-                  <span class="lang-en">A bit more personal</span>
+                  <Bilingual ru="Больше личного" en="A bit more personal" />
                   <span class="beyond-link-arrow" aria-hidden="true">
                     →
                   </span>
@@ -507,24 +472,22 @@ const jsonLd = {
       <!-- ЗАКРЫВАЮЩИЙ CTA -->
       <section class="cta-final reveal" id="contact">
         <h2>
-          <span class="lang-ru">Открыт к роли Head of Engineering</span>
-          <span class="lang-en">Open to a Head of Engineering role</span>
+          <Bilingual
+            ru="Открыт к роли Head of Engineering"
+            en="Open to a Head of Engineering role"
+          />
         </h2>
         <p>
-          <span class="lang-ru">
-            Строю и масштабирую сильные инженерные команды. Давайте обсудим, чем могу быть
-            полезен.
-          </span>
-          <span class="lang-en">
-            I build and scale strong engineering teams. Let's talk about how I can help.
-          </span>
+          <Bilingual
+            ru="Строю и масштабирую сильные инженерные команды. Давайте обсудим, чем могу быть полезен."
+            en="I build and scale strong engineering teams. Let's talk about how I can help."
+          />
         </p>
         <div class="cta-row">
           {
             profile.email && (
               <a class="btn btn-primary" href={`mailto:${profile.email}`} data-goal="cta_email">
-                <span class="lang-ru">Написать на почту</span>
-                <span class="lang-en">Email me</span>
+                <Bilingual ru="Написать на почту" en="Email me" />
               </a>
             )
           }
@@ -537,8 +500,7 @@ const jsonLd = {
                 rel="noopener noreferrer"
                 data-goal="cta_telegram"
               >
-                <span class="lang-ru">Написать в Telegram</span>
-                <span class="lang-en">Message on Telegram</span>
+                <Bilingual ru="Написать в Telegram" en="Message on Telegram" />
               </a>
             )
           }
@@ -572,14 +534,12 @@ const jsonLd = {
       <footer class="footer">
         <span class="copy">
           © {year}
-          <span class="lang-ru">{profile.name.ru}</span>
-          <span class="lang-en">{profile.name.en}</span>
+          <Bilingual ru={profile.name.ru} en={profile.name.en} />
         </span>
         <!-- Машиночитаемая версия: видимый указатель для ИИ-ассистентов
              (которые читают рендер, а не <head>) и сигнал «как данные» для людей. -->
         <span class="machine">
-          <span class="lang-ru">Это резюме доступно как данные:</span>
-          <span class="lang-en">This resume is available as data:</span>
+          <Bilingual ru="Это резюме доступно как данные:" en="This resume is available as data:" />
           <a href={llmsUrl}>llms.txt</a>
           <span class="sep" aria-hidden="true">·</span>
           <a href={mdEn}>Markdown</a>
@@ -598,11 +558,10 @@ const jsonLd = {
       </figure>
     </div>
 
-    <script is:inline>
+    <script define:vars={{ YM_ID: YANDEX_COUNTER_ID }}>
       // Аналитика кликов: любой элемент с data-goal шлёт цель в Яндекс.Метрику
-      // (id продублирован из YandexMetrika.astro) и событие в GA4. Оба необязательны.
+      // и событие в GA4. Оба необязательны. YM_ID приходит из src/lib/analytics.ts.
       (function () {
-        var YM_ID = 109991972;
         document.addEventListener('click', function (ev) {
           var el = ev.target && ev.target.closest ? ev.target.closest('[data-goal]') : null;
           if (!el) return;
@@ -619,19 +578,7 @@ const jsonLd = {
     <script is:inline>
       (function () {
         var html = document.documentElement;
-        function set(l) {
-          html.dataset.lang = l;
-          html.setAttribute('lang', l);
-          try {
-            localStorage.setItem('landing-lang', l);
-          } catch (e) {}
-        }
-        document.querySelectorAll('[data-set-lang]').forEach(function (b) {
-          b.addEventListener('click', function () {
-            set(b.getAttribute('data-set-lang'));
-          });
-        });
-
+        // Переключение языка вынесено в LangToggle.astro.
         var reduce =
           window.matchMedia &&
           window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -809,5 +756,4 @@ const jsonLd = {
         }
       })();
     </script>
-  </body>
-</html>
+</BaseLayout>

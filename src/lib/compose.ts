@@ -60,7 +60,7 @@ function isRelevant(block: Tagged, target: Target, includeAll = false): boolean 
 }
 
 /** Сортировка по убыванию priority, стабильная для равных. */
-function byPriority<T extends { priority?: number }>(a: T, b: T): number {
+export function byPriority<T extends { priority?: number }>(a: T, b: T): number {
   return (b.priority ?? 0) - (a.priority ?? 0);
 }
 
@@ -71,7 +71,7 @@ const dateKey = (d: string) => (d.length === 4 ? `${d}-00` : d);
  * Опыт сортируется по дате начала (новое сверху) — порядок отображения не зависит
  * от имён файлов и не требует ручного priority. priority остаётся тай-брейком.
  */
-function byStartDesc(a: { start: string; priority?: number }, b: { start: string; priority?: number }): number {
+export function byStartDesc(a: { start: string; priority?: number }, b: { start: string; priority?: number }): number {
   const cmp = dateKey(b.start).localeCompare(dateKey(a.start));
   return cmp !== 0 ? cmp : byPriority(a, b);
 }

@@ -3,6 +3,8 @@ import { join, extname } from 'node:path';
 import { chromium } from 'playwright';
 import { loadContent, ROOT } from '../src/lib/load';
 import { escapeHtml as esc } from '../src/lib/inline';
+import { byPriority } from '../src/lib/compose';
+import { MIME } from './lib/mime';
 
 /**
  * Генерация OG-картинки для соцсетей (1200×630) → dist/og.png.
@@ -12,13 +14,6 @@ import { escapeHtml as esc } from '../src/lib/inline';
 
 const DIST = join(ROOT, 'dist');
 const OUT = join(DIST, 'og.png');
-
-const MIME: Record<string, string> = {
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.png': 'image/png',
-  '.webp': 'image/webp',
-};
 
 /** Портрет как data-URI (чтобы HTML был самодостаточным). null, если файла нет. */
 function photoDataUri(rel?: string): string | null {
@@ -37,9 +32,7 @@ function buildHtml(): string {
   const parts = profile.name.ru.split(' ');
   const name = parts.length >= 2 ? `${parts[1]} ${parts[0]}` : profile.name.ru;
   const title = profile.title.ru;
-  const stats = [...content.stats.items]
-    .sort((a, b) => b.priority - a.priority)
-    .slice(0, 3);
+  const stats = [...content.stats.items].sort(byPriority).slice(0, 3);
   const photo = photoDataUri(profile.photo);
 
   const statCells = stats

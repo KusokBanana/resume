@@ -1,0 +1,29 @@
+---
+/**
+ * Двуязычная пара `<span class="lang-ru">…</span><span class="lang-en">…</span>`.
+ * Оба языка всегда в DOM; CSS по data-lang на <html> показывает нужный. Это
+ * убирает повторяющуюся ручную разметку на лендинге.
+ *
+ * `html` — если текст содержит разметку (напр. **жирный** через renderInline),
+ * тогда значения вставляются как HTML (set:html), иначе — как текст.
+ */
+interface Props {
+  ru: string;
+  en: string;
+  html?: boolean;
+}
+const { ru, en, html = false } = Astro.props;
+---
+{
+  html ? (
+    <>
+      <span class="lang-ru" set:html={ru} />
+      <span class="lang-en" set:html={en} />
+    </>
+  ) : (
+    <>
+      <span class="lang-ru">{ru}</span>
+      <span class="lang-en">{en}</span>
+    </>
+  )
+}

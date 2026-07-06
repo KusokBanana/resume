@@ -3,9 +3,9 @@ import { loadContent, loadTargets } from '../lib/load';
 import { variantSlug } from '../lib/slug';
 import { withBase } from '../lib/url';
 import { UI } from '../lib/labels';
-import YandexMetrika from '../components/YandexMetrika.astro';
-import GoogleAnalytics from '../components/GoogleAnalytics.astro';
-import FaviconLinks from '../components/FaviconLinks.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LangToggle from '../components/LangToggle.astro';
+import Bilingual from '../components/Bilingual.astro';
 import '../styles/landing.css';
 
 // Скрытая служебная страница: нигде не линкуется, закрыта в robots.txt и
@@ -16,46 +16,27 @@ const base = import.meta.env.BASE_URL;
 const name = content.profile.name.ru;
 ---
 
-<!doctype html>
-<html lang="ru" data-lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex, nofollow" />
-    <FaviconLinks />
-    <title>{name} — форматы и экспорт</title>
-    <YandexMetrika />
-    <GoogleAnalytics />
-  </head>
-  <body>
+<BaseLayout title={`${name} — форматы и экспорт`} dataLang robots="noindex, nofollow">
     <header class="nav">
       <a class="brand" href={withBase(base)}>
         <span class="mono">SD</span>
         <span>← на резюме</span>
       </a>
-      <div class="lang-toggle" role="group" aria-label="Language">
-        <button type="button" data-set-lang="ru">RU</button>
-        <button type="button" data-set-lang="en">EN</button>
-      </div>
+      <LangToggle />
     </header>
 
     <main class="wrap">
       <section class="section">
         <div class="section-head">
           <h2>
-            <span class="lang-ru">Форматы и экспорт</span>
-            <span class="lang-en">Formats &amp; export</span>
+            <Bilingual ru="Форматы и экспорт" en="Formats & export" />
           </h2>
         </div>
         <p class="tagline" style="margin-top:0">
-          <span class="lang-ru"
-            >Личная утилита: открыть нужный вариант и скопировать/скачать для вставки в
-            систему. Не индексируется и не отображается на сайте.</span
-          >
-          <span class="lang-en"
-            >Personal utility: open a variant and copy/download it to paste into a
-            system. Not indexed, not linked from the site.</span
-          >
+          <Bilingual
+            ru="Личная утилита: открыть нужный вариант и скопировать/скачать для вставки в систему. Не индексируется и не отображается на сайте."
+            en="Personal utility: open a variant and copy/download it to paste into a system. Not indexed, not linked from the site."
+          />
         </p>
 
         <div class="variants">
@@ -108,8 +89,7 @@ const name = content.profile.name.ru;
       <section class="section">
         <div class="section-head">
           <h2>
-            <span class="lang-ru">Каноническое (для ИИ)</span>
-            <span class="lang-en">Canonical (for AI)</span>
+            <Bilingual ru="Каноническое (для ИИ)" en="Canonical (for AI)" />
           </h2>
         </div>
         <div class="langrow">
@@ -122,18 +102,4 @@ const name = content.profile.name.ru;
         </div>
       </section>
     </main>
-
-    <script is:inline>
-      (function () {
-        var html = document.documentElement;
-        document.querySelectorAll('[data-set-lang]').forEach(function (b) {
-          b.addEventListener('click', function () {
-            var l = b.getAttribute('data-set-lang');
-            html.dataset.lang = l;
-            html.setAttribute('lang', l);
-          });
-        });
-      })();
-    </script>
-  </body>
-</html>
+</BaseLayout>

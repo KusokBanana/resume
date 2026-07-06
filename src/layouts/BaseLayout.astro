@@ -1,0 +1,39 @@
+---
+/**
+ * Общий каркас страницы: doctype, <html>, <head> с базовой мета-информацией
+ * (charset, viewport, фавиконки, title) и счётчиками аналитики, затем <body>.
+ * Специфичная для страницы мета (OG, canonical, alternate, JSON-LD, инлайн-
+ * скрипты в <head>) передаётся через именованный слот `head`.
+ */
+import YandexMetrika from '../components/YandexMetrika.astro';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+import FaviconLinks from '../components/FaviconLinks.astro';
+
+interface Props {
+  title: string;
+  /** Язык документа (атрибут <html lang>). По умолчанию ru. */
+  lang?: string;
+  /** Добавить data-lang (для страниц с переключателем языка RU/EN). */
+  dataLang?: boolean;
+  /** Значение <meta name="robots">, напр. 'noindex, nofollow'. */
+  robots?: string;
+}
+const { title, lang = 'ru', dataLang = false, robots } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang} data-lang={dataLang ? lang : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {robots && <meta name="robots" content={robots} />}
+    <FaviconLinks />
+    <title>{title}</title>
+    <slot name="head" />
+    <YandexMetrika />
+    <GoogleAnalytics />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
