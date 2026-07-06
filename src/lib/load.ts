@@ -45,7 +45,7 @@ function validate<S extends z.ZodTypeAny>(
       const issues = err.issues
         .map((i) => `  • ${i.path.join('.') || '(root)'}: ${i.message}`)
         .join('\n');
-      throw new Error(`Ошибка валидации в ${where}:\n${issues}`);
+      throw new Error(`Ошибка валидации в ${where}:\n${issues}`, { cause: err });
     }
     throw err;
   }

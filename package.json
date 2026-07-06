@@ -10,6 +10,7 @@
     "preview": "astro preview",
     "test": "tsx --test test/*.test.ts",
     "check": "astro check",
+    "lint": "eslint src scripts test",
     "format": "prettier --write \"src/**/*.{ts,astro}\" \"scripts/**/*.ts\" \"test/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.{ts,astro}\" \"scripts/**/*.ts\" \"test/**/*.ts\"",
     "validate": "tsx scripts/validate.ts",
@@ -32,12 +33,18 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^24.13.2",
+    "eslint": "^10.6.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.7.0",
+    "globals": "^17.7.0",
     "openai": "^6.45.0",
     "playwright": "^1.61.1",
     "prettier": "^3.9.4",
     "prettier-plugin-astro": "^0.14.1",
     "tsx": "^4.23.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.63.0"
   }
 }

@@ -14,6 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev          # dev-сервер Astro (лендинг + все варианты, ru/en)
 npm test             # юнит-тесты чистой логики (node:test через tsx): compose/isRelevant, даты+плюрализация, inline, withBase, golden-рендер
 npm run check        # astro check — типизация .astro + TS (сборка на esbuild её НЕ делает)
+npm run lint         # eslint (flat config) по src/scripts/test; инлайн-<script> в .astro на ES5-стиле сознательно смягчены
 npm run format       # prettier --write по src/scripts/test (content/targets/cli/CLAUDE.md не трогает); format:check — только проверка
 npm run validate     # загрузка+валидация всего content и targets через Zod, сборка каждого варианта
 npm run build        # astro build → dist/ (только HTML). ВНИМАНИЕ: чистит dist/, включая dist/generated/
@@ -29,7 +30,7 @@ npm run find-jobs -- --source file --file ./vacancies.yaml --lang ru --out manua
 npm run apply -- --from hh-lead --id <vacancyId> --lang ru                    # по вакансии из find-jobs: tailor + письмо
 ```
 
-Тесты чистой логики — `npm test` ([test/](test/), `node:test` через `tsx`, без доп. зависимостей): покрыты `compose`/`isRelevant`, даты и русская плюрализация ([labels.ts](src/lib/labels.ts)), inline-markdown, `withBase`. `npm run validate` — интеграционный шлюз: загрузка+валидация всего content/targets через Zod и сборка каждого варианта; запускай после любого изменения content или схемы (при ошибке Zod указывает точный файл и поле). Прогоняй оба после изменений в движке. В CI ([deploy.yml](.github/workflows/deploy.yml)) перед сборкой идут `format:check` → `test` → `check` (astro) → `validate` — они гейтят деплой.
+Тесты чистой логики — `npm test` ([test/](test/), `node:test` через `tsx`, без доп. зависимостей): покрыты `compose`/`isRelevant`, даты и русская плюрализация ([labels.ts](src/lib/labels.ts)), inline-markdown, `withBase`. `npm run validate` — интеграционный шлюз: загрузка+валидация всего content/targets через Zod и сборка каждого варианта; запускай после любого изменения content или схемы (при ошибке Zod указывает точный файл и поле). Прогоняй оба после изменений в движке. В CI ([deploy.yml](.github/workflows/deploy.yml)) перед сборкой идут `format:check` → `lint` → `test` → `check` (astro) → `validate` — они гейтят деплой.
 
 Важен порядок: `astro build` сначала чистит `dist/`, поэтому артефакты `generated/` (md/json/pdf) **должны создаваться после** `build`. Всегда используй `build:all`, либо `build` и затем генераторы — никогда `build` в одиночку, если нужны скачиваемые файлы. Для `build:pdf` нужен Chromium: `npx playwright install chromium`.
 
