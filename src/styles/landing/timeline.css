@@ -1,0 +1,195 @@
+/* ---- Опыт работы (таймлайн) ------------------------------------------ */
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+.tl-item {
+  position: relative;
+  padding: 0 0 26px 30px;
+  max-width: 78ch;
+  border-left: 1px solid var(--rule);
+  scroll-margin-top: 84px; /* отступ под липкий навбар при скролле по якорю */
+}
+.tl-item:last-child {
+  padding-bottom: 0;
+  border-left-color: transparent;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 9px; /* по центру первой строки должности (line-height ≈ 28px) */
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow:
+    0 0 0 4px var(--bg),
+    0 0 12px rgba(110, 168, 254, 0.7);
+}
+.tl-role {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.tl-company {
+  margin: 3px 0 0;
+  font-weight: 600;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.tl-logo {
+  height: 18px;
+  width: auto;
+  max-width: 90px;
+  object-fit: contain;
+  flex: none;
+}
+.tl-company a {
+  text-decoration: none;
+}
+.tl-company a:hover {
+  text-decoration: underline;
+}
+/* Индустрия — тонкий бейдж у названия компании. */
+.tl-industry {
+  padding: 2px 9px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 12px;
+}
+.tl-meta {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--faint);
+}
+/* Суммарный стаж рядом с датами — тонкая пилюля. */
+.tl-duration {
+  margin-left: 8px;
+  padding: 1px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.92em;
+  white-space: nowrap;
+}
+/* Чипы масштаба под датами: короткие «кричащие» метрики, привязанные к месту. */
+.tl-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 0;
+}
+.tl-metric {
+  padding: 4px 11px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.tl-metric strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+.tl-summary {
+  margin: 12px 0 0;
+  color: var(--muted);
+  max-width: 74ch;
+}
+.tl-points {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  max-width: 74ch;
+}
+.tl-points li {
+  margin: 5px 0;
+  color: var(--muted);
+}
+.tl-points li::marker {
+  color: var(--accent);
+}
+.tl-points li strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+.tl-group {
+  margin-top: 16px;
+}
+.tl-group h4 {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+}
+.tl-group .tl-points {
+  margin-top: 6px;
+}
+.tl-stackline {
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  color: var(--faint);
+  max-width: 74ch;
+}
+.tl-stacklabel {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Сворачиваемый «хвост» опыта. Без JS виден целиком (SEO/AI); JS навешивает
+   .is-collapsed и анимирует max-height. */
+.tl-rest {
+  transition: max-height 0.32s ease, opacity 0.24s ease;
+}
+.tl-rest.is-collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+.tl-toggle {
+  display: none; /* появляется только при включённом JS */
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(110, 168, 254, 0.08);
+  border: 1px solid rgba(110, 168, 254, 0.22);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+html.js .tl-toggle {
+  display: inline-flex;
+}
+.tl-toggle:hover {
+  background: rgba(110, 168, 254, 0.16);
+  border-color: var(--accent);
+}
+.tl-chevron {
+  font-size: 11px;
+  transition: transform 0.2s ease;
+}
+.tl-toggle .tl-toggle-less {
+  display: none;
+}
+.tl-toggle[aria-expanded='true'] .tl-toggle-more {
+  display: none;
+}
+.tl-toggle[aria-expanded='true'] .tl-toggle-less {
+  display: inline;
+}
+.tl-toggle[aria-expanded='true'] .tl-chevron {
+  transform: rotate(180deg);
+}

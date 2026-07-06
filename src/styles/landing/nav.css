@@ -1,0 +1,80 @@
+/* ---- Навбар ----------------------------------------------------------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  backdrop-filter: blur(8px);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+/* Имя в шапке избыточно, пока на первом экране крупный hero с полным именем.
+   При активном JS прячем его и проявляем только после ухода hero за верх
+   (см. класс .nav.scrolled ниже). Без JS — имя видно всегда (fallback). */
+html.js .brand-name {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+html.js .nav.scrolled .brand-name {
+  opacity: 1;
+  transform: none;
+}
+/* Когда имя проявилось — лёгкий полупрозрачный фон + граница, чтобы текст
+   читался поверх контента. Основную непрозрачность даёт backdrop-filter blur
+   у .nav; здесь только чуть притемняем, не превращая шапку в глухую панель. */
+.nav.scrolled {
+  background: rgba(8, 8, 12, 0.4);
+  border-bottom: 1px solid var(--rule);
+}
+/* Бренд-марка = favicon.svg (единый источник градиента+«SD», см. public/favicon.svg).
+   Скругление уже зашито в SVG (rx=19 на 64 vB ≈ те же 10px при 34px). */
+.mono {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+}
+
+/* Переключатель языка */
+.lang-toggle {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+}
+.lang-toggle button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+.lang-toggle button:hover {
+  color: var(--ink);
+}
+html[data-lang='ru'] .lang-toggle [data-set-lang='ru'],
+html[data-lang='en'] .lang-toggle [data-set-lang='en'] {
+  background: var(--ink);
+  color: var(--bg);
+}

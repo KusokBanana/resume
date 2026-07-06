@@ -1,0 +1,29 @@
+/* ---- Футер ------------------------------------------------------------ */
+.footer {
+  padding: 40px 0 56px;
+  border-top: 1px solid var(--rule);
+  margin-top: 24px;
+  color: var(--faint);
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.footer .machine {
+  font-size: 12px;
+}
+.footer .machine a {
+  color: var(--faint);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer .machine a:hover {
+  color: var(--ink, currentColor);
+}
+.footer .machine .sep {
+  margin: 0 4px;
+  opacity: 0.5;
+}

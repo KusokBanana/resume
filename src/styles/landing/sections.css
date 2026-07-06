@@ -1,0 +1,23 @@
+/* ---- Секции ----------------------------------------------------------- */
+.section {
+  padding: 48px 0;
+  scroll-margin-top: 84px; /* чтобы липкий навбар (~71px) не перекрывал якорь при скролле */
+}
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.section-head h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.section-head .num {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}

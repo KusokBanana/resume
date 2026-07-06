@@ -1,0 +1,55 @@
+/* ---- Адаптив ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Портрет уходит наверх, центрируем колонку текста. */
+  .hero-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 28px;
+  }
+  .hero-portrait {
+    order: -1;
+    justify-self: center;
+  }
+  .portrait-frame {
+    width: clamp(132px, 38vw, 168px);
+  }
+  .hero .tagline {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .contacts,
+  .cta-row {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    padding: 40px 0 24px;
+  }
+  .cta-row .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+  /* Полоса цифр — ровно 2 колонки, чтобы не рвалась на узких экранах. */
+  .stats-band {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px 10px;
+  }
+}
+
+/* ---- Доступность: уважаем reduce-motion ------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition: none !important;
+  }
+  /* Reveal-элементы сразу видимы, без анимации появления. */
+  html.js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,33 @@
+/* ---- Появление при скролле ------------------------------------------- */
+/* Скрытое стартовое состояние — только при включённом JS, иначе контент
+   остаётся видимым без скриптов (важно для SEO/AI и no-JS). */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+html.js .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+/* Лёгкий стаггер для карточек в сетках/рядах. */
+html.js .results .reveal:nth-child(2),
+html.js .interests .reveal:nth-child(2) {
+  transition-delay: 0.06s;
+}
+html.js .results .reveal:nth-child(3),
+html.js .interests .reveal:nth-child(3) {
+  transition-delay: 0.12s;
+}
+html.js .results .reveal:nth-child(n + 4) {
+  transition-delay: 0.18s;
+}
+html.js .theses .reveal:nth-child(2) {
+  transition-delay: 0.06s;
+}
+html.js .theses .reveal:nth-child(3) {
+  transition-delay: 0.12s;
+}
+html.js .theses .reveal:nth-child(n + 4) {
+  transition-delay: 0.18s;
+}

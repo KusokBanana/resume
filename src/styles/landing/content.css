@@ -1,0 +1,161 @@
+/* ---- Ключевые результаты --------------------------------------------- */
+.results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.result {
+  padding: 22px 22px 24px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.18s, transform 0.18s, background 0.18s;
+}
+.result::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-strong), var(--violet));
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+.result:hover {
+  border-color: var(--rule-strong);
+  background: var(--surface-hover);
+  transform: translateY(-3px);
+}
+.result:hover::after {
+  opacity: 1;
+}
+.result .body {
+  font-size: 15px;
+  color: var(--muted);
+}
+.result .body strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ---- Полоса цифр (продающая, под hero) ------------------------------- */
+.stats-band {
+  display: grid;
+  /* 140px даёт ровно 6 колонок в ряд при maxw 980 (иначе 6 цифр ложатся как 5+1). */
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 24px 12px;
+  margin: 4px 0 8px;
+  padding: 30px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.stat {
+  text-align: center;
+  padding: 0 8px;
+}
+.stat-value {
+  font-size: clamp(2.1rem, 6vw, 3.3rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(120deg, #fff 20%, var(--accent) 70%, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stat-label {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+/* ---- Тезисы (лидерские принципы) ------------------------------------- */
+.theses {
+  display: grid;
+  gap: 12px;
+  padding: 40px 0 8px;
+}
+.thesis {
+  margin: 0;
+  padding: 14px 18px;
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface);
+  font-size: clamp(1.02rem, 2.2vw, 1.26rem);
+  line-height: 1.4;
+  color: var(--muted);
+  transition: border-color 0.18s, background 0.18s, transform 0.18s;
+}
+.thesis:hover {
+  border-left-color: var(--violet);
+  background: var(--surface-hover);
+  transform: translateX(2px);
+}
+.thesis strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ---- Закрывающий CTA -------------------------------------------------- */
+.cta-final {
+  margin: 56px 0 8px;
+  padding: 40px 32px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(80% 120% at 0% 0%, rgba(59, 130, 246, 0.14), transparent 60%),
+    radial-gradient(80% 120% at 100% 100%, rgba(167, 139, 250, 0.12), transparent 60%),
+    var(--surface);
+  text-align: center;
+}
+.cta-final h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, #fff 30%, var(--accent) 75%, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.cta-final p {
+  margin: 14px auto 24px;
+  max-width: 56ch;
+  color: var(--muted);
+  font-size: clamp(0.98rem, 1.6vw, 1.1rem);
+}
+.cta-final .cta-row {
+  justify-content: center;
+}
+
+/* ---- Навыки ----------------------------------------------------------- */
+.skill-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.skill-group h3 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--faint);
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag {
+  font-size: 13.5px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--ink);
+}
