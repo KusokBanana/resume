@@ -65,7 +65,7 @@ npm run apply -- --from hh-lead --id <vacancyId> --lang ru                    # 
 Команды поверх общего слоя:
 
 - **[cli/tailor.ts](cli/tailor.ts)** (`runTailor`) — пишет ревьюируемый `targets/tailored-<slug>.yaml`. LLM выбирает/ранжирует блоки и предлагает переформулировку summary (комментарием в шапке YAML, не подменяя `content/`). Без ключа/при ошибке — откат на эвристику по ключевым словам.
-- **[cli/cover-letter.ts](cli/cover-letter.ts)** (`runCoverLetter`) — письмо строго по фактам резюме → `out/cover-letters/<slug>-<lang>.md`. **Без ключа не работает** (фолбэка нет — письмо без LLM бессмысленно).
+- **[cli/cover-letter.ts](cli/cover-letter.ts)** (`runCoverLetter`) — письмо строго по фактам резюме → `out/cover-letters/<slug>-<lang>.md`. **Двухэтапно**: этап 1 (Hiring Manager) строит стратегию-план (`LetterPlanSchema` → `<slug>-<lang>.plan.json`), этап 2 пишет письмо, видя только отобранные планом блоки (структурная защита от пересказа/галлюцинаций; id валидируются по каталогу). При сбое этапа 1 — откат на одностадийный `FALLBACK_SYSTEM_PROMPT`. **Без ключа OpenAI не работает** (эвристики-фолбэка нет — письмо без LLM бессмысленно).
 - **[cli/find-jobs.ts](cli/find-jobs.ts)** (`runFindJobs`/`loadMatches`) — сбор вакансий (hh.ru API через [cli/lib/hh.ts](cli/lib/hh.ts) или ручной YAML/JSON-файл) → **два этапа**: дешёвый предфильтр по словам резюме (top-N), затем LLM-ранжирование только top-N одним батч-вызовом (для hh детальные описания тянутся лишь для top-N). Выдача → `out/jobs/<slug>.{json,md}` + таблица в терминал. Без ключа — только эвристический скор.
 - **[cli/apply.ts](cli/apply.ts)** — связка: по `--from <slug> --id <vacancyId>` из результатов find-jobs запускает `runTailor` + `runCoverLetter`.
 
