@@ -1,29 +1,41 @@
 ---
 /**
- * Двуязычная пара `<span class="lang-ru">…</span><span class="lang-en">…</span>`.
- * Оба языка всегда в DOM; CSS по data-lang на <html> показывает нужный. Это
- * убирает повторяющуюся ручную разметку на лендинге.
+ * Двуязычная пара элементов: по одному на язык, оба всегда в DOM, а CSS по
+ * data-lang на <html> показывает нужный. Убирает повторяющуюся ручную разметку
+ * `<span class="lang-ru">…</span><span class="lang-en">…</span>`.
  *
- * `html` — если текст содержит разметку (напр. **жирный** через renderInline),
- * тогда значения вставляются как HTML (set:html), иначе — как текст.
+ * - `as` — тег каждого элемента (по умолчанию `span`; напр. `li` для пунктов).
+ * - `class` — доп. классы, добавляются к `lang-ru`/`lang-en`.
+ * - `html` — вставить значения как HTML (set:html), если в тексте разметка
+ *   (напр. **жирный** через renderInline), иначе — как текст.
+ * - Прочие атрибуты (data-*, aria-* и т.п.) пробрасываются на оба элемента.
  */
 interface Props {
   ru: string;
   en: string;
   html?: boolean;
+  as?: string;
+  class?: string;
+  [key: string]: unknown;
 }
-const { ru, en, html = false } = Astro.props;
+const { ru, en, html = false, as: Tag = 'span', class: className, ...rest } = Astro.props;
+const ruClass = ['lang-ru', className].filter(Boolean).join(' ');
+const enClass = ['lang-en', className].filter(Boolean).join(' ');
 ---
 {
   html ? (
     <>
-      <span class="lang-ru" set:html={ru} />
-      <span class="lang-en" set:html={en} />
+      <Tag class={ruClass} {...rest} set:html={ru} />
+      <Tag class={enClass} {...rest} set:html={en} />
     </>
   ) : (
     <>
-      <span class="lang-ru">{ru}</span>
-      <span class="lang-en">{en}</span>
+      <Tag class={ruClass} {...rest}>
+        {ru}
+      </Tag>
+      <Tag class={enClass} {...rest}>
+        {en}
+      </Tag>
     </>
   )
 }

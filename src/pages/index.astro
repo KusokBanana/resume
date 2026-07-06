@@ -307,12 +307,7 @@ const jsonLd = {
             {stats.map((s) => (
               <div class="stat">
                 <div class="stat-value">
-                  <span class="lang-ru" data-count>
-                    {s.value.ru}
-                  </span>
-                  <span class="lang-en" data-count>
-                    {s.value.en}
-                  </span>
+                  <Bilingual as="span" data-count="" ru={s.value.ru} en={s.value.en} />
                 </div>
                 <div class="stat-label">
                   <Bilingual ru={s.label.ru} en={s.label.en} />
