@@ -68,7 +68,7 @@ export const ProfileSchema = z.object({
    */
   pitch: Localized.optional(),
   location: Localized.optional(),
-  email: z.string().email().optional(),
+  email: z.email().optional(),
   phone: z.string().optional(),
   /** Путь к портретному фото относительно public/, напр. "photo.jpg". Используется на лендинге. */
   photo: z.string().optional(),
@@ -77,14 +77,14 @@ export const ProfileSchema = z.object({
     .array(
       z.object({
         label: z.string(),
-        url: z.string().url(),
+        url: z.url(),
         /** необязательная подпись для системы: github, linkedin, telegram... */
         kind: z.string().optional(),
       }),
     )
     .default([]),
   /** Личная ссылка для блока «Помимо работы» */
-  instagram: z.string().url().optional(),
+  instagram: z.url().optional(),
   /**
    * Целевые ключевые фразы экспертизы (двуязычно). Отдаются в JSON-LD
    * `knowsAbout` — это то, по чему AI-рекрутер/поиск матчит профиль.
@@ -111,7 +111,7 @@ export type Summary = z.infer<typeof SummarySchema>;
 export const ExperienceSchema = z.object({
   id: z.string(),
   company: z.string(),
-  companyUrl: z.string().url().optional(),
+  companyUrl: z.url().optional(),
   /** Путь к логотипу относительно public/, напр. "logos/vk.svg". */
   logo: z.string().optional(),
   role: Localized,
@@ -140,7 +140,7 @@ export type Experience = z.infer<typeof ExperienceSchema>;
 export const ProjectSchema = z.object({
   id: z.string(),
   name: Localized,
-  url: z.string().url().optional(),
+  url: z.url().optional(),
   description: Localized,
   highlights: z.array(Highlight).default([]),
   stack: z.array(z.string()).default([]),

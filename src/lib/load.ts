@@ -1,6 +1,5 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { join, dirname, basename } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join, basename } from 'node:path';
 import { parse as parseYaml } from 'yaml';
 import { z, ZodError } from 'zod';
 import {
@@ -20,8 +19,13 @@ import {
   TargetSchema,
 } from '../schema/index';
 
-/** Корень проекта (src/lib/load.ts -> ../../). */
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+/**
+ * Корень проекта. Берём cwd: loadContent зовётся только на этапе сборки
+ * (getStaticPaths / рендер страниц / build-скрипты), а `astro build` и `tsx`
+ * запускаются из корня. Через import.meta.url ROOT ломается в Astro 7: он
+ * складывает prerender-чанки в dist/.prerender/, и относительный путь съезжает.
+ */
+const ROOT = process.cwd();
 const CONTENT_DIR = join(ROOT, 'content');
 const TARGETS_DIR = join(ROOT, 'targets');
 
