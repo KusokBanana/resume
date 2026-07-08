@@ -31,6 +31,8 @@
   padding: 3px;
   background: linear-gradient(135deg, var(--accent-strong), var(--violet));
   box-shadow: 0 18px 50px rgba(59, 130, 246, 0.28);
+  /* Плавный возврат из 3D-наклона (сам наклон ставит landing.ts инлайн-transform). */
+  transition: transform 0.18s ease;
 }
 .portrait-frame::after {
   /* мягкое свечение под портретом */

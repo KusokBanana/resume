@@ -188,3 +188,69 @@ if (lb) {
     }
   });
 }
+
+// --- Интерактивное свечение фона: мягко ведём голубой блик за курсором.
+// Слой — body::after (см. base.css). Инерция: цель tx/ty → текущие cx/cy через lerp.
+// Только для точных указателей (мышь/трекпад) и без reduce-motion.
+if (!reduce && window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+  let tx = 50;
+  let ty = 0;
+  let cx = 50;
+  let cy = 0;
+  let raf = 0;
+  const frame = () => {
+    cx += (tx - cx) * 0.08;
+    cy += (ty - cy) * 0.08;
+    html.style.setProperty('--mx', cx.toFixed(2) + '%');
+    html.style.setProperty('--my', cy.toFixed(2) + '%');
+    // Крутим кадры, пока блик не «догнал» курсор; затем засыпаем до нового движения.
+    raf =
+      Math.abs(tx - cx) > 0.1 || Math.abs(ty - cy) > 0.1
+        ? requestAnimationFrame(frame)
+        : 0;
+  };
+  window.addEventListener(
+    'mousemove',
+    (ev) => {
+      tx = (ev.clientX / window.innerWidth) * 100;
+      ty = (ev.clientY / window.innerHeight) * 100;
+      document.body.classList.add('glow-active');
+      if (!raf) raf = requestAnimationFrame(frame);
+    },
+    { passive: true },
+  );
+
+  // --- Tilt/parallax: лёгкий 3D-наклон к курсору у фото и карточек результатов.
+  // Наклон ставим инлайн-transform'ом; возврат сглаживает CSS-transition на элементе
+  // (portrait-frame / .result уже имеют transition transform). Лифт .result:hover
+  // сохраняем, добавляя translateY внутрь transform.
+  const attachTilt = (el: HTMLElement, max: number, lift: number) => {
+    let raf2 = 0;
+    let rx = 0;
+    let ry = 0;
+    const apply = () => {
+      raf2 = 0;
+      const t = `perspective(720px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+      el.style.transform = lift ? `${t} translateY(${lift}px)` : t;
+    };
+    el.addEventListener('pointermove', (ev) => {
+      const r = el.getBoundingClientRect();
+      const px = (ev.clientX - r.left) / r.width - 0.5; // -0.5..0.5
+      const py = (ev.clientY - r.top) / r.height - 0.5;
+      rx = -py * max * 2;
+      ry = px * max * 2;
+      if (!raf2) raf2 = requestAnimationFrame(apply);
+    });
+    el.addEventListener('pointerleave', () => {
+      if (raf2) {
+        cancelAnimationFrame(raf2);
+        raf2 = 0;
+      }
+      el.style.transform = ''; // назад к CSS-состоянию (плавно, через transition элемента)
+    });
+  };
+  document
+    .querySelectorAll<HTMLElement>('.portrait-frame')
+    .forEach((el) => attachTilt(el, 8, 0));
+  document.querySelectorAll<HTMLElement>('.result').forEach((el) => attachTilt(el, 5, -3));
+}
