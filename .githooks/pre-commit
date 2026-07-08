@@ -1,0 +1,10 @@
+#!/bin/sh
+# Быстрый статический гейт перед коммитом — то же, чем CI открывает проверку.
+# Ловит именно такие поломки (несформатированный код), не дожидаясь push/CI.
+# Обойти разово: git commit --no-verify
+
+set -e
+
+echo "pre-commit: format:check + lint"
+npm run --silent format:check
+npm run --silent lint

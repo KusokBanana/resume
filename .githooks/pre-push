@@ -1,0 +1,14 @@
+#!/bin/sh
+# Полный гейт перед push — воспроизводит порядок CI (deploy.yml):
+# format:check → lint → test → check (astro) → validate.
+# Тяжелее pre-commit (тесты + типизация + Zod-валидация), поэтому на push, а не на каждый коммит.
+# Обойти разово: git push --no-verify
+
+set -e
+
+echo "pre-push: format:check → lint → test → check → validate"
+npm run --silent format:check
+npm run --silent lint
+npm run --silent test
+npm run --silent check
+npm run --silent validate

@@ -261,5 +261,7 @@ if (!reduce && window.matchMedia && window.matchMedia('(pointer: fine)').matches
   document
     .querySelectorAll<HTMLElement>('.portrait-frame')
     .forEach((el) => attachTilt(el, 8, 0));
-  document.querySelectorAll<HTMLElement>('.result').forEach((el) => attachTilt(el, 5, -3));
+  document
+    .querySelectorAll<HTMLElement>('.result')
+    .forEach((el) => attachTilt(el, 5, -3));
 }
