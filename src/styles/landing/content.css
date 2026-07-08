@@ -29,6 +29,13 @@
   background: var(--surface-hover);
   transform: translateY(-3px);
 }
+/* Наклон/возврат карточек — быстрее (≈ как у фото, чуть резвее): transform 0.16s.
+   Класс вешает landing.ts на время наведения. Селектор html.js .result.tilting
+   специфичнее html.js .reveal (transform 0.5s), которым .result помечена как reveal,
+   поэтому перебивает его. Рамку/фон оставляем на прежних 0.18s. */
+html.js .result.tilting {
+  transition: border-color 0.18s, transform 0.16s ease, background 0.18s;
+}
 .result:hover::after {
   opacity: 1;
 }

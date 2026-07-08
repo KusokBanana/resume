@@ -233,6 +233,15 @@ if (!reduce && window.matchMedia && window.matchMedia('(pointer: fine)').matches
       const t = `perspective(720px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
       el.style.transform = lift ? `${t} translateY(${lift}px)` : t;
     };
+    // Помечаем элемент на время наведения: .result.tilting ускоряет transform
+    // с унаследованных от .reveal 0.5s до ~фото (см. content.css). Появление
+    // (opacity-fade) уже прошло к моменту наведения, поэтому его не задеваем.
+    // transition-delay зануляем инлайном: стаггер появления (.reveal:nth-child →
+    // delay 0.06–0.18s) иначе задерживает и наклон — нижние карточки тормозят.
+    el.addEventListener('pointerenter', () => {
+      el.classList.add('tilting');
+      el.style.transitionDelay = '0s';
+    });
     el.addEventListener('pointermove', (ev) => {
       const r = el.getBoundingClientRect();
       const px = (ev.clientX - r.left) / r.width - 0.5; // -0.5..0.5
