@@ -18,4 +18,3 @@ highlights:
       ru: Разрабатывал интернет-магазины и сервис автоматизации работы со ставками в Яндекс.Директ.
       en: Built e-commerce stores and a tool for automating bid management in Yandex.Direct.
     tags: {}
-stack: [PHP, 1C-Bitrix, Yii, Yii2, MySQL, HTML5, SCSS, JavaScript, jQuery]

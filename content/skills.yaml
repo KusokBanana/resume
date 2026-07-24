@@ -1,81 +1,123 @@
+# Единый реестр навыков — источник истины для строки «Стек» карточек опыта/экспортов
+# (стек компании = навыки с её id в `at` и stack:true) И для глобальной секции «Навыки».
+#
+# Политика:
+#   stack:true  — попадает в строку «Стек» карточек опыта. ТОЛЬКО «ядро» (языки, основные
+#                 фреймворки, БД) и «легаси». Библиотеки/инструменты/инфра в стек НЕ идут.
+#   global:true — показывается чипом в витрине навыков (сгруппировано).
+#   Ядро:   stack:true, global:true  (и в стеке, и чипом).
+#   Легаси: stack:true, global:false (только в стеке старых работ).
+#   Прочее (библиотеки, тесты, инфра, компетенции): stack:false, global:true (только чип).
+#   group — группа витрины (обязательна при global:true).
+#
+# Порядок массива задаёт порядок в строке «Стек» (по stack:true) и внутри группы витрины.
+# Порядок ГРУПП — по priority.
+#
+# ⚠ `at` — фактические/предположительные привязки к местам работы, ПРОВЕРЬ.
+
 groups:
-  - id: management
-    priority: 100
-    name:
-      ru: Управление
-      en: Management
-    items:
-      - ru: найм
-        en: hiring
-      - ru: ИПР
-        en: individual development plans
-      - ru: "1:1"
-        en: "1:1s"
-      - ru: OKR / roadmap
-        en: OKR / roadmap
-      - ru: Agile / Scrum
-        en: Agile / Scrum
-      - ru: выстраивание процессов
-        en: process design
-      - ru: стейкхолдер-менеджмент
-        en: stakeholder management
-      - ru: кросс-функциональное взаимодействие
-        en: cross-functional collaboration
-      - ru: управление изменениями
-        en: change management
-    tags: {}
+  - { id: management, priority: 100, name: { ru: Управление, en: Management } }
+  - { id: frontend, priority: 90, name: { ru: Frontend, en: Frontend } }
+  - { id: ai, priority: 80, name: { ru: AI в разработке, en: AI in development } }
+  - { id: backend, priority: 75, name: { ru: Backend, en: Backend } }
+  - { id: infra, priority: 70, name: { ru: Инфраструктура / DevOps / Другое, en: Infrastructure / DevOps / Other } }
 
-  - id: tech
-    priority: 90
-    name:
-      ru: Технологии
-      en: Technology
-    # Технические термины языко-нейтральны → простые строки.
-    items:
-      - TypeScript
-      - React
-      - Angular
-      - Node.js
-      - CI/CD (GitLab CI)
-      - Docker
-      - Figma
-    tags: {}
+items:
+  # ============ Frontend ============
+  # Компетенции и библиотеки (stack:false — только чипы витрины).
+  - { ru: дизайн-системы, en: design systems, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: frontend }
+  - { name: Feature-Sliced Design, at: [positive-technologies], stack: false, group: frontend }
+  - { name: Node.js, at: [vk-lead, positive-technologies], stack: false, group: frontend }
+  # Ядро (stack:true — и в стеке опыта, и чипом).
+  - { name: TypeScript, at: [yandex, vk-senior, vk-lead, positive-technologies], group: frontend }
+  - { name: React, at: [yandex, vk-senior, vk-lead, positive-technologies], group: frontend }
+  - { name: Angular, at: [yandex, positive-technologies], group: frontend }
+  - { name: "Vue.js", at: [kodix], group: frontend }
+  - { name: JavaScript, at: [positive-technologies, yandex, vk-senior, vk-lead, kodix, freelance, givemesite], group: frontend }
+  # Библиотеки (stack:false — только чипы).
+  - { name: Redux Toolkit, at: [vk-senior, vk-lead, positive-technologies], stack: true, group: frontend }
+  - { name: RTK Query, at: [vk-senior, vk-lead, positive-technologies], stack: true, group: frontend }
+  - { name: React Hook Form, at: [vk-senior, vk-lead, positive-technologies], stack: false, group: frontend }
+  - { name: Zod, at: [positive-technologies], stack: false, group: frontend }
+  - { name: Ant Design, at: [positive-technologies], stack: false, group: frontend }
+  - { name: CSS Modules, at: [vk-senior, vk-lead, positive-technologies], stack: false, group: frontend }
+  - { name: SCSS, at: [givemesite, yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: frontend }
+  - { name: Vite, at: [positive-technologies], stack: false, group: frontend }
+  - { name: Webpack, at: [yandex], stack: false, group: frontend }
+  - { name: Preact, at: [positive-technologies], stack: false, group: frontend }
+  - { name: Preact Signals, at: [positive-technologies], stack: false, group: frontend }
 
-  - id: tech-domains
-    priority: 85
-    name:
-      ru: Frontend-экспертиза
-      en: Frontend expertise
-    items:
-      - ru: frontend-архитектура
-        en: frontend architecture
-      - ru: highload-интерфейсы
-        en: high-load UIs
-      - ru: дизайн-системы
-        en: design systems
-      - FrontOps
-    tags: {}
+  # ============ AI в разработке (stack:false) ============
+  - { name: "LLM-assisted development", at: [positive-technologies], stack: true, group: ai }
+  - { name: Claude, at: [positive-technologies], stack: true, group: ai }
+  - { name: OpenAI, at: [positive-technologies], stack: false, group: ai }
+  - { name: Cursor, at: [positive-technologies], stack: false, group: ai }
+  - { ru: внедрение AI, en: AI adoption, at: [positive-technologies], stack: false, group: ai }
+  - { ru: MCP-серверы, en: MCP servers, at: [positive-technologies], stack: false, group: ai }
+  - { ru: llms.txt, en: llms.txt, at: [positive-technologies], stack: false, group: ai }
+  - { ru: "разработка Claude-плагинов", en: "Claude plugins dev", at: [positive-technologies], stack: false, group: ai }
+  - { name: vibe-coding, at: [positive-technologies], stack: false, group: ai }
+  - { ru: автоматизация рутины, en: routine automation, at: [positive-technologies], stack: false, group: ai }
 
-  - id: ai
-    priority: 80
-    name:
-      ru: AI / эффективность
-      en: AI / efficiency
-    items:
-      - LLM-assisted development (Claude, Cursor)
-      - ru: автоматизация рутинных операций
-        en: automation of routine operations
-    tags: {}
+  # ============ Backend ============
+  # Ядро (stack:true).
+  - { name: Python, at: [kodix, yandex, positive-technologies], group: backend }
+  - { name: Flask, at: [kodix, yandex], group: backend }
+  - { name: PHP, at: [givemesite, freelance, kodix, yandex, vk-lead], group: backend }
+  - { name: Symfony, at: [yandex], group: backend }
+  - { name: Laravel, at: [kodix], group: backend }
+  - { name: PostgreSQL, at: [yandex], group: backend }
+  - { name: MySQL, at: [givemesite, freelance, kodix, yandex, vk-lead], group: backend }
+  - { name: Oracle, at: [yandex], group: backend }
+  - { name: MongoDB, at: [yandex], group: backend }
+  - { name: Redis, at: [kodix, yandex], group: backend }
+  # Прочее backend (stack:false — только чипы).
+  - { name: Linux, at: [yandex], stack: false, group: backend }
+  - { name: SQLAlchemy, at: [yandex], stack: false, group: backend }
+  - { name: Alembic, at: [yandex], stack: false, group: backend }
+  - { name: pytest, at: [yandex, positive-technologies], stack: false, group: backend }
+  - { name: Doctrine ORM, at: [yandex], stack: false, group: backend }
+  - { name: Composer, at: [kodix, yandex], stack: false, group: backend }
+  - { name: Yii2, at: [givemesite, freelance], stack: false, group: backend }
+  - { name: Lumen, at: [kodix, yandex], stack: false, group: backend }
+  - { name: Memcached, at: [yandex], stack: false, group: backend }
 
-  - id: earlier
-    priority: 70
-    name:
-      ru: Ранее
-      en: Earlier
-    items:
-      - Python / Flask / SQLAlchemy
-      - PHP / Symfony / Laravel / Yii2
-      - SQL (PostgreSQL, MySQL, Oracle, ...)
-      - NoSQL (MongoDB, Redis, ...)
-      - Linux
-    tags: {}
+  # ============ Инфраструктура / DevOps / Другое (stack:false) ============
+  - { name: Docker, at: [yandex, positive-technologies], stack: false, group: infra }
+  - { name: Nginx, at: [givemesite, freelance, kodix, yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: infra }
+  - { name: Bash, at: [yandex, positive-technologies], stack: false, group: infra }
+  - { name: GitLab CI, at: [positive-technologies], stack: false, group: infra }
+  - { name: Flux, at: [positive-technologies], stack: false, group: infra }
+  - { name: Sentry, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: infra }
+  - { name: Unleash, at: [positive-technologies], stack: false, group: infra }
+  - { name: GitOps, at: [positive-technologies], stack: false, group: infra }
+  - { ru: архитектура, en: architecture, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: infra }
+  - { name: FrontOps, at: [vk-lead, positive-technologies], stack: false, group: infra }
+  - { name: Vitest, at: [positive-technologies], stack: false, group: infra }
+  - { name: Playwright, at: [positive-technologies], stack: false, group: infra }
+  - { name: Storybook, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: infra }
+  - { name: ESLint, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: infra }
+  - { name: Figma, at: [vk-senior, vk-lead, positive-technologies], stack: false, group: infra }
+
+  # ============ Легаси (stack:true, global:false — только в стеке старых работ) ============
+  - { name: Codeception, at: [kodix], global: false }
+  - { name: "1C-Bitrix", at: [givemesite, kodix], global: false }
+  - { name: Yii, at: [givemesite, freelance], global: false }
+  - { name: jQuery, at: [givemesite, freelance, kodix], global: false }
+  - { name: Bootstrap, at: [freelance, givemesite], global: false }
+  - { name: HTML5, at: [givemesite], global: false }
+
+  # ============ Управление (stack:false) ============
+  - { ru: найм, en: hiring, at: [vk-lead, positive-technologies], stack: false, group: management }
+  - { ru: увольнения, en: offboarding, at: [positive-technologies], stack: false, group: management }
+  - { ru: ИПР, en: individual development plans, at: [vk-lead, positive-technologies], stack: false, group: management }
+  - { ru: "1:1", en: "1:1s", at: [vk-lead, positive-technologies], stack: false, group: management }
+  - { ru: менторинг, en: mentoring, at: [yandex], stack: false, group: management }
+  - { name: Jira, at: [positive-technologies, vk-lead, vk-senior], stack: false, group: management }
+  - { ru: OKR / roadmap, en: OKR / roadmap, at: [vk-lead, positive-technologies], stack: false, group: management }
+  - { ru: Agile / Scrum, en: Agile / Scrum, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: management }
+  - { ru: выстраивание процессов, en: process design, at: [vk-lead, positive-technologies], stack: false, group: management }
+  - { ru: стейкхолдер-менеджмент, en: stakeholder management, at: [positive-technologies], stack: false, group: management }
+  - { name: product ownership, at: [yandex, vk-lead], stack: false, group: management }
+  - { ru: кросс-функциональное взаимодействие, en: cross-functional collaboration, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: management }
+  - { ru: управление изменениями, en: change management, at: [positive-technologies], stack: false, group: management }

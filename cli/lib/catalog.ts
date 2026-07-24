@@ -2,6 +2,7 @@
  * Каталог блоков резюме и дешёвые текстовые эвристики — общий вход для LLM-подбора
  * (tailor), генерации письма (cover-letter) и сопоставления вакансий (find-jobs).
  */
+import { stackFor } from '../../src/lib/compose';
 import type { Content, Lang } from '../../src/schema/index';
 
 export interface CatalogBlock {
@@ -17,10 +18,12 @@ export function catalog(content: Content, lang: Lang): CatalogBlock[] {
   for (const e of content.experience) {
     const flat = e.highlights.map((h) => h.text[lang]);
     const grouped = e.groups.flatMap((g) => g.highlights.map((h) => h.text[lang]));
+    // Стек компании выводится из единого реестра навыков (content/skills.yaml).
+    const stack = stackFor(content.skills, e.id, lang);
     blocks.push({
       id: e.id,
       kind: 'experience',
-      text: `${e.role[lang]} ${e.stack.join(' ')} ${[...flat, ...grouped].join(' ')}`,
+      text: `${e.role[lang]} ${stack.join(' ')} ${[...flat, ...grouped].join(' ')}`,
       domains: e.tags.domains ?? [],
     });
   }

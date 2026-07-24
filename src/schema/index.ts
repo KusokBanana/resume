@@ -111,6 +111,8 @@ export type Summary = z.infer<typeof SummarySchema>;
 export const ExperienceSchema = z.object({
   id: z.string(),
   company: z.string(),
+  /** Короткое имя для карточки на мобильном (напр. «PT»). Только лендинг; фильтр/экспорты — company. */
+  short: z.string().optional(),
   companyUrl: z.url().optional(),
   /** Путь к логотипу относительно public/, напр. "logos/vk.svg". */
   logo: z.string().optional(),
@@ -131,7 +133,8 @@ export const ExperienceSchema = z.object({
    * в compose/экспорты не идут.
    */
   metrics: z.array(Localized).default([]),
-  stack: z.array(z.string()).default([]),
+  // Стека здесь больше нет — единый источник в content/skills.yaml (реестр).
+  // Стек компании выводится из навыков реестра с этим id в `at` (см. skill-evidence).
   tags: Tags,
   priority: z.number().default(0),
 });
@@ -149,9 +152,46 @@ export const ProjectSchema = z.object({
 });
 export type Project = z.infer<typeof ProjectSchema>;
 
-/** Навык: либо языко-нейтральная строка (технология), либо двуязычный термин. */
-export const SkillItem = z.union([z.string(), Localized]);
-export type SkillItem = z.infer<typeof SkillItem>;
+/**
+ * Единый реестр навыков — источник истины и для глобальной секции навыков, и для
+ * строки «Стек» в карточках опыта/экспортах (стек больше не хранится в experience).
+ *
+ * Навык: `name` (язык-нейтральная строка, напр. технология) ЛИБО `ru`+`en` (двуязычный
+ * термин, напр. компетенция). Ровно одно из двух.
+ *  - `at`     — id мест работы, где применялся (≥1). Стек компании = навыки с её id и stack:true.
+ *  - `stack`  — попадает ли в строку «Стек» карточек опыта и экспортов (по умолчанию true;
+ *               компетенциям вроде «найм»/«архитектура» ставим false).
+ *  - `global` — показывать ли в глобальной секции навыков (по умолчанию true; легаси вроде
+ *               1C-Bitrix ставим false — оно остаётся только в стеке опыта).
+ *  - `group`  — группа глобальной секции (обязательна при global:true).
+ */
+export const SkillEntry = z
+  .object({
+    name: z.string().optional(),
+    ru: z.string().optional(),
+    en: z.string().optional(),
+    at: z.array(z.string()).min(1),
+    stack: z.boolean().default(true),
+    global: z.boolean().default(true),
+    group: z.string().optional(),
+  })
+  .superRefine((s, ctx) => {
+    const neutral = typeof s.name === 'string';
+    const localized = typeof s.ru === 'string' && typeof s.en === 'string';
+    if (neutral === localized) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'навык: задай либо name, либо пару ru+en',
+      });
+    }
+    if (s.global && !s.group) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `навык "${s.name ?? s.ru}": global:true требует group`,
+      });
+    }
+  });
+export type SkillEntry = z.infer<typeof SkillEntry>;
 
 export const SkillsSchema = z.object({
   groups: z
@@ -159,12 +199,11 @@ export const SkillsSchema = z.object({
       z.object({
         id: z.string(),
         name: Localized,
-        items: z.array(SkillItem).min(1),
-        tags: Tags,
         priority: z.number().default(0),
       }),
     )
     .min(1),
+  items: z.array(SkillEntry).min(1),
 });
 export type Skills = z.infer<typeof SkillsSchema>;
 

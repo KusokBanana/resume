@@ -143,6 +143,22 @@
   color: var(--muted);
   font-weight: 600;
 }
+/* Ссылка «Смотреть навыки →» (у компаний из фильтра навыков) — в секцию навыков
+   с фильтром по компании. Без JS скрыта. */
+.tl-stack-skills {
+  display: none;
+}
+html.js .tl-stack-skills {
+  display: inline;
+  margin-left: 6px;
+  font-size: 12.5px;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+html.js .tl-stack-skills:hover {
+  text-decoration: underline;
+}
 
 /* Сворачиваемый «хвост» опыта. Без JS виден целиком (SEO/AI); JS навешивает
    .is-collapsed и анимирует max-height. */
@@ -192,4 +208,19 @@ html.js .tl-toggle {
 }
 .tl-toggle[aria-expanded='true'] .tl-chevron {
   transform: rotate(180deg);
+}
+
+/* Вспышка карточки опыта при переходе по ссылке из поповера навыков. */
+.tl-item.flash {
+  animation: tl-flash 1.4s ease-out;
+}
+@keyframes tl-flash {
+  0% {
+    background: rgba(110, 168, 254, 0.09);
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+  100% {
+    background: transparent;
+    box-shadow: none;
+  }
 }

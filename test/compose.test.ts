@@ -13,7 +13,7 @@ function makeContent(over: Partial<Content> = {}): Content {
     achievements: { items: [] },
     experience: [],
     projects: [],
-    skills: { groups: [] },
+    skills: { groups: [], items: [] },
     languages: { items: [] },
     education: { items: [] },
     interests: { items: [] },

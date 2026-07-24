@@ -33,5 +33,5 @@ highlights:
       en: Built the Cashout service UI.
     tags: {}
 metrics:
+  - { ru: highload, en: highload }
   - { ru: "**~100M** MAU", en: "**~100M** MAU" }
-stack: [TypeScript, React]

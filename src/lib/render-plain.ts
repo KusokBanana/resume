@@ -30,7 +30,16 @@ export function experienceDescription(
     out.push('', g.title);
     for (const h of g.highlights) out.push(`• ${stripBold(h)}`);
   }
-  if (e.stack.length) out.push(`${UI.stack[lang]}: ${e.stack.join(', ')}`);
+  // Стек в plain-форматах (hh/LinkedIn) ограничиваем: это сжатые поля с отдельной
+  // секцией навыков + лимит длины позиции (LinkedIn). На лендинге/в PDF/MD стек полный.
+  if (e.stack.length) {
+    const MAX_STACK = 12;
+    const shown = e.stack.slice(0, MAX_STACK);
+    const extra = e.stack.length - shown.length;
+    out.push(
+      `${UI.stack[lang]}: ${shown.join(', ')}${extra > 0 ? ` … (+${extra})` : ''}`,
+    );
+  }
   return joinInline(out);
 }
 

@@ -66,14 +66,8 @@ function pluralRu(n: number, one: string, few: string, many: string): string {
   return cat === 'one' ? one : cat === 'few' ? few : many;
 }
 
-/** Суммарный стаж на месте работы: «2 года 7 мес.» / «2 yrs 7 mos». */
-export function durationLabel(
-  start: string,
-  end: string,
-  lang: Lang,
-  now = new Date(),
-): string {
-  const total = monthsBetween(start, end, now);
+/** «2 года 7 мес.» / «2 yrs 7 mos» из числа месяцев (минимум «1 мес.»). */
+export function formatMonths(total: number, lang: Lang): string {
   const y = Math.floor(total / 12);
   const m = total % 12;
   if (lang === 'ru') {
@@ -84,4 +78,14 @@ export function durationLabel(
   const yl = y ? `${y} ${y === 1 ? 'yr' : 'yrs'}` : '';
   const ml = m ? `${m} ${m === 1 ? 'mo' : 'mos'}` : '';
   return [yl, ml].filter(Boolean).join(' ') || '1 mo';
+}
+
+/** Суммарный стаж на месте работы: «2 года 7 мес.» / «2 yrs 7 mos». */
+export function durationLabel(
+  start: string,
+  end: string,
+  lang: Lang,
+  now = new Date(),
+): string {
+  return formatMonths(monthsBetween(start, end, now), lang);
 }

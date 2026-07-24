@@ -9,12 +9,16 @@ import type { Experience } from '../schema/index';
 interface Props {
   e: Experience;
   base: string;
+  /** Стек компании — выводится из реестра навыков (content/skills.yaml) вызывающим. */
+  stack: string[];
+  /** Имя компании, если она есть в фильтре навыков — тогда в стеке будет ссылка «по группам →». */
+  linkCompany?: string;
 }
-const { e, base } = Astro.props;
+const { e, base, stack, linkCompany } = Astro.props;
 
-// Превью: первые N плоских пунктов видны всегда; остальное (хвост плоских пунктов,
-// все группы, стек) уходит под сворачивание. Группы НЕ дробим — так заголовки
-// подсекций остаются осмысленными.
+// Превью: первые N плоских пунктов видны всегда; хвост плоских пунктов и все группы
+// уходят под сворачивание (группы НЕ дробим — заголовки подсекций осмысленны).
+// Стек рендерится всегда, вне ката (см. ниже) — рекрутёр сразу видит технологии.
 const LEAD = 3;
 const lead = e.highlights.slice(0, LEAD);
 const restHighlights = e.highlights.slice(LEAD);
@@ -143,7 +147,6 @@ const hasCollapse = hiddenCount > 0;
             </ul>
           </div>
         ))}
-        <StackLine stack={e.stack} />
       </div>
     )
   }
@@ -164,5 +167,6 @@ const hasCollapse = hiddenCount > 0;
     )
   }
 
-  {!hasCollapse && <StackLine stack={e.stack} />}
+  {/* Стек виден всегда (не под катом): рекрутёр сразу видит технологии места. */}
+  <StackLine stack={stack} linkCompany={linkCompany} />
 </article>

@@ -71,18 +71,3 @@ highlights:
     tags: { audience: [hr, technical] }
 metrics:
   - { ru: "**8+** внутренних сервисов", en: "**8+** internal services" }
-stack:
-  - TypeScript
-  - React
-  - Angular
-  - Python
-  - Flask
-  - PHP
-  - Symfony
-  - PostgreSQL
-  - MySQL
-  - Oracle
-  - MongoDB
-  - Redis
-  - Memcached
-  - Docker

@@ -6,9 +6,37 @@ import type {
   Tags,
   ResumeDocument,
   Highlight,
+  Skills,
+  SkillEntry,
 } from '../schema/index';
 
 const pick = (l: Localized, lang: Lang): string => l[lang];
+
+/** Отображаемое имя навыка: язык-нейтральное `name` либо локализованное ru/en (по умолч. en). */
+export function skillName(s: SkillEntry, lang: Lang = 'en'): string {
+  return s.name ?? (lang === 'ru' ? (s.ru as string) : (s.en as string));
+}
+
+/** Стек компании: имена навыков реестра с этим id в `at` и stack:true, в порядке реестра. */
+export function stackFor(skills: Skills, expId: string, lang?: Lang): string[] {
+  return skills.items
+    .filter((s) => s.stack && s.at.includes(expId))
+    .map((s) => skillName(s, lang));
+}
+
+/** Группа глобальной секции с её навыками (global:true), группы по priority. */
+export interface SkillGroupView {
+  id: string;
+  name: Localized;
+  items: SkillEntry[];
+}
+export function globalSkillGroups(skills: Skills): SkillGroupView[] {
+  return [...skills.groups].sort(byPriority).map((g) => ({
+    id: g.id,
+    name: g.name,
+    items: skills.items.filter((s) => s.global && s.group === g.id),
+  }));
+}
 
 /** Все теги блока, сплющенные в один набор строк (для include/exclude по тегам). */
 function flatten(tags: Tags): Set<string> {
@@ -141,7 +169,7 @@ export function compose(
       metrics: e.metrics.map((m) => pick(m, lang)),
       highlights: localizeHighlights(e.highlights, target, lang, includeAll),
       groups: localizeGroups(e.groups, target, lang, includeAll),
-      stack: e.stack,
+      stack: stackFor(content.skills, e.id, lang),
     }));
 
   const projects = content.projects
@@ -155,13 +183,13 @@ export function compose(
       stack: p.stack,
     }));
 
-  const skills = content.skills.groups
-    .filter((g) => isRelevant(g, target, includeAll))
-    .sort(byPriority)
+  // Глобальная секция навыков: группы реестра с их global-навыками (по priority).
+  const skills = globalSkillGroups(content.skills)
     .map((g) => ({
       name: pick(g.name, lang),
-      items: g.items.map((it) => (typeof it === 'string' ? it : pick(it, lang))),
-    }));
+      items: g.items.map((s) => skillName(s, lang)),
+    }))
+    .filter((g) => g.items.length > 0);
 
   const languages = content.languages.items
     .filter((l) => isRelevant(l, target, includeAll))

@@ -13,23 +13,22 @@ tags:
   domains: [fullstack, web]
 highlights:
   - text:
-      ru: "Разрабатывал и поддерживал единую платформу дилерских автосайтов: доставка фич, обновлений и контента из центра управления на все дилерские сайты; соответствие сайтам марки по виду, каталогу и ценам. Стек: PHP 5.6–7.0, 1C-Bitrix, jQuery."
-      en: "Built and maintained a unified platform for car-dealer websites: delivering features, updates and content from a control centre to all dealer sites; keeping them aligned with the brand site in look, catalogue and pricing. Stack: PHP 5.6–7.0, 1C-Bitrix, jQuery."
+      ru: "Разрабатывал и поддерживал единую платформу дилерских автосайтов: доставка фич, обновлений и контента из центра управления на все дилерские сайты; соответствие сайтам марки по виду, каталогу и ценам."
+      en: "Built and maintained a unified platform for car-dealer websites: delivering features, updates and content from a control centre to all dealer sites; keeping them aligned with the brand site in look, catalogue and pricing."
     tags: {}
   - text:
-      ru: "Собрал систему подбора конфигурации автомобиля по ключевым факторам — с прогнозом цены и 3D-визуализацией на Unity. Стек: PHP 5.6–7.0, 1C-Bitrix, jQuery."
-      en: "Built a car-configuration selector by key factors, with price prediction and Unity-based 3D visualisation. Stack: PHP 5.6–7.0, 1C-Bitrix, jQuery."
+      ru: "Собрал систему подбора конфигурации автомобиля по ключевым факторам — с прогнозом цены и 3D-визуализацией на Unity."
+      en: "Built a car-configuration selector by key factors, with price prediction and Unity-based 3D visualisation."
     tags: {}
   - text:
-      ru: "Создал сервис оценки стоимости личного автомобиля по параметрам на основе сопоставимых предложений auto.ru; микросервисная архитектура. Стек: PHP 7.0, Lumen, Redis, jQuery, Codeception."
-      en: "Built a personal-car valuation service from parameters based on comparable auto.ru listings; microservice architecture. Stack: PHP 7.0, Lumen, Redis, jQuery, Codeception."
+      ru: "Создал сервис оценки стоимости личного автомобиля по параметрам на основе сопоставимых предложений auto.ru; микросервисная архитектура."
+      en: "Built a personal-car valuation service from parameters based on comparable auto.ru listings; microservice architecture."
     tags: {}
   - text:
-      ru: "Реализовал внутренний интерфейс автоматического деплоя и управления серверами (prod/test/dev) с настройкой характеристик и интеграцией с API Ansible. Стек: Python (Flask), JS (jQuery)."
-      en: "Made an internal UI for automated deploy and server management (prod/test/dev) with configurable specs and Ansible API integration. Stack: Python (Flask), JS (jQuery)."
+      ru: "Реализовал внутренний интерфейс автоматического деплоя и управления серверами (prod/test/dev) с настройкой характеристик и интеграцией с API Ansible."
+      en: "Made an internal UI for automated deploy and server management (prod/test/dev) with configurable specs and Ansible API integration."
     tags: {}
   - text:
-      ru: "Сделал MVP мобильного web-приложения для инженера автосервиса: акт приёма автомобиля с выбором стоимости, срочности и других полей. Стек: PHP (Laravel), JS (Vue.js)."
-      en: "Built an MVP mobile web app for a service-station engineer: a car-intake report with cost, urgency and other fields. Stack: PHP (Laravel), JS (Vue.js)."
+      ru: "Сделал MVP мобильного web-приложения для инженера автосервиса: акт приёма автомобиля с выбором стоимости, срочности и других полей."
+      en: "Built an MVP mobile web app for a service-station engineer: a car-intake report with cost, urgency and other fields."
     tags: {}
-stack: [PHP, 1C-Bitrix, Lumen, Laravel, "Vue.js", jQuery, Python, Flask, Redis]

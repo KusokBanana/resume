@@ -1,5 +1,6 @@
 id: positive-technologies
 company: Positive Technologies
+short: PT
 companyUrl: https://www.ptsecurity.com
 logo: logos/positive-technologies.svg
 role:
@@ -12,7 +13,7 @@ industry:
   ru: кибербезопасность
   en: cybersecurity
 start: "2024-03"
-end: present
+end: "2026-08"
 tags:
   domains: [engineering-management, frontend, leadership]
 summary:
@@ -89,6 +90,10 @@ groups:
           en: "Brought in AI-assisted development (Claude and similar): prototyping, refactoring, coding and review got about 1.5× faster."
         tags: {}
       - text:
+          ru: "Собрал внутренний маркетплейс Claude Code-плагинов команды — субагенты, slash-команды и скилы для код-ревью, груминга задач и git-воркфлоу."
+          en: "Built the team's internal Claude Code plugin marketplace — subagents, slash commands and skills for code review, task grooming and git workflow."
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
+      - text:
           ru: Добавил в библиотеку компонентов поддержку llms.txt — машиночитаемую документацию для LLM. Теперь AI-ассистенты используют компоненты корректно из коробки, без ручного контекста.
           en: Added llms.txt support to the component library — machine-readable docs for LLMs. AI assistants now use the components correctly out of the box, without hand-fed context.
         tags: { audience: [technical] }
@@ -111,6 +116,10 @@ groups:
           en: Designed and evolved the team's frontend infrastructure.
         tags: { audience: [hr, technical], domains: [linkedin-skip] }
       - text:
+          ru: "Собрал общий инструментарий команды: публикуемый npm-пакет с едиными конфигами линтеров и правилами архитектуры (Feature-Sliced Design) и дашборд очереди код-ревью в GitLab с авто-оповещениями."
+          en: "Built the team's shared tooling: a published npm package with unified linter configs and architecture (Feature-Sliced Design) rules, plus a GitLab code-review queue dashboard with automated notifications."
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
+      - text:
           ru: "Автоматизировал релизный цикл (скрипты + CI/CD): подготовка релиза сократилась с 2 часов до 10 минут."
           en: Automated the release cycle (scripts + CI/CD) — release prep dropped from 2 hours to 10 minutes.
         tags: {}
@@ -127,4 +136,3 @@ metrics:
   - { ru: "отдел **0→11** за год", en: "department **0→11** in a year" }
   - { ru: "**6** выросли до Senior/Lead", en: "**6** promoted to Senior/Lead" }
   - { ru: "**5+** продуктов", en: "**5+** products" }
-stack: [React, Angular, TypeScript, Python, GitLab CI, Jira, Figma]

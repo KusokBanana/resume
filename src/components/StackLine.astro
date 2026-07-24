@@ -1,12 +1,15 @@
 ---
-/** Строка стека «Стек: …» для карточки опыта. Пусто — ничего не рендерит. */
+/** Строка стека «Стек: …» для карточки опыта — весь стек компании (из реестра навыков).
+ *  Если компания есть в фильтре навыков (linkCompany) — добавляем ссылку в секцию
+ *  навыков с фильтром по ней (структурированный просмотр по группам). */
 import { UI } from '../lib/labels';
 import Bilingual from './Bilingual.astro';
 
 interface Props {
   stack: string[];
+  linkCompany?: string;
 }
-const { stack } = Astro.props;
+const { stack, linkCompany } = Astro.props;
 ---
 
 {
@@ -16,6 +19,11 @@ const { stack } = Astro.props;
         <Bilingual ru={UI.stack.ru} en={UI.stack.en} />:
       </span>{' '}
       {stack.join(', ')}
+      {linkCompany && (
+        <a class="tl-stack-skills" href="#skills" data-company={linkCompany}>
+          <Bilingual ru="Смотреть навыки →" en="View skills →" />
+        </a>
+      )}
     </p>
   )
 }

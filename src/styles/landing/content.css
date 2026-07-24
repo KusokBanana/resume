@@ -141,13 +141,114 @@ html.js .result.tilting {
 }
 
 /* ---- Навыки ----------------------------------------------------------- */
+/* Фильтр по компании — только под html.js (без скрипта кнопки бесполезны). */
+.skill-filter {
+  display: none;
+}
+html.js .skill-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 20px;
+}
+.co-btn {
+  font: inherit;
+  font-size: 13px;
+  padding: 5px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+}
+.co-btn:hover {
+  border-color: var(--rule-strong);
+  color: var(--ink);
+}
+.co-btn.is-active {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--rule));
+  background: rgba(110, 168, 254, 0.12);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Адаптив сетки групп (5 групп). Контент максимум 980px ⇒ до 3 колонок.
+   <560     — одна колонка;
+   560–879  — две колонки, последняя (5-я) одна в ряду → во всю ширину;
+   ≥880     — 3 карточки сверху + 2 «половинки» снизу (6-колоночная база:
+              верхние span 2 → по 3 в ряд, 4-я и 5-я span 3 → по 2 в ряд). */
 .skill-groups {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 560px) and (max-width: 879px) {
+  .skill-groups {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .skill-groups .skill-group:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 880px) {
+  .skill-groups {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .skill-groups .skill-group {
+    grid-column: span 2;
+  }
+  .skill-groups .skill-group:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+}
+/* Активен фильтр по компании: несовпавшие навыки гаснут, совпавшие — акцент.
+   Класс .co-filtering вешает landing.ts на контейнер, .co-on — на совпавшие чипы. */
+.skill-groups.co-filtering .tag:not(.co-on) {
+  opacity: 0.28;
+}
+.skill-groups.co-filtering .tag.co-on {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--rule));
+  color: var(--ink);
+}
+/* Группа-карточка в языке .result: рамка, градиент-акцент, hover-подъём + tilt.
+   overflow оставлен видимым — внутри позиционируется поповер .skill-pop;
+   скругление верхней полосы-акцента даёт её собственный border-radius. */
+.skill-group {
+  padding: 20px 20px 22px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  position: relative;
+  transition: border-color 0.18s, transform 0.18s, background 0.18s;
+}
+.skill-group::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: linear-gradient(90deg, var(--accent-strong), var(--violet));
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+.skill-group:hover {
+  border-color: var(--rule-strong);
+  background: var(--surface-hover);
+  transform: translateY(-3px);
+}
+.skill-group:hover::after {
+  opacity: 1;
+}
+/* Наклон/возврат — быстрее (как у .result). Класс .tilting вешает landing.ts;
+   селектор специфичнее html.js .reveal (transform 0.5s), которым карточка помечена. */
+html.js .skill-group.tilting {
+  transition: border-color 0.18s, transform 0.16s ease, background 0.18s;
 }
 .skill-group h3 {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -165,4 +266,83 @@ html.js .result.tilting {
   border: 1px solid var(--rule);
   background: var(--surface);
   color: var(--ink);
+  transition: border-color 0.18s, background 0.18s, opacity 0.2s;
+}
+.tag:hover {
+  border-color: var(--rule-strong);
+  background: var(--surface-hover);
+}
+/* Кликабельный навык (есть подтверждение в опыте) — кнопка в облике чипа.
+   Все чипы витрины кликабельны (открывают поповер), поэтому спец-маркер не нужен:
+   намёк на клик — курсор + акцентная рамка на ховере (только под html.js). */
+button.tag {
+  font-family: inherit;
+  line-height: inherit;
+}
+html.js button.tag {
+  cursor: pointer;
+}
+html.js .tag.has-pop:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
+}
+/* Пока открыт поповер — карточку не наклоняем (перебивает inline-tilt из JS). */
+html.js .skill-group.pop-open {
+  transform: none !important;
+}
+
+/* Поповер «где применялся навык»: единственный элемент, JS переносит его
+   в активную карточку и позиционирует у кнопки-чипа. Фон непрозрачный. */
+.skill-pop {
+  position: absolute;
+  z-index: 40;
+  width: min(300px, 100%);
+  padding: 12px 14px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+.skill-pop-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+.skill-pop-total {
+  margin-left: auto;
+  font-size: 12px;
+  white-space: nowrap;
+  color: var(--accent);
+}
+.skill-pop-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.skill-pop-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+}
+.skill-pop-list a {
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap; /* не переносим — landing.ts ловит переполнение и подменяет на короткое */
+  border-bottom: 1px solid var(--rule-strong);
+  transition: color 0.18s, border-color 0.18s;
+}
+.skill-pop-list a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.skill-pop-period {
+  font-size: 12px;
+  white-space: nowrap;
+  color: var(--muted);
 }

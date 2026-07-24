@@ -189,6 +189,140 @@ if (lb) {
   });
 }
 
+// --- Фильтр навыков по компании (SkillsSection). Клик по компании подсвечивает
+// навыки с data-co, где встречается её ключ; остальные гаснут (класс на контейнере).
+const filterBar = document.querySelector<HTMLElement>('.skill-filter');
+const skillGroups = document.querySelector<HTMLElement>('.skill-groups');
+if (filterBar && skillGroups) {
+  const coBtns = filterBar.querySelectorAll<HTMLButtonElement>('.co-btn');
+  const chips = skillGroups.querySelectorAll<HTMLElement>('.tag');
+  let activeCo = '';
+
+  const applyFilter = (co: string) => {
+    activeCo = co;
+    coBtns.forEach((b) => {
+      const on = b.dataset.co === co;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (!co) {
+      skillGroups.classList.remove('co-filtering');
+      chips.forEach((c) => c.classList.remove('co-on'));
+      return;
+    }
+    skillGroups.classList.add('co-filtering');
+    chips.forEach((c) => {
+      const keys = (c.dataset.co || '').split(' ');
+      c.classList.toggle('co-on', keys.indexOf(co) >= 0);
+    });
+  };
+
+  coBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      // Повторный клик по активной компании — сброс к «Все».
+      applyFilter(btn.dataset.co === activeCo ? '' : btn.dataset.co || '');
+    });
+  });
+
+  // Ссылка «по группам →» из карточки опыта: якорь #skills сам скроллит, здесь —
+  // включаем фильтр навыков по компании этой карточки (структурированный просмотр).
+  document.querySelectorAll<HTMLAnchorElement>('.tl-stack-skills').forEach((a) => {
+    a.addEventListener('click', () => {
+      const coBtn = filterBar.querySelector<HTMLButtonElement>(
+        `.co-btn[title="${a.dataset.company}"]`,
+      );
+      if (coBtn && coBtn.getAttribute('aria-pressed') !== 'true') coBtn.click();
+    });
+  });
+}
+
+// --- Поповер «где применялся навык» у чипов с доказательствами (SkillsSection).
+// Содержимое пререндерено на сборке в <template> рядом с кнопкой-чипом; здесь —
+// единственный всплывающий элемент: клон шаблона, позиционирование, открытие/закрытие.
+const popButtons = document.querySelectorAll<HTMLButtonElement>('.tag.has-pop');
+if (popButtons.length) {
+  const pop = document.createElement('div');
+  pop.className = 'skill-pop';
+  pop.id = 'skill-pop';
+  pop.setAttribute('role', 'dialog');
+  let openBtn: HTMLButtonElement | null = null;
+
+  const close = () => {
+    if (!openBtn) return;
+    openBtn.setAttribute('aria-expanded', 'false');
+    openBtn.removeAttribute('aria-controls'); // #skill-pop уходит из DOM — ссылка не должна виснуть
+    openBtn.closest('.skill-group')?.classList.remove('pop-open');
+    openBtn = null;
+    pop.remove();
+  };
+
+  const open = (btn: HTMLButtonElement, byKeyboard: boolean) => {
+    const tpl = btn.nextElementSibling;
+    const group = btn.closest<HTMLElement>('.skill-group');
+    if (!(tpl instanceof HTMLTemplateElement) || !group) return;
+    close();
+    pop.innerHTML = '';
+    pop.appendChild(tpl.content.cloneNode(true));
+    // Доступное имя диалога — название навыка (иначе SR читает просто «dialog»).
+    pop.setAttribute('aria-label', btn.textContent?.trim() ?? '');
+    group.appendChild(pop);
+    group.classList.add('pop-open');
+    // Имя компании в строке — полное; если не влезает (строка переполнена) — короткое.
+    pop.querySelectorAll<HTMLElement>('.skill-pop-list li').forEach((li) => {
+      const a = li.querySelector<HTMLAnchorElement>('a[data-short]');
+      if (a && li.scrollWidth > li.clientWidth)
+        a.textContent = a.dataset.short ?? a.textContent;
+    });
+    // Под кнопкой, прижимаясь к границам карточки; не влезает в вьюпорт — над ней.
+    pop.style.left =
+      Math.max(0, Math.min(btn.offsetLeft, group.clientWidth - pop.offsetWidth - 12)) +
+      'px';
+    pop.style.top = btn.offsetTop + btn.offsetHeight + 8 + 'px';
+    if (pop.getBoundingClientRect().bottom > window.innerHeight - 12) {
+      pop.style.top = btn.offsetTop - pop.offsetHeight - 8 + 'px';
+    }
+    btn.setAttribute('aria-expanded', 'true');
+    btn.setAttribute('aria-controls', 'skill-pop'); // валидна, только пока #skill-pop в DOM
+    openBtn = btn;
+    // Фокус в поповер — только при открытии с клавиатуры (у клика мышью
+    // ev.detail > 0); иначе после клика виден лишний focus-ring на ссылке.
+    if (byKeyboard) pop.querySelector<HTMLElement>('a')?.focus();
+  };
+
+  popButtons.forEach((btn) => {
+    btn.addEventListener('click', (ev) => {
+      ev.stopPropagation(); // не даём document-обработчику закрыть только что открытое
+      if (openBtn === btn) close();
+      else open(btn, ev.detail === 0);
+    });
+  });
+
+  pop.addEventListener('click', (ev) => {
+    ev.stopPropagation(); // клик внутри поповера не закрывает его…
+    const a = (ev.target as HTMLElement).closest('a');
+    if (!a) return;
+    // …кроме перехода к месту работы: закрываем и мигаем целевой карточкой.
+    const target = document.querySelector(a.getAttribute('href') ?? '');
+    close();
+    if (target) {
+      target.classList.remove('flash');
+      void (target as HTMLElement).offsetWidth; // перезапуск анимации при повторном клике
+      target.classList.add('flash');
+      window.setTimeout(() => target.classList.remove('flash'), 1600);
+    }
+  });
+
+  document.addEventListener('click', close);
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && openBtn) {
+      const btn = openBtn;
+      close();
+      btn.focus();
+    }
+  });
+  window.addEventListener('resize', close);
+}
+
 // --- Интерактивное свечение фона: мягко ведём голубой блик за курсором.
 // Слой — body::after (см. base.css). Инерция: цель tx/ty → текущие cx/cy через lerp.
 // Только для точных указателей (мышь/трекпад) и без reduce-motion.
@@ -264,4 +398,8 @@ if (!reduce && window.matchMedia && window.matchMedia('(pointer: fine)').matches
   document
     .querySelectorAll<HTMLElement>('.result')
     .forEach((el) => attachTilt(el, 5, -3));
+  // Карточки групп навыков — чуть мягче (крупнее .result): max 4.
+  document
+    .querySelectorAll<HTMLElement>('.skill-group')
+    .forEach((el) => attachTilt(el, 4, -3));
 }

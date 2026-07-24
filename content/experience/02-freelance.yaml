@@ -1,5 +1,6 @@
 id: freelance
 company: Фриланс / прямой заказчик («Европолы»)
+short: Фриланс
 role:
   ru: Web-разработчик
   en: Web Developer
@@ -14,11 +15,10 @@ tags:
   domains: [web]
 highlights:
   - text:
-      ru: "Разработал внутреннюю систему учёта и складирования для «Европолов» — с собственным управлением доступом и глубоко кастомизированной визуализацией таблиц на DataTables.js. Стек: PHP 5.6 (собственная ORM-обёртка), jQuery, MySQL."
-      en: "Built an internal inventory and warehousing system for Evropoly — with its own access control and heavily customised table visualisation on DataTables.js. Stack: PHP 5.6 (custom ORM wrapper), jQuery, MySQL."
+      ru: "Разработал внутреннюю систему учёта и складирования для «Европолов» — с собственным управлением доступом и глубоко кастомизированной визуализацией таблиц на DataTables.js."
+      en: "Built an internal inventory and warehousing system for Evropoly — with its own access control and heavily customised table visualisation on DataTables.js."
     tags: {}
   - text:
-      ru: "Сделал интернет-магазин паркета: SEO-менеджер ранжировал товары динамическими правилами по свойствам продукта, плюс управление складом и атрибутами товаров. Стек: PHP 5.6, Yii2, jQuery, Bootstrap, MySQL."
-      en: "Built a parquet e-commerce store: an SEO manager ranked products with dynamic rules on their attributes, plus warehouse and product-attribute management. Stack: PHP 5.6, Yii2, jQuery, Bootstrap, MySQL."
+      ru: "Сделал интернет-магазин паркета: SEO-менеджер ранжировал товары динамическими правилами по свойствам продукта, плюс управление складом и атрибутами товаров."
+      en: "Built a parquet e-commerce store: an SEO manager ranked products with dynamic rules on their attributes, plus warehouse and product-attribute management."
     tags: {}
-stack: [PHP, Yii2, jQuery, Bootstrap, MySQL]
