@@ -34,7 +34,7 @@ groups:
       - text:
           ru: Вёл полный цикл разработки интерфейсов, от low-fi-прототипов до промышленного релиза и дальнейшего развития на проде.
           en: Ran the full UI lifecycle, from low-fidelity prototypes through to production release and continued work on prod.
-        tags: {}
+        tags: { domains: [linkedin-skip] }
       - text:
           ru: "Отвечал за интерфейсы Корпоративного и Партнёрского порталов, Aim (автоматизация управления инфраструктурой), Preboarding (найм и онбординг) и нескольких продуктов поменьше."
           en: "Owned the UIs of the Corporate and Partner portals, Aim (infrastructure-management automation), Preboarding (hiring and onboarding) and a handful of smaller products."
@@ -48,6 +48,10 @@ groups:
       - text:
           ru: "Построил frontend-направление с нуля: найм, онбординг, зоны ответственности, стратегия; масштабировал отдел с 0 до 11 человек за год."
           en: "Built the frontend function from scratch: hiring, onboarding, ownership areas, strategy; scaled the department from 0 to 11 people in a year."
+        tags: {}
+      - text:
+          ru: "Руководил распределённой командой из шести городов — от Москвы и Сочи до Урала, Омска и Новосибирска — в четырёх часовых поясах: выстроил асинхронные процессы так, что разница во времени не тормозила поставку."
+          en: "Led a team distributed across six cities — from Moscow and Sochi to the Urals, Omsk and Novosibirsk — spanning four time zones, with async processes set up so the time difference never slowed delivery."
         tags: {}
       - text:
           ru: "Часть команд досталась «по наследству»: навёл процессы, сделал работу прозрачной и управляемой, выстроил доверительные рабочие отношения."

@@ -117,6 +117,7 @@ items:
   - { ru: OKR / roadmap, en: OKR / roadmap, at: [vk-lead, positive-technologies], stack: false, group: management }
   - { ru: Agile / Scrum, en: Agile / Scrum, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: management }
   - { ru: выстраивание процессов, en: process design, at: [vk-lead, positive-technologies], stack: false, group: management }
+  - { ru: распределённые команды, en: distributed teams, at: [vk-lead, positive-technologies], stack: false, group: management }
   - { ru: стейкхолдер-менеджмент, en: stakeholder management, at: [positive-technologies], stack: false, group: management }
   - { name: product ownership, at: [yandex, vk-lead], stack: false, group: management }
   - { ru: кросс-функциональное взаимодействие, en: cross-functional collaboration, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: management }
