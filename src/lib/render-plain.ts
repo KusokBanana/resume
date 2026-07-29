@@ -14,14 +14,20 @@ import { joinBlocks, joinInline } from './text';
 /** Убираем markdown-жирный `**...**`, оставляя сам текст. */
 const stripBold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '$1');
 
+/** Кэп стека для LinkedIn: жёсткий лимит 2000 симв. на описание позиции. */
+export const LINKEDIN_MAX_STACK = 12;
+
 /**
  * Текст «поля описания» одной позиции опыта (summary + пункты + группы + стек),
  * без строки должности/дат/компании — на LinkedIn это отдельные поля.
  * Используется и рендером, и проверкой лимита (LinkedIn — 2000 символов).
+ * `maxStack` режет стек с хвостом «… (+N)» — только для систем с лимитом длины
+ * (LinkedIn); hh и прочие plain-экспорты показывают стек полностью.
  */
 export function experienceDescription(
   e: ResumeDocument['experience'][number],
   lang: Lang,
+  maxStack = Infinity,
 ): string {
   const out: string[] = [];
   if (e.summary) out.push(stripBold(e.summary));
@@ -30,11 +36,8 @@ export function experienceDescription(
     out.push('', g.title);
     for (const h of g.highlights) out.push(`• ${stripBold(h)}`);
   }
-  // Стек в plain-форматах (hh/LinkedIn) ограничиваем: это сжатые поля с отдельной
-  // секцией навыков + лимит длины позиции (LinkedIn). На лендинге/в PDF/MD стек полный.
   if (e.stack.length) {
-    const MAX_STACK = 12;
-    const shown = e.stack.slice(0, MAX_STACK);
+    const shown = e.stack.slice(0, maxStack);
     const extra = e.stack.length - shown.length;
     out.push(
       `${UI.stack[lang]}: ${shown.join(', ')}${extra > 0 ? ` … (+${extra})` : ''}`,
@@ -45,6 +48,7 @@ export function experienceDescription(
 
 export function renderPlain(doc: ResumeDocument, sections: Section[]): string {
   const lang = doc.meta.language;
+  const maxStack = doc.meta.system === 'linkedin' ? LINKEDIN_MAX_STACK : Infinity;
   const out: string[] = [];
   const heading = (s: Section) => out.push('', sectionTitle(s, lang).toUpperCase(), '');
 
@@ -76,7 +80,7 @@ export function renderPlain(doc: ResumeDocument, sections: Section[]): string {
           .filter(Boolean)
           .join(' · ');
         out.push(meta);
-        out.push(experienceDescription(e, lang));
+        out.push(experienceDescription(e, lang, maxStack));
         out.push('');
       }
     }

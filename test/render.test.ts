@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { renderMarkdown } from '../src/lib/render-md';
-import { renderPlain } from '../src/lib/render-plain';
+import { renderPlain, experienceDescription } from '../src/lib/render-plain';
 import { toJsonResume } from '../src/lib/export-jsonresume';
 import type { ResumeDocument, Section } from '../src/schema/index';
 
@@ -73,6 +73,28 @@ test('renderPlain: golden (капс-заголовки, буллеты •, жи
     'Стек: TS, Go\n\nНАВЫКИ\n\nЯзыки: TS, Go\n\nЯЗЫКИ\n\nРусский — родной\n\n' +
     'ОБРАЗОВАНИЕ\n\nМИФИ — Магистр, CS (2013 — 2015)\n';
   assert.equal(renderPlain(doc, sections), expected);
+});
+
+test('experienceDescription: стек полный по умолчанию, maxStack режет с хвостом (+N)', () => {
+  const e: ResumeDocument['experience'][number] = {
+    company: 'Acme',
+    role: 'Инженер',
+    start: '2020-01',
+    end: 'present',
+    metrics: [],
+    highlights: [],
+    groups: [],
+    stack: Array.from({ length: 13 }, (_, i) => `T${i + 1}`),
+  };
+  // Без кэпа (hh и прочие) — все 13 позиций, без «(+N)».
+  const full = experienceDescription(e, 'ru');
+  assert.ok(full.includes('T13'));
+  assert.ok(!full.includes('(+'));
+  // С кэпом 12 (LinkedIn) — хвост «… (+1)».
+  const capped = experienceDescription(e, 'ru', 12);
+  assert.ok(capped.includes('T12'));
+  assert.ok(!capped.includes('T13'));
+  assert.ok(capped.includes('… (+1)'));
 });
 
 test('toJsonResume: present → без endDate, маппинг полей', () => {

@@ -1,6 +1,6 @@
 import { loadContent, loadTargets } from '../src/lib/load';
 import { compose, targetLangPairs } from '../src/lib/compose';
-import { experienceDescription } from '../src/lib/render-plain';
+import { experienceDescription, LINKEDIN_MAX_STACK } from '../src/lib/render-plain';
 
 /** Лимиты на длину описания одной позиции по системам (символы). */
 const POSITION_LIMITS: Record<string, number> = {
@@ -28,7 +28,9 @@ function main() {
     const limit = POSITION_LIMITS[target.system];
     if (limit) {
       for (const e of doc.experience) {
-        const len = experienceDescription(e, lang).length;
+        // Считаем длину так же, как рендерит renderPlain: со стек-кэпом LinkedIn.
+        const maxStack = target.system === 'linkedin' ? LINKEDIN_MAX_STACK : Infinity;
+        const len = experienceDescription(e, lang, maxStack).length;
         if (len > limit) {
           violations.push(
             `${target.id} [${lang}] «${e.company}»: описание ${len} симв. > лимита ${limit}`,
