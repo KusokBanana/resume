@@ -1,0 +1,22 @@
+# hh.ru, роль Team Lead / техлид — второе резюме на hh под лидовые вакансии
+# уровнем ниже EM. Контент тот же, но заголовок и summary — под роль.
+# Бонус hh: после автоотказа отклик другим резюме снова открывает вакансию.
+id: hh-teamlead
+label:
+  ru: hh.ru · Team Lead
+  en: hh.ru · Team Lead
+# В ru-заголовке намеренно и «Тимлид» (кириллицей — частый запрос рекрутёров),
+# и «Team Lead»: поиск hh матчит слова точно, покрываем оба написания.
+title:
+  ru: Тимлид / Техлид Frontend (Team Lead)
+  en: Frontend Team Lead / Tech Lead
+languages: [ru, en]
+system: hh
+audience: hr
+layout: rich
+formats: [html, pdf, md, txt]
+sections: [summary, achievements, experience, skills, languages, education]
+select:
+  # Ролевой summary: убираем em (priority 30), general (10) и fullstack (5) —
+  # остаётся summary-teamlead (4).
+  excludeIds: [summary-em, summary-general, summary-fullstack]

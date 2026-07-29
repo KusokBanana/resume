@@ -3,6 +3,13 @@ id: hh
 label:
   ru: hh.ru
   en: hh.ru
+# Заголовок под рекрутёрский поиск hh: точное совпадение с реальными запросами
+# («руководитель отдела разработки», «engineering manager»), а не «Head of Engineering»
+# с лендинга — по нему на hh не ищут. Намеренно БЕЗ привязки к frontend/backend:
+# это резюме менеджера разработки в целом (фронт-специфика — у hh-teamlead).
+title:
+  ru: Руководитель отдела разработки (Engineering Manager)
+  en: Engineering Manager
 languages: [ru, en]
 system: hh
 audience: hr

@@ -359,6 +359,12 @@ export type Select = z.infer<typeof Select>;
 export const TargetSchema = z.object({
   id: z.string(),
   label: Localized,
+  /**
+   * Переопределение заголовка (желаемой должности) для этого target'а.
+   * По умолчанию — profile.title. Нужен, когда один и тот же контент
+   * подаётся под разные роли (EM / техлид / fullstack) на одной площадке.
+   */
+  title: Localized.optional(),
   languages: z.array(Lang).min(1),
   system: z.enum(['hh', 'linkedin', 'habr', 'general']),
   audience: Audience,

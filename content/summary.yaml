@@ -23,6 +23,84 @@ variants:
         when it's needed: Python, PHP, Node.js. Bringing AI-assisted development into the
         teams sped up our delivery by half.
 
+  # EM-вариант только для hh (systems: [hh] + priority выше general): стеко-нейтральная
+  # окраска «построил отдел разработки» под заголовок «Руководитель отдела разработки».
+  # На сайте/habr/LinkedIn остаётся summary-general с «frontend-направлением».
+  # hh-teamlead/hh-fullstack исключают его через excludeIds.
+  - id: summary-em
+    priority: 30
+    tags:
+      audience: [hr, technical]
+      systems: [hh]
+    text:
+      ru: >-
+        Инженерный руководитель, 10+ лет в IT и 3+ года в управлении командами.
+        В Positive Technologies построил отдел разработки с нуля и вырастил его
+        до 11 человек и четырёх кросс-функциональных команд. До этого работал
+        в Яндексе и VK. Совмещаю стратегию и процессы с hands-on разработкой на React,
+        Angular и TypeScript. Вырос из fullstack-разработчика, поэтому при необходимости
+        закрываю и backend: Python, PHP, Node.js. Внедрил AI-assisted development
+        в командах, и разработка ускорилась в полтора раза.
+      en: >-
+        Engineering manager with 10+ years in tech and 3+ years leading teams.
+        At Positive Technologies I built an engineering department from scratch and grew
+        it to 11 people across four cross-functional teams. Before that, Yandex and VK.
+        I pair strategy and process with hands-on work in React, Angular and TypeScript.
+        I came up as a full-stack developer, so I still cover backend when it's needed:
+        Python, PHP, Node.js. Bringing AI-assisted development into the teams sped up
+        our delivery by half.
+
+  # Ролевые варианты под отдельные hh-резюме (см. targets/hh-*.yaml).
+  # Низкий priority: обычные target'ы их не выбирают; «включаются» тем, что
+  # соответствующий target исключает summary-general через excludeIds.
+  - id: summary-fullstack
+    priority: 5
+    tags:
+      audience: [hr, technical]
+    text:
+      ru: >-
+        Ведущий fullstack-разработчик, 10+ лет коммерческой разработки: frontend на
+        TypeScript, React и Angular, backend на Python (Flask) и PHP (Symfony, Laravel),
+        плюс Node.js. В Яндексе 3,5 года строил fullstack-сервисы автоматизации
+        инфраструктуры дата-центров — 8+ внутренних сервисов от интерфейса до базы
+        данных; менторил коллег по frontend- и backend-разработке. Последние годы
+        руководил frontend-отделом в Positive Technologies, оставаясь hands-on:
+        React и Angular в критичных местах, Python-тулинг, архитектурные решения,
+        код-ревью и релизная автоматизация. AI-assisted development ускорил
+        разработку в полтора раза.
+      en: >-
+        Lead full-stack developer with 10+ years of hands-on engineering: frontend in
+        TypeScript, React and Angular, backend in Python (Flask) and PHP (Symfony,
+        Laravel), plus Node.js. At Yandex I spent 3.5 years building full-stack
+        data-centre infrastructure automation services — 8+ internal services from UI
+        to database — and mentored colleagues across frontend and backend. In recent
+        years I led the frontend department at Positive Technologies while staying
+        hands-on: React and Angular in the critical spots, Python tooling, architecture
+        decisions, code review and release automation. AI-assisted development made
+        delivery 1.5× faster.
+
+  - id: summary-teamlead
+    priority: 4
+    tags:
+      audience: [hr, technical]
+    text:
+      ru: >-
+        Team Lead / техлид фронтенда, 10+ лет в разработке и 3+ года в управлении
+        командами. Вёл фронтенд финтеха ВКонтакте (highload, выплаты 10+ млн ₽ в месяц)
+        и четыре кросс-функциональные команды в Positive Technologies. Совмещаю
+        управление — найм, процессы, 1:1 — с hands-on разработкой на TypeScript, React
+        и Angular; владею frontend-архитектурой, дизайн-системами и стандартами
+        разработки интерфейсов. Внедрил AI-assisted development, и разработка
+        ускорилась в полтора раза.
+      en: >-
+        Frontend team lead / tech lead with 10+ years in engineering and 3+ years
+        leading teams. Ran the frontend of VK fintech (a high-load service paying out
+        10M+ ₽ a month) and four cross-functional teams at Positive Technologies.
+        I pair management — hiring, process, 1:1s — with hands-on work in TypeScript,
+        React and Angular, and own frontend architecture, design systems and UI
+        engineering standards. Brought in AI-assisted development, making delivery
+        1.5× faster.
+
   - id: summary-ats
     priority: 20
     tags:

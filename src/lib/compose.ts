@@ -218,7 +218,8 @@ export function compose(
     },
     profile: {
       name: pick(profile.name, lang),
-      title: pick(profile.title, lang),
+      // Заголовок (желаемая должность): target может переопределить profile.title.
+      title: pick(target.title ?? profile.title, lang),
       location: profile.location ? pick(profile.location, lang) : undefined,
       email: profile.email,
       phone: profile.phone,

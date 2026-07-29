@@ -1,0 +1,29 @@
+# hh.ru, роль Lead Fullstack — третье резюме на hh, расширяет воронку в IC-трек
+# (пул fullstack-вакансий на hh ~2× больше, чем EM-frontend). Ведущий разработчик
+# обоих стеков: Яндекс-фулстек разворачивается полностью, lead-сигналы (архитектура,
+# менторинг, код-ревью) остаются, чисто менеджерские пункты (тег `management`) и
+# менеджерские достижения скрываются.
+id: hh-fullstack
+label:
+  ru: hh.ru · Fullstack
+  en: hh.ru · Full-stack
+# Стек в заголовке IC-резюме — сознательно: рекрутёры ищут «python/php/react
+# разработчик», язык в заголовке даёт точное совпадение с максимальным весом.
+# Порядок = сила заявки: React (ядро), Python и PHP (продакшн-бэкенд), Node.js (тулинг).
+title:
+  ru: Ведущий Fullstack-разработчик (React, Python, PHP, Node.js)
+  en: Lead Full-stack Developer (React, Python, PHP, Node.js)
+languages: [ru, en]
+system: hh
+audience: hr
+layout: rich
+formats: [html, pdf, md, txt]
+sections: [summary, achievements, experience, skills, languages, education]
+select:
+  # Ролевой summary (см. content/summary.yaml): без em и general остаётся
+  # summary-fullstack как самый приоритетный из релевантных.
+  # Достижения об управлении (масштабирование, удержание, рост людей,
+  # дизайн-ревью) не работают на IC-заявку — скрываем.
+  excludeIds: [summary-em, summary-general, scale, retention, growth, visual-bugs]
+  # Чисто менеджерские пункты опыта помечены доменным тегом `management`.
+  excludeTags: [management]

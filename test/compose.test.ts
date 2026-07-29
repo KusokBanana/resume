@@ -52,6 +52,14 @@ test('summary: выбирается релевантный вариант с н�
   assert.equal(compose(content, target({ audience: 'hr' }), 'ru', true).summary, 'ats');
 });
 
+test('title: target.title переопределяет profile.title, без него — profile.title', () => {
+  const content = makeContent();
+  assert.equal(compose(content, target(), 'ru').profile.title, 'Title');
+  const t = target({ title: { ru: 'Фулстек', en: 'Fullstack' } });
+  assert.equal(compose(content, t, 'ru').profile.title, 'Фулстек');
+  assert.equal(compose(content, t, 'en').profile.title, 'Fullstack');
+});
+
 test('experience: фильтр по системе блока', () => {
   const content = makeContent({
     experience: [
