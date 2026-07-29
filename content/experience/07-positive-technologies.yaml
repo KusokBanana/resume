@@ -40,6 +40,10 @@ groups:
           en: "Owned the UIs of the Corporate and Partner portals, Aim (infrastructure-management automation), Preboarding (hiring and onboarding) and a handful of smaller products."
         tags: {}
       - text:
+          ru: "Проектировал системы с нуля — Корпоративный портал, Aim и Preboarding: от анализа требований и архитектуры до промышленной эксплуатации."
+          en: "Designed systems from the ground up — the Corporate portal, Aim and Preboarding: from requirements analysis and architecture through to production operation."
+        tags: { domains: [linkedin-skip] }
+      - text:
           ru: Держал стабильную поставку интерфейсов для продуктов с живой пользовательской базой.
           en: Kept UI delivery steady for products with a live user base.
         tags: { audience: [hr, technical], domains: [linkedin-skip] }
@@ -48,15 +52,23 @@ groups:
       - text:
           ru: "Построил frontend-направление с нуля: найм, онбординг, зоны ответственности, стратегия; масштабировал отдел с 0 до 11 человек за год."
           en: "Built the frontend function from scratch: hiring, onboarding, ownership areas, strategy; scaled the department from 0 to 11 people in a year."
-        tags: {}
+        tags: { domains: [management] }
       - text:
           ru: "Руководил распределённой командой из шести городов — от Москвы и Сочи до Урала, Омска и Новосибирска — в четырёх часовых поясах: выстроил асинхронные процессы так, что разница во времени не тормозила поставку."
           en: "Led a team distributed across six cities — from Moscow and Sochi to the Urals, Omsk and Novosibirsk — spanning four time zones, with async processes set up so the time difference never slowed delivery."
-        tags: {}
+        tags: { domains: [management] }
       - text:
           ru: "Часть команд досталась «по наследству»: навёл процессы, сделал работу прозрачной и управляемой, выстроил доверительные рабочие отношения."
           en: "Some teams came to me by inheritance: I put process in place, made the work transparent and manageable, and built trusting working relationships."
+        tags: { domains: [linkedin-skip, management] }
+      - text:
+          ru: "Переводил бизнес-требования в технические решения: груминг и декомпозиция задач вместе с продакт-менеджерами, проработка постановок до передачи в разработку."
+          en: "Turned business requirements into technical solutions: groomed and decomposed tasks with product managers, shaping specs before they reached development."
         tags: { domains: [linkedin-skip] }
+      - text:
+          ru: "Планировал ресурсы направления: собирал команды с нуля под новые задачи, планировал кварталы и спринты от доступных мощностей; управлял внешним подрядчиком по дизайну."
+          en: "Planned the function's resources: staffed teams from scratch for new work, planned quarters and sprints against available capacity, and managed an external design contractor."
+        tags: { domains: [linkedin-skip, management] }
       - text:
           ru: Полностью сменил команду на одном из продуктов и бесшовно перевёл интерфейс на современный стек, не останавливая развитие продукта.
           en: Fully replaced a product's team and migrated its UI to a modern stack seamlessly, without pausing product development.
@@ -64,7 +76,7 @@ groups:
       - text:
           ru: Запустил дизайн-ревью, и визуальные баги упали со стабильных 5–10 до 0–1 на релиз.
           en: Started running design review, and visual bugs fell from a steady 5–10 to 0–1 per release.
-        tags: {}
+        tags: { domains: [management] }
       - text:
           ru: "Перестроил разработку email-писем: там, где раньше уходила неделя на связку «дизайнер плюс разработчик», теперь справляется один разработчик за пару часов."
           en: "Reworked how we build emails: what used to take a designer and a developer about a week now takes one developer a couple of hours."
@@ -74,19 +86,23 @@ groups:
       - text:
           ru: "Развивал команду через индивидуальные планы развития (ИПР): трое доросли до Senior, ещё трое стали лидами."
           en: "Grew the team through individual development plans: three reached Senior, three more became leads."
-        tags: {}
+        tags: { domains: [management] }
       - text:
           ru: За два года отдел не покинул добровольно ни один человек, и это на фоне турбулентности в компании — урезаний бюджетов и массовых сокращений; потери были только в рамках общекорпоративного сокращения штата.
           en: Over two years not a single person left the department voluntarily, and that was amid company turbulence — budget cuts and mass layoffs; the only losses came with company-wide reductions.
-        tags: {}
+        tags: { domains: [management] }
       - text:
           ru: "Повысил автономность команд и снизил bus-factor: работа перестала завязываться на отдельных людях."
           en: "Made the teams more autonomous and lowered the bus factor: the work no longer hinged on individual people."
-        tags: { audience: [hr, technical], domains: [linkedin-skip] }
+        tags: { audience: [hr, technical], domains: [linkedin-skip, management] }
+      - text:
+          ru: "Работал с ФОТ: формировал компенсационные предложения под офферы и проводил повышения по итогам ИПР."
+          en: "Owned the payroll budget: shaped compensation offers and ran raises based on development-plan outcomes."
+        tags: { domains: [linkedin-skip, management] }
       - text:
           ru: Принимал сложные управленческие решения, включая расставание с сотрудниками в рамках оптимизации команды.
           en: Made hard management calls, including parting with team members during team optimisation.
-        tags: { audience: [hr], domains: [linkedin-skip] }
+        tags: { audience: [hr], domains: [linkedin-skip, management] }
   - title: { ru: Технологии и hands-on, en: Technology & hands-on }
     highlights:
       - text:
@@ -108,6 +124,14 @@ groups:
       - text:
           ru: Прорабатывал архитектурные решения, проводил код-ревью; владею frontend-архитектурой и стандартами разработки интерфейсов.
           en: Shaped architectural decisions and ran code reviews; strong in frontend architecture and UI development standards.
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
+      - text:
+          ru: "Построил аналитику инженерных метрик поверх Jira (Python, FastAPI, React): cycle time, velocity, throughput, rework и переносы между спринтами — сопоставимо между командами и по каждому человеку, в бизнес-часах."
+          en: "Built engineering-metrics analytics on top of Jira (Python, FastAPI, React): cycle time, velocity, throughput, rework and sprint carry-over — comparable across teams and per person, in business hours."
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
+      - text:
+          ru: Развивал «Календарь событий» — SSR-приложение на Next.js в Nx-монорепозитории.
+          en: Grew the Events Calendar — an SSR app on Next.js in an Nx monorepo.
         tags: { audience: [hr, technical], domains: [linkedin-skip] }
       - text:
           ru: Автоматизировал внутренние процессы и tooling на Python — скрипты, вспомогательные сервисы, оптимизация рутинных операций.

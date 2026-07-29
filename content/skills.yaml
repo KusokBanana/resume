@@ -31,6 +31,7 @@ items:
   # Ядро (stack:true — и в стеке опыта, и чипом).
   - { name: TypeScript, at: [yandex, vk-senior, vk-lead, positive-technologies], group: frontend }
   - { name: React, at: [yandex, vk-senior, vk-lead, positive-technologies], group: frontend }
+  - { name: "Next.js", at: [positive-technologies], group: frontend }
   - { name: Angular, at: [yandex, positive-technologies], group: frontend }
   - { name: "Vue.js", at: [kodix], group: frontend }
   - { name: JavaScript, at: [positive-technologies, yandex, vk-senior, vk-lead, kodix, freelance, givemesite], group: frontend }
@@ -73,6 +74,7 @@ items:
   - { name: Redis, at: [kodix, yandex], group: backend }
   # Прочее backend (stack:false — только чипы).
   - { name: Linux, at: [yandex], stack: false, group: backend }
+  - { name: FastAPI, at: [positive-technologies], stack: false, group: backend }
   - { name: SQLAlchemy, at: [yandex], stack: false, group: backend }
   - { name: Alembic, at: [yandex], stack: false, group: backend }
   - { name: pytest, at: [yandex, positive-technologies], stack: false, group: backend }
@@ -92,6 +94,8 @@ items:
   - { name: Unleash, at: [positive-technologies], stack: false, group: infra }
   - { name: GitOps, at: [positive-technologies], stack: false, group: infra }
   - { ru: архитектура, en: architecture, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: infra }
+  - { ru: проектирование систем, en: system design, at: [yandex, positive-technologies], stack: false, group: infra }
+  - { ru: монорепозитории (Nx), en: monorepos (Nx), at: [positive-technologies], stack: false, group: infra }
   - { name: FrontOps, at: [vk-lead, positive-technologies], stack: false, group: infra }
   - { name: Vitest, at: [positive-technologies], stack: false, group: infra }
   - { name: Playwright, at: [positive-technologies], stack: false, group: infra }
@@ -118,6 +122,11 @@ items:
   - { ru: Agile / Scrum, en: Agile / Scrum, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: management }
   - { ru: выстраивание процессов, en: process design, at: [vk-lead, positive-technologies], stack: false, group: management }
   - { ru: распределённые команды, en: distributed teams, at: [vk-lead, positive-technologies], stack: false, group: management }
+  - { ru: работа с бизнес-требованиями, en: requirements engineering, at: [positive-technologies], stack: false, group: management }
+  - { ru: метрики инженерных процессов, en: engineering metrics, at: [positive-technologies], stack: false, group: management }
+  - { ru: планирование ресурсов, en: resource planning, at: [positive-technologies], stack: false, group: management }
+  - { ru: компенсации и ФОТ, en: compensation & payroll, at: [positive-technologies], stack: false, group: management }
+  - { ru: управление подрядчиками, en: vendor management, at: [positive-technologies], stack: false, group: management }
   - { ru: стейкхолдер-менеджмент, en: stakeholder management, at: [positive-technologies], stack: false, group: management }
   - { name: product ownership, at: [yandex, vk-lead], stack: false, group: management }
   - { ru: кросс-функциональное взаимодействие, en: cross-functional collaboration, at: [yandex, vk-senior, vk-lead, positive-technologies], stack: false, group: management }
