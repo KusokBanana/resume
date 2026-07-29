@@ -1,0 +1,26 @@
+# hh.ru, роль Head of Engineering — четвёртое резюме на hh, грейд выше EM.
+# Таргетинг: Head/директор по разработке в малых и средних продуктовых компаниях,
+# где Head of Engineering ≈ сильный EM с функцией под ключ (стратегия, ФОТ,
+# ресурсы, подрядчики). Зарплатная планка этого резюме — верхняя (600к),
+# EM-резюме (targets/hh.yaml) держит массовый пул на ступень ниже.
+# В заголовке сознательно НЕТ «отдела» — «руководитель отдела разработки» это
+# запрос грейда ниже, он закреплён за EM-резюме.
+id: hh-head
+label:
+  ru: hh.ru · Head of Engineering
+  en: hh.ru · Head of Engineering
+title:
+  ru: Руководитель разработки (Head of Engineering)
+  en: Head of Engineering
+languages: [ru, en]
+system: hh
+audience: hr
+layout: rich
+formats: [html, pdf, md, txt]
+sections: [summary, achievements, experience, skills, languages, education]
+select:
+  # Ролевой summary: убираем em (priority 30) и general (10) — остаётся
+  # summary-head (6), он перебивает fullstack (5) и teamlead (4) по priority.
+  # ⚠ И наоборот: каждый target ролевого summary обязан исключать все ролевые
+  # summary с priority ВЫШЕ своего, иначе они протекут (см. hh-teamlead/fullstack).
+  excludeIds: [summary-em, summary-general]

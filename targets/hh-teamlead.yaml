@@ -17,6 +17,6 @@ layout: rich
 formats: [html, pdf, md, txt]
 sections: [summary, achievements, experience, skills, languages, education]
 select:
-  # Ролевой summary: убираем em (priority 30), general (10) и fullstack (5) —
+  # Ролевой summary: убираем em (priority 30), head (6), general (10) и fullstack (5) —
   # остаётся summary-teamlead (4).
-  excludeIds: [summary-em, summary-general, summary-fullstack]
+  excludeIds: [summary-em, summary-head, summary-general, summary-fullstack]

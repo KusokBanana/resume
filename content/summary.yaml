@@ -53,6 +53,29 @@ variants:
   # Ролевые варианты под отдельные hh-резюме (см. targets/hh-*.yaml).
   # Низкий priority: обычные target'ы их не выбирают; «включаются» тем, что
   # соответствующий target исключает summary-general через excludeIds.
+  - id: summary-head
+    priority: 6
+    tags:
+      audience: [hr, technical]
+    text:
+      ru: >-
+        Инженерный руководитель (Head of Engineering), 10+ лет в IT и 3+ года
+        в управлении. Строю разработку как функцию: стратегия, найм и ФОТ,
+        планирование ресурсов, процессы и метрики поставки. В Positive Technologies
+        построил отдел разработки с нуля до 11 человек и четырёх кросс-функциональных
+        команд, управлял распределённой командой в четырёх часовых поясах и внешними
+        подрядчиками. Вырос из fullstack-разработчика — говорю на одном языке
+        с frontend и backend. Внедрил AI-assisted development, и разработка
+        ускорилась в полтора раза.
+      en: >-
+        Head of Engineering with 10+ years in tech and 3+ years leading teams.
+        I build engineering as a function: strategy, hiring and payroll budget,
+        resource planning, processes and delivery metrics. At Positive Technologies
+        I built an engineering department from scratch to 11 people across four
+        cross-functional teams, ran a team distributed over four time zones and
+        managed external contractors. I came up as a full-stack developer, so I speak
+        the same language with frontend and backend. Brought in AI-assisted
+        development, making delivery 1.5× faster.
   - id: summary-fullstack
     priority: 5
     tags:

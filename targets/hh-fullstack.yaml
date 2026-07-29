@@ -24,6 +24,6 @@ select:
   # summary-fullstack как самый приоритетный из релевантных.
   # Достижения об управлении (масштабирование, удержание, рост людей,
   # дизайн-ревью) не работают на IC-заявку — скрываем.
-  excludeIds: [summary-em, summary-general, scale, retention, growth, visual-bugs]
+  excludeIds: [summary-em, summary-head, summary-general, scale, retention, growth, visual-bugs]
   # Чисто менеджерские пункты опыта помечены доменным тегом `management`.
   excludeTags: [management]
