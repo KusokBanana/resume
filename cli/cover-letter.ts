@@ -7,8 +7,10 @@
  *     talking points, что подчеркнуть / чего избегать / честные пробелы. Только JSON,
  *     без текста письма. Результат сохраняется в <slug>-<lang>.plan.json (инспекция).
  *   Этап 2 (writeLetter) — LLM пишет письмо, получая ТОЛЬКО план и отобранные блоки
- *     опыта (не весь каталог) — пересказать резюме физически нечем.
+ *     опыта (не весь каталог) — пересказать резюме физически нечем. Код проверяет,
+ *     что закрыты ВСЕ high-тезисы плана (по paragraphMap); при потере — один ретрай.
  * Между этапами — код-валидация id блоков (защита от галлюцинаций).
+ * Компания берётся из --company, иначе извлекается этапом 1 из текста вакансии.
  * Если этап 1 упал/refusal — откат на одностадийный промпт (всегда даём результат).
  *
  * Письмо пишется СТРОГО по фактам резюме, без выдумок. Требует OPENAI_API_KEY (.env).
@@ -17,7 +19,10 @@
  * Запуск:
  *   npm run cover-letter -- --job ./vacancy.txt --lang ru --slug acme --company "Acme"
  *   npm run cover-letter -- --job "текст вакансии" --lang en --tone warm --length medium
+ *   npm run cover-letter -- --job https://hh.ru/vacancy/123456 --lang ru --slug acme
  *
+ * --job принимает файл, текст или ссылку на вакансию hh.ru (текст и компания
+ * достаются из JSON-LD страницы, см. cli/lib/fetch-job.ts).
  * --length: short (по умолчанию — как отклик на hh) | medium | long (email/LinkedIn).
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
@@ -26,6 +31,7 @@ import { z } from 'zod';
 import { loadContent, ROOT } from '../src/lib/load';
 import { catalog, profileFacts, type ProfileFacts } from './lib/catalog';
 import { callStructured, hasOpenAIKey, modelName } from './lib/llm';
+import { isJobUrl, fetchJobByUrl } from './lib/fetch-job';
 import type { Content, Lang } from '../src/schema/index';
 
 export type Tone = 'formal' | 'warm';
@@ -90,6 +96,10 @@ const Coverage = z.enum(['strong', 'partial', 'none']);
 const Importance = z.enum(['high', 'medium', 'low']);
 
 const LetterPlanSchema = z.object({
+  company: z
+    .string()
+    .nullable()
+    .describe('название компании, если оно есть в тексте вакансии; null если не найдено'),
   positioningAngle: z
     .string()
     .describe('одна фраза — главный угол, под которым продаём кандидата этой роли'),
@@ -133,6 +143,7 @@ Engineering Manager и Head of Engineering. Ты НЕ пишешь сопров�
 На вход: (1) факты о кандидате; (2) каталог блоков опыта (id + текст); (3) вакансия.
 
 Действуй как при реальном скрининге:
+0. Извлеки название компании из текста вакансии (поле company; null, если его там нет).
 1. Определи, что роли действительно нужно: главные задачи, обязательные и желательные
    требования, реальные критерии решения о приглашении.
 2. Для каждого значимого требования оцени покрытие опытом кандидата
@@ -200,16 +211,25 @@ async function analyzeVacancy(
 // ============================================================================
 
 const CoverLetterSchema = z.object({
-  greeting: z.string().describe('приветствие, напр. «Здравствуйте!» или с именем компании'),
+  greeting: z
+    .string()
+    .describe('приветствие — просто «Здравствуйте!» (без обращения к компании по имени)'),
   paragraphs: z
     .array(z.string())
     .describe('тело письма; число абзацев и объём — по инструкции ДЛИНА'),
-  closing: z.string().describe('завершающая фраза перед подписью'),
+  closing: z
+    .string()
+    .describe(
+      'завершающая фраза перед подписью — БЕЗ имени, без «С уважением» и любых подписей: подпись добавляет шаблон',
+    ),
   paragraphMap: z
     .array(
       z.object({
         paragraphIndex: z.number().describe('0-based индекс абзаца в paragraphs'),
-        addressesTalkingPoint: z.string().describe('какой тезис/требование закрывает абзац'),
+        talkingPointIndices: z
+          .array(z.number())
+          .describe('0-based индексы тезисов plan.talkingPoints, которые закрывает абзац ([] если абзац не про тезис)'),
+        addressesTalkingPoint: z.string().describe('какой тезис/требование закрывает абзац (словами)'),
       }),
     )
     .describe('self-check: каждый абзац должен закрывать тезис плана'),
@@ -227,17 +247,35 @@ export const WRITE_SYSTEM_PROMPT = `Ты пишешь от лица кандид
 На вход: факты о кандидате; план (JSON); ТОЛЬКО отобранные блоки опыта; ДЛИНА и ТОН.
 
 Задача — написать максимально убедительное письмо:
-- возьми верхние talking points, укладывающиеся в заданную длину (importance high — в первую очередь);
-- один тезис ≈ один абзац; каждый абзац отвечает на вопрос работодателя
-  «почему стоит пригласить именно этого человека»;
+- ОБЯЗАН закрыть ВСЕ talking points с importance=high. Если длина не позволяет дать
+  каждому свой абзац — объединяй два смежных тезиса в один абзац (одним-двумя
+  предложениями каждый), но НЕ выбрасывай high-тезис;
+- первое предложение — хук под главную задачу роли (из roleAnalysis.mainObjectives):
+  что кандидат сделает для НИХ. ЗАПРЕЩЕНО открывать письмо автобиографией вида
+  «Я инженерный руководитель с N годами опыта» — это пересказ резюме;
+- возражение нанимающего снимай ТОЛЬКО если оно центральное для решения (прямо
+  следует из decisionCriteria или must-have, который кандидат не закрывает) И рефрейм
+  превращает его в сильную сторону. Второстепенные пробелы НЕ упоминай вовсе:
+  «не обещаю X» и прочие дисклеймеры сажают читателю сомнение, которого у него
+  могло не быть;
+- метрики подбирай под уровень роли: для руководящих ролей (Head/CTO/EM) — результаты
+  уровня бизнеса и организации (масштабирование команды, удержание, time-to-market,
+  предсказуемость поставки), а операционные микро-метрики (минуты, счётчики багов)
+  оставь резюме — если только вакансия не про них. Максимум 2–3 цифры на письмо;
+- каждый абзац отвечает на вопрос работодателя «почему стоит пригласить именно этого
+  человека»;
 - опирайся ТОЛЬКО на предоставленные блоки и факты — другого материала у тебя нет;
 - язык вакансии (delivery, ownership, architecture, people management и т.п.) —
   лишь там, где подтверждён блоками;
 - не касайся тем из avoid; не заявляй того, что в honestGaps;
 - без пересказа резюме, без канцелярита; звучи как живой человек, не как ИИ;
+- название компании упоминай в теле максимум один раз (повторение в каждом абзаце
+  звучит роботично); в greeting и closing — не упоминай;
+- closing — только короткая фраза-приглашение к разговору, БЕЗ имени и подписи;
 - строго соблюдай длину.
 
-Верни JSON по схеме, включая paragraphMap (какой абзац какой тезис закрывает).`;
+Верни JSON по схеме, включая paragraphMap: для каждого абзаца — индексы закрытых
+тезисов plan.talkingPoints (talkingPointIndices).`;
 
 function buildWritePrompt(
   args: CoverLetterArgs,
@@ -265,7 +303,16 @@ function buildWritePrompt(
     .join('\n');
 }
 
-async function writeLetter(
+/** Индексы high-тезисов плана, не закрытых ни одним абзацем (по paragraphMap). */
+export function uncoveredHighPoints(plan: LetterPlan, letter: CoverLetter): number[] {
+  const covered = new Set(letter.paragraphMap.flatMap((p) => p.talkingPointIndices));
+  return plan.talkingPoints
+    .map((t, i) => ({ t, i }))
+    .filter(({ t, i }) => t.importance === 'high' && !covered.has(i))
+    .map(({ i }) => i);
+}
+
+export async function writeLetter(
   content: Content,
   args: CoverLetterArgs,
   facts: ProfileFacts,
@@ -276,12 +323,29 @@ async function writeLetter(
   // Этап 2 видит только отобранные блоки. Если план не выбрал ни одного — даём весь
   // каталог (безопасный дегрейд, чтобы письмо не осталось без фактуры).
   const blocks = selectedIds.length ? all.filter((b) => selectedIds.includes(b.id)) : all;
-  return callStructured(
-    WRITE_SYSTEM_PROMPT,
-    buildWritePrompt(args, facts, plan, blocks),
-    CoverLetterSchema,
-    'cover_letter',
-  );
+  const basePrompt = buildWritePrompt(args, facts, plan, blocks);
+
+  let letter = await callStructured(WRITE_SYSTEM_PROMPT, basePrompt, CoverLetterSchema, 'cover_letter');
+
+  // Enforce: все high-тезисы плана должны быть закрыты. Один ретрай с перечнем потерь —
+  // paragraphMap заполняет модель, поэтому проверка сообщает и о честных пропусках,
+  // и о незадекларированных абзацах (последние ретраем не чиним — не отличить).
+  const missing = uncoveredHighPoints(plan, letter);
+  if (missing.length > 0) {
+    console.error(
+      `⚠ Письмо не закрыло high-тезисы [${missing.join(', ')}] — повторная попытка.`,
+    );
+    const retryPrompt = [
+      basePrompt,
+      '',
+      'ПРЕДЫДУЩАЯ ПОПЫТКА ОТКЛОНЕНА: не закрыты обязательные (importance=high) тезисы плана:',
+      ...missing.map((i) => `- [${i}] ${plan.talkingPoints[i].claim}`),
+      'Перепиши письмо так, чтобы КАЖДЫЙ из них был закрыт (объединяй тезисы в абзацах, если не хватает длины).',
+    ].join('\n');
+    const retry = await callStructured(WRITE_SYSTEM_PROMPT, retryPrompt, CoverLetterSchema, 'cover_letter');
+    if (uncoveredHighPoints(plan, retry).length < missing.length) letter = retry;
+  }
+  return letter;
 }
 
 // ============================================================================
@@ -334,7 +398,7 @@ function buildFallbackPrompt(args: CoverLetterArgs, facts: ProfileFacts, content
 // ============================================================================
 
 /** Собирает Markdown письма: тело от модели + подпись из профиля. */
-function renderMarkdown(letter: CoverLetter, facts: ProfileFacts, args: CoverLetterArgs): string {
+export function renderMarkdown(letter: CoverLetter, facts: ProfileFacts, args: CoverLetterArgs): string {
   const heading = args.company
     ? `# Сопроводительное письмо — ${args.company}`
     : `# Сопроводительное письмо — ${args.slug}`;
@@ -394,6 +458,8 @@ export async function runCoverLetter(
     const raw = await analyzeVacancy(content, args, facts);
     const sanitized = sanitizePlan(raw, knownIds);
     plan = sanitized.plan;
+    // Компания: явный --company важнее; иначе — извлечённая этапом 1 из вакансии.
+    if (!args.company && plan.company) args = { ...args, company: plan.company };
     letter = await writeLetter(content, args, facts, plan, sanitized.selectedIds);
   } catch (err) {
     console.error(
@@ -427,9 +493,15 @@ function rel(abs: string): string {
 }
 
 async function main() {
-  const args = parseArgs(process.argv.slice(2));
+  let args = parseArgs(process.argv.slice(2));
   const content = loadContent();
   try {
+    // --job со ссылкой: скачиваем вакансию (пока только hh.ru) до генерации.
+    if (isJobUrl(args.job)) {
+      const fetched = await fetchJobByUrl(args.job);
+      console.log(`✓ Вакансия с hh: «${fetched.title}»${fetched.company ? ` — ${fetched.company}` : ''}`);
+      args = { ...args, job: fetched.text, company: args.company ?? fetched.company };
+    }
     const res = await runCoverLetter(content, args);
     const mode = res.source === 'two-stage' ? 'двухэтапно' : 'одностадийно (fallback)';
     console.log(`✓ Письмо сгенерировано через OpenAI (${modelName()}, ${mode})`);

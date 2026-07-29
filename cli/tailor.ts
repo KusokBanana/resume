@@ -17,6 +17,9 @@
  * Запуск:
  *   npm run tailor -- --job ./vacancy.txt --lang ru --system general --slug acme-backend
  *   npm run tailor -- --job "текст вакансии прямо в аргументе" --lang en
+ *   npm run tailor -- --job https://hh.ru/vacancy/123456 --lang ru --slug acme
+ *
+ * --job принимает файл, текст или ссылку на вакансию hh.ru (см. cli/lib/fetch-job.ts).
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -25,6 +28,7 @@ import { z } from 'zod';
 import { loadContent, TARGETS_DIR } from '../src/lib/load';
 import { catalog, words, keywordScore } from './lib/catalog';
 import { callStructured, hasOpenAIKey, modelName } from './lib/llm';
+import { isJobUrl, fetchJobByUrl } from './lib/fetch-job';
 import type { Content, Lang } from '../src/schema/index';
 
 export interface TailorArgs {
@@ -177,8 +181,15 @@ export async function runTailor(content: Content, args: TailorArgs): Promise<Tai
 }
 
 async function main() {
-  const args = parseArgs(process.argv.slice(2));
+  let args = parseArgs(process.argv.slice(2));
   const content = loadContent();
+
+  // --job со ссылкой: скачиваем вакансию (пока только hh.ru) до подбора.
+  if (isJobUrl(args.job)) {
+    const fetched = await fetchJobByUrl(args.job);
+    console.log(`✓ Вакансия с hh: «${fetched.title}»${fetched.company ? ` — ${fetched.company}` : ''}`);
+    args = { ...args, job: fetched.text };
+  }
 
   if (!hasOpenAIKey()) {
     console.log('ℹ OPENAI_API_KEY не задан — использую эвристику.');

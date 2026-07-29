@@ -38,11 +38,12 @@ GPT-4o и новее). Без ключа `tailor` и `find-jobs` работаю�
 ```bash
 npm run tailor -- --job ./vacancy.txt --lang ru --system general --slug acme
 npm run tailor -- --job "текст вакансии прямо в аргументе" --lang en --slug acme
+npm run tailor -- --job https://hh.ru/vacancy/123456 --lang ru --slug acme
 ```
 
 | Флаг | По умолчанию | Описание |
 |---|---|---|
-| `--job` | — (обязателен) | путь к файлу или текст вакансии |
+| `--job` | — (обязателен) | путь к файлу, текст вакансии или ссылка hh.ru (`https://hh.ru/vacancy/<id>`) |
 | `--lang` | `ru` | `ru` \| `en` |
 | `--system` | `general` | `hh` \| `linkedin` \| `habr` \| `general` |
 | `--slug` | `tailored` | имя варианта → `targets/tailored-<slug>.yaml` |
@@ -56,14 +57,15 @@ npm run tailor -- --job "текст вакансии прямо в аргуме�
 ```bash
 npm run cover-letter -- --job ./vacancy.txt --lang ru --slug acme --company "Acme"
 npm run cover-letter -- --job ./vacancy.txt --lang ru --slug acme --length medium --tone warm
+npm run cover-letter -- --job https://hh.ru/vacancy/123456 --lang ru --slug acme
 ```
 
 | Флаг | По умолчанию | Описание |
 |---|---|---|
-| `--job` | — (обязателен) | путь к файлу или текст вакансии |
+| `--job` | — (обязателен) | путь к файлу, текст вакансии или ссылка hh.ru (`https://hh.ru/vacancy/<id>` — текст и компания достаются из JSON-LD страницы) |
 | `--lang` | `ru` | язык письма |
 | `--slug` | `cover` | имя файла → `out/cover-letters/<slug>-<lang>.md` |
-| `--company` | — | название компании для приветствия/заголовка |
+| `--company` | — | название компании для приветствия/заголовка; без флага берётся из hh-ссылки или извлекается этапом 1 из текста вакансии |
 | `--tone` | `formal` | `formal` \| `warm` |
 | `--length` | `short` | `short` (отклик на hh, 1–2 абзаца) \| `medium` (2 абзаца) \| `long` (email/LinkedIn, 3–4 абзаца) |
 
