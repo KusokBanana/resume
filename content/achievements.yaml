@@ -1,58 +1,65 @@
 # Ключевые результаты (вверху резюме). Жирный лид-акцент через **...**.
 # Порядок — по priority (выше = выше).
+#
+# ⚠ Формулировки НАМЕРЕННО не совпадают с пунктами опыта дословно: этот блок —
+# выжимка, а LLM-скоринг ATS штрафует дословные повторы как накрутку объёма.
+# Перефразируя пункт опыта — не копируй его сюда, и наоборот.
+# Ролевой отбор — через excludeIds в targets/hh-*.yaml: управленческие версии
+# скрывают микро-метрики (visual-bugs, email-cost), IC-версии — менеджерские
+# результаты (scale, retention, growth).
 items:
   - id: scale
     priority: 100
     tags: {}
     text:
-      ru: "**Масштабировал отдел с 0 до 11 человек за год.** Собрал четыре кросс-функциональные команды — в каждой лид, фронтендеры и дизайнер. Весь найм вёл сам: и с рынка, и ротацией внутри."
-      en: "**Scaled the department from 0 to 11 people in a year.** Built four cross-functional teams, each with a lead, frontend engineers and a designer. I ran all the hiring myself, both externally and through internal moves."
+      ru: "**Отдел 0 → 11 за год.** Четыре кросс-функциональные команды — лид, фронтендеры и дизайнер в каждой; весь найм вёл сам, с рынка и внутренней ротацией."
+      en: "**Department grown 0 → 11 in a year.** Four cross-functional teams — a lead, frontend engineers and a designer in each; I did all the hiring myself, external and internal."
 
   - id: retention
     priority: 95
     tags: {}
     text:
-      ru: "**91% удержания команды за два года.** Сохранил ядро отдела на фоне турбулентности в компании: урезания бюджетов и массовых сокращений."
-      en: "**91% team retention over two years.** Kept the core of the department together through company turbulence: budget cuts and mass layoffs."
+      ru: "**Ни один человек не ушёл из отдела добровольно за два года.** Удержал ядро команды, пока компанию штормило."
+      en: "**Not a single person left the department voluntarily in two years.** Held the team's core together while the company weathered a storm."
 
   - id: growth
     priority: 90
     tags: {}
     text:
-      ru: "**Вырастил людей через ИПР**: трое доросли до старших разработчиков и дизайнеров, ещё трое стали руководителями."
-      en: "**Grew people through development plans**: three reached senior engineer or designer, three more became team leads."
+      ru: "**Шесть повышений внутри команды**: три человека выросли до senior-уровня, ещё три — до руководителей."
+      en: "**Six promotions inside the team**: three people grew to senior level, three more became leads."
 
   - id: ai-speedup
     priority: 85
     tags: {}
     text:
-      ru: "**Ускорил разработку в полтора раза**, встроив AI-инструменты (Claude) в процессы команды."
-      en: "**Sped up delivery by half** by building AI tooling (Claude) into the team's workflow."
+      ru: "**Разработка ×1,5 быстрее с AI-инструментами** (Claude) — эффект подтверждён собственной аналитикой инженерных метрик; у отдельных инженеров — до ×2."
+      en: "**Delivery 1.5× faster with AI tooling** (Claude) — the effect is backed by my own engineering-metrics analytics; up to 2× for individual engineers."
 
   - id: vk-release-flags
     priority: 82
     tags: {}
     text:
-      ru: "**Релизы несколько раз в день** в highload-финтехе ВКонтакте: поднял feature-flags с выборочным раскатом на сегменты пользователей."
-      en: "**Multiple releases a day** in VK's high-load fintech: I set up feature flags with selective rollout to user segments."
+      ru: "**Ежедневные релизы в highload-финтехе ВКонтакте** — вместо редких больших выкаток: feature-flags и постепенный раскат по сегментам пользователей."
+      en: "**Daily releases in VK's high-load fintech** instead of rare big-bang rollouts: feature flags and gradual rollout by user segment."
 
   - id: release-time
     priority: 80
     tags: {}
     text:
-      ru: "**Сократил подготовку релиза с двух часов до десяти минут**, автоматизировав её скриптами и CI/CD."
-      en: "**Cut release prep from two hours to ten minutes** by automating it with scripts and CI/CD."
+      ru: "**Релиз готовится 10 минут вместо двух часов** — весь цикл подготовки закрыт автоматизацией."
+      en: "**Release prep takes 10 minutes instead of two hours** — the whole cycle is covered by automation."
 
   - id: visual-bugs
     priority: 75
     tags: {}
     text:
-      ru: "**Свёл визуальные баги с 5–10 до 0–1 на релиз**, запустив дизайн-ревью."
-      en: "**Brought visual bugs down from 5–10 to 0–1 per release** by introducing design review."
+      ru: "**0–1 визуальный баг на релиз вместо стабильных 5–10** — эффект выстроенного дизайн-ревью."
+      en: "**0–1 visual bug per release instead of a steady 5–10** — the payoff of the design-review practice I set up."
 
   - id: email-cost
     priority: 70
     tags: {}
     text:
-      ru: "**Удешевил разработку email-писем**: раньше это была связка «дизайнер плюс разработчик, около недели», теперь — один разработчик за пару часов."
-      en: "**Made building emails far cheaper**: what used to take a designer and a developer about a week now takes one developer a couple of hours."
+      ru: "**Email-письма делаются за пару часов, а не за неделю**: вместо связки «дизайнер плюс разработчик» справляется один человек + ИИ."
+      en: "**Emails now take a couple of hours, not a week**: one person with AI handles what used to need a designer-developer pair."

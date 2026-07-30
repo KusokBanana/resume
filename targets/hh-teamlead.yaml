@@ -19,4 +19,7 @@ sections: [summary, achievements, experience, skills, languages, education]
 select:
   # Ролевой summary: убираем em (priority 30), head (6), general (10) и fullstack (5) —
   # остаётся summary-teamlead (4).
-  excludeIds: [summary-em, summary-head, summary-general, summary-fullstack]
+  # «Ключевые результаты» — только технические/поставочные: менеджерские
+  # (масштабирование отдела, удержание, рост людей) продают EM, а не тимлида,
+  # и вставали первыми четырьмя пунктами. Лидерство остаётся в теле опыта.
+  excludeIds: [summary-em, summary-head, summary-general, summary-fullstack, scale, retention, growth]

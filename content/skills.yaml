@@ -57,7 +57,6 @@ items:
   - { ru: MCP-серверы, en: MCP servers, at: [positive-technologies], stack: false, group: ai }
   - { ru: llms.txt, en: llms.txt, at: [positive-technologies], stack: false, group: ai }
   - { ru: "разработка Claude-плагинов", en: "Claude plugins dev", at: [positive-technologies], stack: false, group: ai }
-  - { name: vibe-coding, at: [positive-technologies], stack: false, group: ai }
   - { ru: автоматизация рутины, en: routine automation, at: [positive-technologies], stack: false, group: ai }
 
   # ============ Backend ============
@@ -69,7 +68,9 @@ items:
   - { name: Laravel, at: [kodix], group: backend }
   - { name: PostgreSQL, at: [yandex], group: backend }
   - { name: MySQL, at: [givemesite, freelance, kodix, yandex, vk-lead], group: backend }
-  - { name: Oracle, at: [yandex], group: backend }
+  # Oracle: остаётся в строке «Стек» Яндекса (факт), но из витрины навыков убран —
+  # легаси-БД размывает релевантность матчинга (оценка ATS-симуляции, 2026-07).
+  - { name: Oracle, at: [yandex], global: false }
   - { name: MongoDB, at: [yandex], group: backend }
   - { name: Redis, at: [kodix, yandex], group: backend }
   # Прочее backend (stack:false — только чипы).
@@ -80,8 +81,9 @@ items:
   - { name: pytest, at: [yandex, positive-technologies], stack: false, group: backend }
   - { name: Doctrine ORM, at: [yandex], stack: false, group: backend }
   - { name: Composer, at: [kodix, yandex], stack: false, group: backend }
-  - { name: Yii2, at: [givemesite, freelance], stack: false, group: backend }
-  - { name: Lumen, at: [kodix, yandex], stack: false, group: backend }
+  # Lumen скрыт отовсюду (микроверсия Laravel, который уже в стеке Kodix);
+  # запись оставлена как факт истории (реестр — источник истины).
+  - { name: Lumen, at: [kodix, yandex], stack: false, global: false }
   - { name: Memcached, at: [yandex], stack: false, group: backend }
 
   # ============ Инфраструктура / DevOps / Другое (stack:false) ============
@@ -106,7 +108,7 @@ items:
   # ============ Легаси (stack:true, global:false — только в стеке старых работ) ============
   - { name: Codeception, at: [kodix], global: false }
   - { name: "1C-Bitrix", at: [givemesite, kodix], global: false }
-  - { name: Yii, at: [givemesite, freelance], global: false }
+  - { name: Yii2, at: [givemesite, freelance], global: false }
   - { name: jQuery, at: [givemesite, freelance, kodix], global: false }
   - { name: Bootstrap, at: [freelance, givemesite], global: false }
   - { name: HTML5, at: [givemesite], global: false }

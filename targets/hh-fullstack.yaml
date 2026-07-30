@@ -9,10 +9,12 @@ label:
   en: hh.ru · Full-stack
 # Стек в заголовке IC-резюме — сознательно: рекрутёры ищут «python/php/react
 # разработчик», язык в заголовке даёт точное совпадение с максимальным весом.
-# Порядок = сила заявки: React (ядро), Python и PHP (продакшн-бэкенд), Node.js (тулинг).
+# Node.js из заголовка убран: в опыте нет ни одного подтверждающего факта —
+# AI-скоринг штрафует «заголовочные» навыки без evidence. «Senior» латиницей —
+# частый поисковый запрос (оценка ATS-симуляции, 2026-07).
 title:
-  ru: Ведущий Fullstack-разработчик (React, Python, PHP, Node.js)
-  en: Lead Full-stack Developer (React, Python, PHP, Node.js)
+  ru: Ведущий / Senior Fullstack-разработчик (React, Python, PHP)
+  en: Lead / Senior Full-stack Developer (React, Python, PHP)
 languages: [ru, en]
 system: hh
 audience: hr
@@ -23,7 +25,8 @@ select:
   # Ролевой summary (см. content/summary.yaml): без em и general остаётся
   # summary-fullstack как самый приоритетный из релевантных.
   # Достижения об управлении (масштабирование, удержание, рост людей,
-  # дизайн-ревью) не работают на IC-заявку — скрываем.
-  excludeIds: [summary-em, summary-head, summary-general, scale, retention, growth, visual-bugs]
+  # дизайн-ревью) и процессные (email) не работают на IC-заявку — скрываем;
+  # остаются feature-flags, релизная автоматизация и AI ×1,5.
+  excludeIds: [summary-em, summary-head, summary-general, scale, retention, growth, visual-bugs, email-cost]
   # Чисто менеджерские пункты опыта помечены доменным тегом `management`.
   excludeTags: [management]

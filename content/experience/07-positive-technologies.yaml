@@ -88,8 +88,8 @@ groups:
           en: "Grew the team through individual development plans: three reached Senior, three more became leads."
         tags: { domains: [management] }
       - text:
-          ru: За два года отдел не покинул добровольно ни один человек, и это на фоне турбулентности в компании — урезаний бюджетов и массовых сокращений; потери были только в рамках общекорпоративного сокращения штата.
-          en: Over two years not a single person left the department voluntarily, and that was amid company turbulence — budget cuts and mass layoffs; the only losses came with company-wide reductions.
+          ru: "За два года — ноль добровольных уходов из отдела, на фоне турбулентности и урезаний бюджетов; потери были только в рамках общекорпоративного сокращения штата."
+          en: "Two years, zero voluntary departures from the department — through turbulence and budget cuts; the only losses came with a company-wide headcount reduction."
         tags: { domains: [management] }
       - text:
           ru: "Повысил автономность команд и снизил bus-factor: работа перестала завязываться на отдельных людях."
@@ -109,6 +109,10 @@ groups:
           ru: "Внедрил AI-assisted development (Claude и подобные инструменты): прототипирование, рефакторинг, написание кода и ревью ускорились примерно в полтора раза."
           en: "Brought in AI-assisted development (Claude and similar): prototyping, refactoring, coding and review got about 1.5× faster."
         tags: {}
+      - text:
+          ru: "Эффект AI измерил собственной аналитикой поверх Jira: cycle time команд −17%, доля rework — с 39% до 28%, throughput +31%; у топ-инженеров cycle time сократился вдвое."
+          en: "Measured the AI effect with my own Jira analytics: team cycle time −17%, rework rate down from 39% to 28%, throughput +31%; top engineers' cycle time halved."
+        tags: { audience: [hr, technical], domains: [linkedin-skip] }
       - text:
           ru: "Собрал внутренний маркетплейс Claude Code-плагинов команды — субагенты, slash-команды и скилы для код-ревью, груминга задач и git-воркфлоу."
           en: "Built the team's internal Claude Code plugin marketplace — subagents, slash commands and skills for code review, task grooming and git workflow."

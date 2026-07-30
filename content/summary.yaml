@@ -82,9 +82,9 @@ variants:
       audience: [hr, technical]
     text:
       ru: >-
-        Ведущий fullstack-разработчик, 10+ лет коммерческой разработки: frontend на
-        TypeScript, React и Angular, backend на Python (Flask) и PHP (Symfony, Laravel),
-        плюс Node.js. В Яндексе 3,5 года строил fullstack-сервисы автоматизации
+        Ведущий фулстек-разработчик (Lead Fullstack), 10+ лет коммерческой разработки:
+        frontend на TypeScript, React и Angular, backend на Python (Flask) и PHP
+        (Symfony, Laravel), плюс Node.js. В Яндексе 3,5 года строил fullstack-сервисы автоматизации
         инфраструктуры дата-центров — 8+ внутренних сервисов от интерфейса до базы
         данных; менторил коллег по frontend- и backend-разработке. Последние годы
         руководил frontend-отделом в Positive Technologies, оставаясь hands-on:
@@ -109,7 +109,8 @@ variants:
     text:
       ru: >-
         Team Lead / техлид фронтенда, 10+ лет в разработке и 3+ года в управлении
-        командами. Вёл фронтенд финтеха ВКонтакте (highload, выплаты 10+ млн ₽ в месяц)
+        командами. Вёл фронтенд финтеха ВКонтакте (highload, выплаты на десятки
+        миллионов ₽ в месяц)
         и четыре кросс-функциональные команды в Positive Technologies. Совмещаю
         управление — найм, процессы, 1:1 — с hands-on разработкой на TypeScript, React
         и Angular; владею frontend-архитектурой, дизайн-системами и стандартами
@@ -118,7 +119,8 @@ variants:
       en: >-
         Frontend team lead / tech lead with 10+ years in engineering and 3+ years
         leading teams. Ran the frontend of VK fintech (a high-load service paying out
-        10M+ ₽ a month) and four cross-functional teams at Positive Technologies.
+        tens of millions of ₽ a month) and four cross-functional teams at Positive
+        Technologies.
         I pair management — hiring, process, 1:1s — with hands-on work in TypeScript,
         React and Angular, and own frontend architecture, design systems and UI
         engineering standards. Brought in AI-assisted development, making delivery

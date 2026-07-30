@@ -16,4 +16,10 @@ audience: hr
 layout: rich
 formats: [html, pdf, md, txt]
 sections: [summary, achievements, experience, skills, languages, education]
-select: {}
+# Канонический вариант: его PDF отдаёт лендинг (см. downloads.ts).
+canonical: true
+select:
+  # Управленческая версия: микро-метрики уровня мидла/техлида (визуальные баги,
+  # email-письма) девальвируют блок «Ключевые результаты» — они остаются
+  # в теле опыта и в IC/тимлид-вариантах.
+  excludeIds: [visual-bugs, email-cost]

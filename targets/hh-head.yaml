@@ -9,9 +9,11 @@ id: hh-head
 label:
   ru: hh.ru · Head of Engineering
   en: hh.ru · Head of Engineering
+# «Директор по разработке» — второй частотный запрос этого грейда, без него
+# терялся целый пласт рекрутёрского поиска (оценка ATS-симуляции, 2026-07).
 title:
-  ru: Руководитель разработки (Head of Engineering)
-  en: Head of Engineering
+  ru: Руководитель разработки / Директор по разработке (Head of Engineering)
+  en: Head of Engineering / Director of Engineering
 languages: [ru, en]
 system: hh
 audience: hr
@@ -23,4 +25,6 @@ select:
   # summary-head (6), он перебивает fullstack (5) и teamlead (4) по priority.
   # ⚠ И наоборот: каждый target ролевого summary обязан исключать все ролевые
   # summary с priority ВЫШЕ своего, иначе они протекут (см. hh-teamlead/fullstack).
-  excludeIds: [summary-em, summary-general]
+  # Микро-метрики (визуальные баги, email) на Head-грейде девальвируют блок
+  # «Ключевые результаты» — скрываем.
+  excludeIds: [summary-em, summary-general, visual-bugs, email-cost]
