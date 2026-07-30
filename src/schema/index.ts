@@ -373,6 +373,12 @@ export const TargetSchema = z.object({
   select: Select,
   /** Порядок и состав секций. По умолчанию — стандартный порядок ниже. */
   sections: z.array(Section).default([...SECTIONS]),
+  /**
+   * Канонический «самый полный человеческий» вариант — его PDF отдаёт лендинг.
+   * Раньше выбирался эвристикой «rich+hr+пустой select», но select канонического
+   * target'а теперь непустой (ролевой отбор достижений).
+   */
+  canonical: z.boolean().default(false),
 });
 export type Target = z.infer<typeof TargetSchema>;
 

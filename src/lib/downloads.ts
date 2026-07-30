@@ -15,6 +15,7 @@ export function pdfDownloads(base: string): {
 } {
   const targets = loadTargets();
   const pdfTarget =
+    targets.find((t) => t.canonical && t.formats.includes('pdf')) ??
     targets.find(
       (t) =>
         t.formats.includes('pdf') &&
