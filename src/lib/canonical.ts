@@ -17,6 +17,9 @@ export const PRIMARY_TARGET: Target = {
   layout: 'rich',
   select: {},
   sections: [...SECTIONS],
+  // Виртуальный таргет не участвует в выборе PDF лендинга (см. downloads.ts) —
+  // флаг canonical там про target из targets/*.yaml.
+  canonical: false,
 };
 
 /**
