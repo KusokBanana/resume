@@ -149,6 +149,23 @@ npm run apply -- --from hh-lead --id <vacancyId> --lang ru
 Берёт описание вакансии из сохранённых результатов и запускает `tailor` +
 `cover-letter`. Оба артефакта — ревьюируемые черновики; проверь перед отправкой.
 
+## `npm run funnel` — учёт воронки откликов
+
+Приватный трекер (`out/funnel.yaml`, в `.gitignore`): без него не узнать, что реально
+конвертит — канал, резюме, письмо. LLM не использует, ключей не требует.
+
+```bash
+npm run funnel -- add --url https://hh.ru/vacancy/123456 --resume hh-head   # название/компания подтянутся с hh
+npm run funnel -- add --title "Head of Engineering" --company Acme --resume hh --channel referral --letter acme
+npm run funnel -- set 3 --status viewed        # applied|viewed|screening|interview|offer|rejected|silence|withdrawn
+npm run funnel -- list --status applied
+npm run funnel -- stats                        # конверсии по этапам + разбивка по резюме и каналам
+```
+
+`stats` считает конверсии по истории статусов (не только по текущему) и подсказывает
+главный разрыв воронки: «нет просмотров → чинить заголовок/зарплату», «просмотры без
+скринингов → чинить содержание».
+
 ## Структура
 
 ```
@@ -157,10 +174,12 @@ cli/
   cover-letter.ts   — письмо (экспортирует runCoverLetter)
   find-jobs.ts      — поиск/сопоставление (экспортирует runFindJobs, loadMatches)
   apply.ts          — связка find-jobs → tailor + cover-letter
+  funnel.ts         — учёт воронки откликов (out/funnel.yaml, без LLM)
   lib/
     llm.ts          — обёртка OpenAI (Responses API + Structured Outputs), .env
     catalog.ts      — каталог блоков резюме + эвристики предфильтра + профиль
     hh.ts           — клиент hh.ru API (поиск + детали, User-Agent, strip HTML)
+    fetch-job.ts    — вакансия по URL (hh: JSON-LD со страницы, без токена)
 ```
 
 Зависимость от сайта — только чтение движка: `loadContent` и схемы из `../src`.

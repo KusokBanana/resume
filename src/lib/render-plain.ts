@@ -33,7 +33,9 @@ export function experienceDescription(
   if (e.summary) out.push(stripBold(e.summary));
   for (const h of e.highlights) out.push(`• ${stripBold(h)}`);
   for (const g of e.groups) {
-    out.push('', g.title);
+    // Двоеточие — сигнал «это подзаголовок»: голую строку между буллетами
+    // примитивный ATS-парсер может принять за название должности.
+    out.push('', `${g.title}:`);
     for (const h of g.highlights) out.push(`• ${stripBold(h)}`);
   }
   if (e.stack.length) {

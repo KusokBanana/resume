@@ -25,6 +25,7 @@
     "tailor": "tsx cli/tailor.ts",
     "cover-letter": "tsx cli/cover-letter.ts",
     "find-jobs": "tsx cli/find-jobs.ts",
+    "funnel": "tsx cli/funnel.ts",
     "apply": "tsx cli/apply.ts"
   },
   "dependencies": {
