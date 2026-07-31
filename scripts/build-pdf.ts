@@ -1,7 +1,7 @@
 import { createServer } from 'node:http';
 import { readFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import { join, extname } from 'node:path';
+import { join, extname, resolve as resolvePath, sep } from 'node:path';
 import { chromium } from 'playwright';
 import { loadTargets, ROOT } from '../src/lib/load';
 import { variantSlug } from '../src/lib/slug';
@@ -20,6 +20,15 @@ function startServer(): Promise<ReturnType<typeof createServer>> {
       if (BASE !== '/' && p.startsWith(BASE)) p = p.slice(BASE.length);
       if (p === '' || p.endsWith('/')) p += 'index.html';
       const file = join(DIST, p);
+      // Обход каталога: `new URL()` нормализует только незакодированные `..`, а `%2f`
+      // разделителем пути не считается — `/..%2f.env` декодируется уже ПОСЛЕ нормализации
+      // и уводит за пределы dist. Сверяем итоговый путь после resolve.
+      const root = resolvePath(DIST);
+      if (!resolvePath(file).startsWith(root + sep)) {
+        res.statusCode = 403;
+        res.end('forbidden');
+        return;
+      }
       if (!existsSync(file)) {
         res.statusCode = 404;
         res.end('not found');
@@ -33,7 +42,11 @@ function startServer(): Promise<ReturnType<typeof createServer>> {
       res.end('error');
     }
   });
-  return new Promise((resolve) => server.listen(PORT, () => resolve(server)));
+  // Только петля: сервер живёт секунды, но в чужой сети (кафе/офис) открытый порт
+  // на всех интерфейсах = анонимный доступ к файлам проекта.
+  return new Promise((resolve) =>
+    server.listen(PORT, '127.0.0.1', () => resolve(server)),
+  );
 }
 
 async function main() {
