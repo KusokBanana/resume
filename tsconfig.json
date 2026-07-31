@@ -6,12 +6,9 @@
     "moduleResolution": "Bundler",
     "target": "ES2022",
     "verbatimModuleSyntax": false,
-    "allowImportingTsExtensions": false,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "allowImportingTsExtensions": false
   },
-  "include": ["src", "scripts", "cli", "*.ts", "*.mjs"],
+  // .astro/types.d.ts — генерируется `astro sync`, даёт типы import.meta.env.
+  "include": [".astro/types.d.ts", "src", "scripts", "cli", "test", "*.ts", "*.mjs"],
   "exclude": ["dist", "node_modules"]
 }

@@ -12,6 +12,7 @@ const doc: ResumeDocument = {
     system: 'hh',
     audience: 'hr',
     layout: 'rich',
+    summaryId: 'base',
     language: 'ru',
     label: 'hh',
   },
@@ -110,4 +111,24 @@ test('toJsonResume: present → без endDate, маппинг полей', () =
   assert.equal(jr.education[0].area, 'CS');
   assert.equal(jr.education[0].studyType, 'Магистр');
   assert.equal(jr.education[0].endDate, '2015');
+});
+
+test('toJsonResume: пункты из groups не теряются, языки и достижения на месте', () => {
+  const jr = JSON.parse(JSON.stringify(toJsonResume(doc)));
+  // В JSON Resume нет подсекций — группы склеиваются с префиксом заголовка.
+  // Без этого у мест работы, где все пункты в groups (напр. PT), highlights был пуст.
+  assert.deepEqual(jr.work[0].highlights, ['Сделал дело', 'Процессы: Наладил']);
+  assert.deepEqual(jr.languages, [{ language: 'Русский', fluency: 'родной' }]);
+  // Достижения отдельной секции не имеют — дописываются в basics.summary без **.
+  assert.match(jr.basics.summary, /Достижение X/);
+  assert.doesNotMatch(jr.basics.summary, /\*\*/);
+});
+
+test('toJsonResume: sections — второй гейт, как у остальных рендереров', () => {
+  const only: Section[] = ['summary', 'experience'];
+  const jr = JSON.parse(JSON.stringify(toJsonResume(doc, only)));
+  assert.ok(jr.work, 'experience включён — work должен быть');
+  assert.equal('skills' in jr, false, 'skills вне sections — не должно попасть в JSON');
+  assert.equal('languages' in jr, false);
+  assert.equal('education' in jr, false);
 });

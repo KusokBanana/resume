@@ -392,6 +392,8 @@ export interface ResumeDocument {
     layout: Target['layout'];
     language: Lang;
     label: string;
+    /** id выбранного варианта summary (null, если ни один не подошёл). */
+    summaryId: string | null;
   };
   profile: {
     name: string;

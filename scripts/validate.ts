@@ -17,12 +17,25 @@ function main() {
   console.log(`✓ content валиден`);
   console.log(`✓ targets: ${targets.map((t) => t.id).join(', ')}`);
 
+  // Инвариант лендинга: PDF для кнопки «Скачать» берётся у единственного
+  // canonical-варианта (downloads.ts). Двух быть не должно, нуля — тоже.
+  const canonical = targets.filter((t) => t.canonical);
+  if (canonical.length !== 1 || !canonical[0].formats.includes('pdf')) {
+    violations.push(
+      `canonical-таргетов с форматом pdf должно быть ровно 1, найдено: ${
+        canonical.length ? canonical.map((t) => t.id).join(', ') : 'ни одного'
+      }`,
+    );
+  }
+
   for (const { target, lang } of pairs) {
     const doc = compose(content, target, lang);
     const exp = doc.experience.length;
     const proj = doc.projects.length;
+    // summaryId в выводе: видно, какой ролевой вариант «Кратко» реально выбрался
+    // (матрица закреплена в test/compose-matrix.test.ts).
     console.log(
-      `✓ ${target.id} [${lang}] → ${exp} опыт, ${proj} проектов, summary: ${doc.summary ? 'да' : 'нет'}`,
+      `✓ ${target.id} [${lang}] → ${exp} опыт, ${proj} проектов, summary: ${doc.meta.summaryId ?? 'нет'}`,
     );
 
     const limit = POSITION_LIMITS[target.system];
@@ -42,9 +55,7 @@ function main() {
   console.log(`\nВсего вариантов: ${pairs.length}`);
 
   if (violations.length) {
-    throw new Error(
-      `Превышен лимит длины описания позиции:\n  ${violations.join('\n  ')}`,
-    );
+    throw new Error(`Нарушения:\n  ${violations.join('\n  ')}`);
   }
 }
 

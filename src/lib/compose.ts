@@ -215,6 +215,9 @@ export function compose(
       layout: target.layout,
       language: lang,
       label: pick(target.label, lang),
+      // id выбранного варианта «Кратко» — для гейта: сдвиг priority в summary.yaml
+      // молча уводит ролевое резюме на чужой текст (см. test/compose-matrix.test.ts).
+      summaryId: summaryVariant?.id ?? null,
     },
     profile: {
       name: pick(profile.name, lang),
