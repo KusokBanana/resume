@@ -39,6 +39,16 @@ document.querySelectorAll<HTMLButtonElement>('.tl-toggle').forEach((btn) => {
       rest.style.maxHeight = 'none';
     }
   });
+  // Печать: инлайновый max-height сильнее любого правила из @media print,
+  // поэтому перед печатью снимаем его, а после — возвращаем как было.
+  window.addEventListener('beforeprint', () => {
+    rest.dataset.printPrev = rest.style.maxHeight;
+    rest.style.maxHeight = 'none';
+  });
+  window.addEventListener('afterprint', () => {
+    if (rest.dataset.printPrev !== undefined)
+      rest.style.maxHeight = rest.dataset.printPrev;
+  });
 });
 
 // --- Появление при скролле.

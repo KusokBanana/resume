@@ -31,3 +31,50 @@ html.js .theses .reveal:nth-child(3) {
 html.js .theses .reveal:nth-child(n + 4) {
   transition-delay: 0.18s;
 }
+
+/* ---- Печать лендинга (Ctrl+P) ----------------------------------------- */
+/* Без этого блока страница печатается почти пустой: reveal-элементы остаются
+   в стартовом `opacity: 0` (класс `.in` ставит IntersectionObserver только для
+   того, что реально попало во вьюпорт), свёрнутый опыт уезжает как `max-height: 0`,
+   а градиентный текст заголовков невидим, потому что «фоновая графика» в диалоге
+   печати по умолчанию выключена. Тёмную тему в печати тоже разворачиваем. */
+@media print {
+  html.js .reveal,
+  html.js .reveal.in {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .tl-rest,
+  .tl-rest.is-collapsed {
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+  /* Интерактивная обвязка на бумаге бесполезна. */
+  .tl-toggle,
+  .skill-filter,
+  .lang-toggle,
+  .skill-pop,
+  .tl-stack-skills {
+    display: none !important;
+  }
+  /* Градиент по тексту → обычный цвет. */
+  .hero h1,
+  .stat-value,
+  .cta-final h2 {
+    background: none !important;
+    -webkit-text-fill-color: currentColor;
+    color: #111 !important;
+  }
+  /* Тёмная тема в печати: тёмный текст на белом. */
+  :root {
+    --bg: #fff;
+    --bg-soft: #fff;
+    --ink: #111;
+  }
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+}
